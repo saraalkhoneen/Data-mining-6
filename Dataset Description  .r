@@ -19,7 +19,7 @@ https://www.kaggle.com/datasets/ppb00x/credit-risk-customers
 
 1- Number of Attributes: 21
 2- Number of Objects: 1001
-3- Type of Attributes:
+3- Type of Attributes: Numeric , Nominal
 
 | Attribute name    | Data type |            Description             |
 |-------------------|-----------|------------------------------------|
@@ -29,10 +29,10 @@ https://www.kaggle.com/datasets/ppb00x/credit-risk-customers
 |savings_status     |Nominal    |if the customer is saving or not    |
 |age                |Numeric    |Age Of The credit customer          |
 |employment         |Nominal    |The employment status               |
-|other_payment_plans|Nominal |Other ways of payment                  |
-|personal_status    |Nominal     |single or married, male/female     |
-|housing            |Nominal     |The housing situation rent or owned| 
-|class              |Nominal     |good or bad credit risks           |
+|other_payment_plans|Nominal    |Other ways of payment               |
+|personal_status    |Nominal    |single or married, male/female      |
+|housing            |Nominal    |The housing situation rent or owned | 
+|class              |Nominal    |good or bad credit risks            |
 
  4- class name and lable: The "class" which describes whether the customer is a good or bad credit risks. 
 
