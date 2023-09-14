@@ -34,12 +34,5 @@ https://www.kaggle.com/datasets/ppb00x/credit-risk-customers
 |housing            |Nominal     |The housing situation rent or owned| 
 |class              |Nominal     |good or bad credit risks           |
 
-
-
-
-
-
-
-
-# 4- class name and lable: The "class" which describes whether the customer is a good or bad credit risks. 
+ 4- class name and lable: The "class" which describes whether the customer is a good or bad credit risks. 
 
