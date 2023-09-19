@@ -26,18 +26,18 @@ https://www.kaggle.com/datasets/ppb00x/credit-risk-customers
 3- Type of Attributes:
 
 
-| Attribute name    | Data type |            Description             |
-|-------------------|-----------|------------------------------------|
-|checking_status    |Nominal    |the validity of credit card number  |
-|duration           |Numeric    |duration                            |
-|credit_history     |Nominal    |dept and other loans                |
-|savings_status     |Nominal    |if the customer is saving or not    |
-|age                |Numeric    |Age Of The credit customer          |
-|employment         |Nominal    |The employment status               |
-|other_payment_plans|Nominal |Other ways of payment                  |
-|personal_status    |Nominal     |single or married, male/female     |
-|housing            |Nominal     |The housing situation rent or owned| 
-|class              |Nominal     |good or bad credit risks           |
+  | Attribute name   | Data type | Description | 
+  |-|-|-|
+  |checking_status    |Nominal    |the validity of credit card number  |
+  |duration           |Numeric    |duration                            |
+  |credit_history     |Nominal    |dept and other loans                |
+  |savings_status     |Nominal    |if the customer is saving or not    |
+  |age                |Numeric    |Age Of The credit customer          |
+  |employment         |Nominal    |The employment status               |
+  |other_payment_plans|Nominal |Other ways of payment                  |
+  |personal_status    |Nominal     |single or married, male/female     |
+  |housing            |Nominal     |The housing situation rent or owned| 
+  |class              |Nominal     |good or bad credit risks           |
 
 
 4- class name and lable:
