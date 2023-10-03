@@ -8,7 +8,7 @@ https://www.kaggle.com/datasets/ppb00x/credit-risk-customers
 
 ## General information 
 
-1- Number of Attributes: 21
+1- Number of Attributes: 11
 2- Number of Objects: 1001
 3- Type of Attributes:
 4- class name and lable:
@@ -35,12 +35,12 @@ The "class" which describes whether the customer is a good or bad credit risks.
 ```{r}
 nrow(dataset) 
 ```
-the output was 1000 which is the number of rows
+the output is 1000, which is the number of rows
 
 ```{r}
  ncol(dataset)
 ```
-the output was 11 which is the number of columns
+the output is 11, which is the number of columns
 
 ## central tendency 
 
