@@ -12,6 +12,8 @@ https://www.kaggle.com/datasets/ppb00x/credit-risk-customers
 1- Number of Attributes: 21
 2- Number of Objects: 1001
 3- Type of Attributes:
+class name and lable:
+The "class" which describes whether the customer is a good or bad credit risks.
 
 ## attribute description
 
