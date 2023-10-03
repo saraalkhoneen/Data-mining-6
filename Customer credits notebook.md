@@ -28,3 +28,23 @@ The "class" which describes whether the customer is a good or bad credit risks.
 |personal_status    |Nominal     |single or married, male/female     |
 |housing            |Nominal     |The housing situation rent or owned| 
 |class              |Nominal     |good or bad credit risks           |
+
+
+## Summary of the dataset
+
+nrow(dataset) 
+
+the output was 1000 which is the number of rows
+
+ncol(dataset)
+
+the output was 11 which is the number of columns
+
+## central tendency 
+
+summary(dataset)
+
+we got a closer look at our data.
+1- the length 
+2- class type 
+3- central tendancy (mode, mean and median) of each attribute with the Q1 and Q3
