@@ -54,7 +54,7 @@ we got a closer look at our data.
 2- class type 
 3- central tendancy (mode, mean and median) of each attribute with the Q1 and Q3
 
-## missing values 
+## Missing Values 
 
 ```{r}
  summary(dataset)
