@@ -42,8 +42,6 @@ the output is 1000, which is the number of rows
 ```
 the output is 11, which is the number of columns
 
-## central tendency 
-
 ```{r}
  summary(dataset)
 ```
