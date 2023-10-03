@@ -56,8 +56,6 @@ ncol(dataset)
 ```
 the output is 11, which is the number of columns
 
-## central tendency 
-
 ```{r}
 summary(dataset)
 ```
