@@ -67,7 +67,7 @@ we got a closer look at our data.
 ## Missing Values
 
 ```{r}
- summary(dataset)
+sum(is.na(dataset))
 ```
 the output is 0 , which means there is not missing values
 
