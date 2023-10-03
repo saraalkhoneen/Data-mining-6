@@ -25,7 +25,7 @@ https://www.kaggle.com/datasets/ppb00x/credit-risk-customers
 2- Number of Objects: 1001
 3- Type of Attributes:
 
-[
+
 | Attribute name    | Data type |            Description             |
 |-------------------|-----------|------------------------------------|
 |checking_status    |Nominal    |the validity of credit card number  |
@@ -37,7 +37,7 @@ https://www.kaggle.com/datasets/ppb00x/credit-risk-customers
 |other_payment_plans|Nominal |Other ways of payment                  |
 |personal_status    |Nominal     |single or married, male/female     |
 |housing            |Nominal     |The housing situation rent or owned| 
-|class              |Nominal     |good or bad credit risks           |]
+|class              |Nominal     |good or bad credit risks           |
 
 
 4- class name and lable:
