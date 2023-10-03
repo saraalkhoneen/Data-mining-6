@@ -32,18 +32,21 @@ The "class" which describes whether the customer is a good or bad credit risks.
 
 ## Summary of the dataset
 
+```{r}
 nrow(dataset) 
-
+```
 the output was 1000 which is the number of rows
 
-ncol(dataset)
-
+```{r}
+ ncol(dataset)
+```
 the output was 11 which is the number of columns
 
 ## central tendency 
 
-summary(dataset)
-
+```{r}
+ summary(dataset)
+```
 we got a closer look at our data.
 1- the length 
 2- class type 
