@@ -33,6 +33,10 @@ The "class" which describes whether the customer is a good or bad credit risks.
 ## Summary of the dataset
 
 ```{r}
+dataset = read.csv('dataset.csv')
+```
+
+```{r}
 nrow(dataset) 
 ```
 the output is 1000, which is the number of rows
