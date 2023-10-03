@@ -64,9 +64,12 @@ we got a closer look at our data.
 2- class type 
 3- central tendancy (mode, mean and median) of each attribute with the Q1 and Q3
 
+## Missing Values
 
-
-
+```{r}
+ summary(dataset)
+```
+the output is 0 , which means there is not missing values
 
 
 
