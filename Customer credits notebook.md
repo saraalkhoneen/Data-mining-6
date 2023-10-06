@@ -51,7 +51,9 @@ The output is 11, which is the number of columns
 ```{r}
 var_duration <- var(dataset$duration)
 ```
-
+```{r}
+var_age <- var(dataset$age)
+```
 Te got a closer look at our data.
 1- The length 
 2- Class type 
