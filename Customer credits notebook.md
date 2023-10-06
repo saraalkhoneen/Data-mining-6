@@ -79,10 +79,15 @@ library(outliers)
 ```{r}
 OutAge <- outlier(dataset$age, logical = TRUE)
 ```
-we created a variable "OutAge" to store the result of finding the outliers in the dataset 
+we created a variable "OutAge" to store the result of finding the outliers in the dataset , 
 logical true which specifies the outliers with true .
 
 ```{r}
 sum(OutAge)
 ```
 Then we calculated the sum of All the outliers, the result is 2 . 
+
+```{r}
+Find_outlier <- which(OutAge == TRUE, arr.ind = TRUE)
+```
+row nummbers with the Outliers 
