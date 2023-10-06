@@ -137,3 +137,15 @@ ggplot(data = dataset, aes(x = age, y = duration)) +
 ```
 The distribution of loan durations , we can identify outliers and the central tendency of the loan duration in out dataset.
 
+
+```{r}
+ggplot(data = dataset, aes(x = credit_history, fill = class)) +
+    geom_bar(position = "stack") +
+     labs(title = "Credit History vs. Credit Risk",
+          x = "Credit History",
+          y = "Count") +
+     scale_fill_manual(values = c("good" = "green", "bad" = "red")) +
+     theme_minimal()
+
+```
+The bar chart shows the distribution of credit history categories and how they are associated with good and bad credit risks.
