@@ -78,22 +78,27 @@ library(outliers)
 ```
 ```{r}
 OutAge <- outlier(dataset$age, logical = TRUE)
+OutDuration <- outlier(dataset$duration, logical = TRUE)
 ```
-we created a variable "OutAge" to store the result of finding the outliers in the dataset , 
+we created a variable "OutAge" , "OutDuration" to store the result of finding the outliers in the dataset , 
 logical true which specifies the outliers with true .
 
 ```{r}
 sum(OutAge)
+sum(OutDuration)
 ```
-Then we calculated the sum of All the outliers, the result is 2 . 
+Then we calculated the sum of All the outliers, the result is 2 for the age / 1 for the duration. 
 
 ```{r}
-Find_outlier <- which(OutAge == TRUE, arr.ind = TRUE)
+Find_outlierAge <- which(OutAge == TRUE, arr.ind = TRUE)
+Find_outlierDuration <- which(OutDuration == TRUE, arr.ind = TRUE)
 ```
 to find the row nummbers with the Outliers 
 
 ```{r}
 OutAge
-Find_outlier
+OutDuration
+Find_outlierAge
+Find_outlierDuration
 ```
 Finally we displayed the outliers
