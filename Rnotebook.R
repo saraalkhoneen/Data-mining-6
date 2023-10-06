@@ -18,13 +18,17 @@ decision-making.
 
 The dataset was sourced from the kaggle website in this URL:
 https://www.kaggle.com/datasets/ppb00x/credit-risk-customers 
+### Project Motivation:
+we will use this data set to assist financial institutions make informed decisions regarding loan approvals and deciding weather a customer has good or bad cedit risks by analyzing customers’ payment behavior, as well as all their relevant attributes such as age, income, loan amount, employment status, etc. By utilizing this data, predictive models can be built to forecast customers’ creditworthiness and may be used as a tool for risk assessment and decision-making.
 
 ## General information 
 
-1- Number of Attributes: 21
+1- Number of Attributes: 11
 2- Number of Objects: 1001
-3- Type of Attributes:
+3- class name and lable:
+The "class" attribute which describes whether the customer is a good or bad credit risks.
 
+## Attribute description
 
 | Attribute name    | Data type |            Description             |
 |-------------------|-----------|------------------------------------|
@@ -40,36 +44,98 @@ https://www.kaggle.com/datasets/ppb00x/credit-risk-customers
 |class              |Nominal     |good or bad credit risks           |
 
 
-4- class name and lable:
-
-The "class" which describes whether the customer is a good or bad credit risks.
-
 ## Summary of the dataset
+
+```{r}
+dataset = read.csv('dataset.csv')
+```
 
 ```{r}
 nrow(dataset) 
 ```
-the output is 1000, which is the number of rows
+The output is 1000, which is the number of rows
 
 ```{r}
-ncol(dataset)
+ ncol(dataset)
 ```
-the output is 11, which is the number of columns
+The output is 11, which is the number of columns
 
 ```{r}
-summary(dataset)
+ summary(dataset)
 ```
-we got a closer look at our data.
-1- the length 
-2- class type 
-3- central tendancy (mode, mean and median) of each attribute with the Q1 and Q3
+```{r}
+var_duration <- var(dataset$duration)
+```
 
-## Missing Values
+Te got a closer look at our data.
+1- The length 
+2- Class type 
+3- Central tendancy (mode, mean and median) of each attribute with the Q1 and Q3
+4- Variance 
+
+## Missing Values and Null Values
+
+```{r}
+is.na(dataset)
+```
+The output is false for all atrributes , this indicates that the corresponding element in our dataset is not missing and contains a valid value.
 
 ```{r}
 sum(is.na(dataset))
 ```
-the output is 0 , which means there is not missing values
+We used this function to reassure we dont have missing values or Nulls in the the entire dataset the output is 0. 
 
+## Outliers
 
+```{r}
+library(outliers)
+```
+```{r}
+OutAge <- outlier(dataset$age, logical = TRUE)
+OutDuration <- outlier(dataset$duration, logical = TRUE)
+```
+We created a variable "OutAge" , "OutDuration" to store the result of finding the outliers in the dataset , 
+logical true which specifies the outliers with true .
+
+```{r}
+sum(OutAge)
+sum(OutDuration)
+```
+Then we calculated the sum of All the outliers, the result is 2 for the age / 1 for the duration. 
+
+```{r}
+Find_outlierAge <- which(OutAge == TRUE, arr.ind = TRUE)
+Find_outlierDuration <- which(OutDuration == TRUE, arr.ind = TRUE)
+```
+To find the row nummbers with the Outliers 
+
+```{r}
+dataset <- dataset[-Find_outlierAge ,-Find_outlierDuration , ]
+```
+Finally we removed the outliers , out dataset after remvoing the outliers have 997 objects.
+
+## Graphs 
+
+```{r}
+hist(dataset$age, main = "Histogram of Age", xlab = "Age", ylab = "Frequency", col = "lightblue")
+```
+We ceated a histogram for the "Age" attribute for its importance in deciding a customers credits risks 
+
+```{r}
+barplot(table(dataset$checking_status), main = "Bar Plot of Checking Status", 
++         xlab = "Checking Status", ylab = "Frequency", col = "lightgreen")
+```
+This chart will show the distribution of individuals across different checking status categories which then provide insights into the financial standing of the customers. 
+
+```{r}
+library(ggplot2)
+```
+```{r}
+ggplot(data = dataset, aes(x = age, y = duration)) +
+  geom_point() +
+  labs(title = "Scatter Plot of Age vs. Duration",
+       x = "Age",
+       y = "Duration")
+```
+The distribution of loan durations , we can identify outliers and the central tendency of the loan duration in out dataset.
 
