@@ -90,4 +90,4 @@ Then we calculated the sum of All the outliers, the result is 2 .
 ```{r}
 Find_outlier <- which(OutAge == TRUE, arr.ind = TRUE)
 ```
-row nummbers with the Outliers 
+to find the row nummbers with the Outliers 
