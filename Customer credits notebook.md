@@ -95,9 +95,6 @@ Find_outlierDuration <- which(OutDuration == TRUE, arr.ind = TRUE)
 to find the row nummbers with the Outliers 
 
 ```{r}
-OutAge
-OutDuration
-Find_outlierAge
-Find_outlierDuration
+dataset <- dataset[-Find_outlierAge , -Find_outlierDuration, ]
 ```
-Finally we displayed the outliers
+finally we removed the outliers , out dataset after remvoing the outliers have 997 objects.
