@@ -38,12 +38,12 @@ dataset = read.csv('dataset.csv')
 ```{r}
 nrow(dataset) 
 ```
-the output is 1000, which is the number of rows
+The output is 1000, which is the number of rows
 
 ```{r}
  ncol(dataset)
 ```
-the output is 11, which is the number of columns
+The output is 11, which is the number of columns
 
 ```{r}
  summary(dataset)
@@ -52,23 +52,23 @@ the output is 11, which is the number of columns
 var_duration <- var(dataset$duration)
 ```
 
-we got a closer look at our data.
-1- the length 
-2- class type 
-3- central tendancy (mode, mean and median) of each attribute with the Q1 and Q3
-4- variance 
+Te got a closer look at our data.
+1- The length 
+2- Class type 
+3- Central tendancy (mode, mean and median) of each attribute with the Q1 and Q3
+4- Variance 
 
 ## Missing Values and Null Values
 
 ```{r}
 is.na(dataset)
 ```
-the output is false for all atrributes , this indicates that the corresponding element in our dataset is not missing and contains a valid value.
+The output is false for all atrributes , this indicates that the corresponding element in our dataset is not missing and contains a valid value.
 
 ```{r}
 sum(is.na(dataset))
 ```
-we used this function to reassure we dont have missing values or Nulls in the the entire dataset the output is 0. 
+We used this function to reassure we dont have missing values or Nulls in the the entire dataset the output is 0. 
 
 ## Outliers
 
@@ -79,7 +79,7 @@ library(outliers)
 OutAge <- outlier(dataset$age, logical = TRUE)
 OutDuration <- outlier(dataset$duration, logical = TRUE)
 ```
-we created a variable "OutAge" , "OutDuration" to store the result of finding the outliers in the dataset , 
+We created a variable "OutAge" , "OutDuration" to store the result of finding the outliers in the dataset , 
 logical true which specifies the outliers with true .
 
 ```{r}
@@ -92,25 +92,25 @@ Then we calculated the sum of All the outliers, the result is 2 for the age / 1 
 Find_outlierAge <- which(OutAge == TRUE, arr.ind = TRUE)
 Find_outlierDuration <- which(OutDuration == TRUE, arr.ind = TRUE)
 ```
-to find the row nummbers with the Outliers 
+To find the row nummbers with the Outliers 
 
 ```{r}
 dataset <- dataset[-Find_outlierAge ,-Find_outlierDuration , ]
 ```
-finally we removed the outliers , out dataset after remvoing the outliers have 997 objects.
+Finally we removed the outliers , out dataset after remvoing the outliers have 997 objects.
 
-## graphs 
+## Graphs 
 
 ```{r}
 hist(dataset$age, main = "Histogram of Age", xlab = "Age", ylab = "Frequency", col = "lightblue")
 ```
-// We ceated a histogram for the "Age" attribute for its importance in deciding a customers credits risks 
+We ceated a histogram for the "Age" attribute for its importance in deciding a customers credits risks 
 
 ```{r}
 barplot(table(dataset$checking_status), main = "Bar Plot of Checking Status", 
 +         xlab = "Checking Status", ylab = "Frequency", col = "lightgreen")
 ```
-// This chart will show the distribution of individuals across different checking status categories which then provide insights into the financial standing of the customers. 
+This chart will show the distribution of individuals across different checking status categories which then provide insights into the financial standing of the customers. 
 
 ```{r}
 library(ggplot2)
@@ -122,4 +122,4 @@ ggplot(data = dataset, aes(x = age, y = duration)) +
        x = "Age",
        y = "Duration")
 ```
-// the distribution of loan durations , we can identify outliers and the central tendency of the loan duration in out dataset.
+The distribution of loan durations , we can identify outliers and the central tendency of the loan duration in out dataset.
