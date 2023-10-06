@@ -54,9 +54,16 @@ we got a closer look at our data.
 2- class type 
 3- central tendancy (mode, mean and median) of each attribute with the Q1 and Q3
 
-## Missing Values 
+## Null Values 
 
 ```{r}
 sum(is.na(dataset))
 ```
-the output is 0 , which means there is not missing values
+the output is 0 , which means there is not Null values in our dataset
+
+## Missing values
+
+```{r}
+is.na(dataset)
+```
+the output is false for all the attributes,This indicates that the corresponding element in the original dataset is not missing and contains a valid value.
