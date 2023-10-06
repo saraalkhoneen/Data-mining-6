@@ -54,7 +54,7 @@ var_duration <- var(dataset$duration)
 ```{r}
 var_age <- var(dataset$age)
 ```
-Te got a closer look at our data.
+we got a closer look at our data.
 1- The length 
 2- Class type 
 3- Central tendancy (mode, mean and median) of each attribute with the Q1 and Q3
@@ -124,4 +124,4 @@ ggplot(data = dataset, aes(x = age, y = duration)) +
        x = "Age",
        y = "Duration")
 ```
-The distribution of loan durations , we can identify outliers and the central tendency of the loan duration in out dataset.
+The distribution of loan durations , we identify outliers and the central tendency of the loan duration in our dataset.
