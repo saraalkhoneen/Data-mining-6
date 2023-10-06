@@ -48,6 +48,10 @@ the output is 11, which is the number of columns
 ```{r}
  summary(dataset)
 ```
+```{r}
+var_duration <- var(dataset$duration)
+```
+
 we got a closer look at our data.
 1- the length 
 2- class type 
