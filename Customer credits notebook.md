@@ -59,7 +59,7 @@ sum(is.na(dataset))
 ```
 the output is 0 , which means there is not Null values in our dataset
 
-## Missing values
+## Missing Values and Null Values
 
 ```{r}
 is.na(dataset)
@@ -69,4 +69,4 @@ the output is false for all atrributes , this indicates that the corresponding e
 ```{r}
 sum(is.na(dataset))
 ```
-we used this function to reassure we dont have missing values in the the entire dataset the output is 0. 
+we used this function to reassure we dont have missing values or Nulls in the the entire dataset the output is 0. 
