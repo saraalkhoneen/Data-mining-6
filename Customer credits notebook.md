@@ -56,11 +56,7 @@ we got a closer look at our data.
 1- the length 
 2- class type 
 3- central tendancy (mode, mean and median) of each attribute with the Q1 and Q3
-
-```{r}
-sum(is.na(dataset))
-```
-the output is 0 , which means there is not Null values in our dataset
+4- variance 
 
 ## Missing Values and Null Values
 
