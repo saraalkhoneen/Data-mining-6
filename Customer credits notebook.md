@@ -98,3 +98,28 @@ to find the row nummbers with the Outliers
 dataset <- dataset[-Find_outlierAge ,-Find_outlierDuration , ]
 ```
 finally we removed the outliers , out dataset after remvoing the outliers have 997 objects.
+
+## graphs 
+
+```{r}
+hist(dataset$age, main = "Histogram of Age", xlab = "Age", ylab = "Frequency", col = "lightblue")
+```
+// We ceated a histogram for the "Age" attribute for its importance in deciding a customers credits risks 
+
+```{r}
+barplot(table(dataset$checking_status), main = "Bar Plot of Checking Status", 
++         xlab = "Checking Status", ylab = "Frequency", col = "lightgreen")
+```
+// This chart will show the distribution of individuals across different checking status categories which then provide insights into the financial standing of the customers. 
+
+```{r}
+library(ggplot2)
+```
+```{r}
+ggplot(data = dataset, aes(x = age, y = duration)) +
+  geom_point() +
+  labs(title = "Scatter Plot of Age vs. Duration",
+       x = "Age",
+       y = "Duration")
+```
+// the distribution of loan durations , we can identify outliers and the central tendency of the loan duration in out dataset.
