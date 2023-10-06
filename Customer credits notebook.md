@@ -66,4 +66,4 @@ the output is 0 , which means there is not Null values in our dataset
 ```{r}
 is.na(dataset)
 ```
-the output is false for all the attributes,This indicates that the corresponding element in the original dataset is not missing and contains a valid value.
+the output is false for all the attributes,This indicates that the corresponding element in our dataset is not missing and contains a valid value.
