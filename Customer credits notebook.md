@@ -70,3 +70,19 @@ the output is false for all atrributes , this indicates that the corresponding e
 sum(is.na(dataset))
 ```
 we used this function to reassure we dont have missing values or Nulls in the the entire dataset the output is 0. 
+
+## Outliers
+
+```{r}
+library(outliers)
+```
+```{r}
+OutAge <- outlier(dataset$age, logical = TRUE)
+```
+we created a variable "OutAge" to store the result of finding the outliers in the dataset 
+logical true which specifies the outliers with true .
+
+```{r}
+sum(OutAge)
+```
+Then we calculated the sum of All the outliers, the result is 2 . 
