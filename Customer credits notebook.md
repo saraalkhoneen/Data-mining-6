@@ -13,7 +13,7 @@ https://www.kaggle.com/datasets/ppb00x/credit-risk-customers
 3- class name and lable:
 The "class" attribute which describes whether the customer is a good or bad credit risks.
 
-## attribute description
+## Attribute description
 
 | Attribute name    | Data type |            Description             |
 |-------------------|-----------|------------------------------------|
