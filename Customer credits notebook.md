@@ -136,3 +136,20 @@ ggplot(data = dataset, aes(x = credit_history, fill = class)) +
 
 ```
 The bar chart shows the distribution of credit history categories and how they are associated with good and bad credit risks.
+
+## Normalization
+
+```{r}
+min_max_scaling <- function(x) {return (x - min(x)) / (max(x)- min(x))}
+```
+Definding the normalization function
+
+```{r}
+dataset$age <- min_max_scaling(dataset$age)
+```
+Normalizing the 'age' variable
+
+```{r}
+dataset$duration <- min_max_scaling(dataset$duration)
+```
+Normalizing the 'duration' variable
