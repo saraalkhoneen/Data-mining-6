@@ -99,8 +99,10 @@ To find the row nummbers with the Outliers
 ```{r}
 dataset <- dataset[-Find_outlierAge ,-Find_outlierDuration , ]
 ```
+
 Finally we removed the outliers , out dataset after remvoing the outliers have 997 objects.
-# Data Conversion (Encoding categorical data)/discretization
+## Data Conversion (Encoding categorical data)/discretization
+
 ```{r}
 dataset$checking_status <- factor(dataset$checking_status, levels = c("<0", "0<=X<200", "no checking"), labels = c(1, 2, 3))
 ```
@@ -114,12 +116,13 @@ dataset$housing = factor(dataset$housing,levels = c("own","for free", "rent"), l
 ```{r}
 print(dataset)
 ```
-# Feature Scaling
+## Feature Scaling
 Apply feature scaling to non-categorical data
 ```{r}
 code here 
 ```
-#Normalization
+## Normalization
+
 Define the normalize() function
 ```{r}
 code here 
@@ -142,6 +145,8 @@ code here
 hist(dataset$age, main = "Histogram of Age", xlab = "Age", ylab = "Frequency", col = "lightblue")
 ```
 We ceated a histogram for the "Age" attribute for its importance in deciding a customers credits risks 
+what we learned from the histogram is the age distribution of our dataset, which is an important factor in 
+deciding the credit risks of a customer. 
 
 ```{r}
 barplot(table(dataset$checking_status), main = "Bar Plot of Checking Status", 
@@ -172,14 +177,5 @@ ggplot(data = dataset, aes(x = credit_history, fill = class)) +
 ```
 The bar chart shows the distribution of credit history categories and how they are associated with good and bad credit risks.
 
-# Central Tendency Measurements (mean and variance)
 
- Calculate mean and variance of 'duration'
- ```{r}
-mean_duration <- mean(dataset$duration)
-var_duration <- var(dataset$duration)
-cat("Mean Duration:", mean_duration, "\n")
-cat("Variance of Duration:", var_duration, "\n")
-
-```
  
