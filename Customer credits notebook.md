@@ -169,4 +169,8 @@ The bar chart shows the distribution of credit history categories and how they a
 affects the decision when deciding a good or a bad credit risks for a customer.
 
 
- 
+ ```{r}
+barplot(table(dataset$age), main = "Bar Chart for the Age Variable", xlab = "Checking Status", ylab = "Frequency", col = "yellow")
+
+```
+This bar chart shows our customers' age
