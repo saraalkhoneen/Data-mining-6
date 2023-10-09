@@ -123,22 +123,21 @@ code here
 ```
 ## Normalization
 
-Define the normalize() function
+Define the min_max_scaling() function
 ```{r}
-code here 
+min_max_scaling <- function(x) {return (x - min(x)) / (max(x)- min(x))}
 ```
- Normalize '***' variable
+
+ Normalize 'age' variable
  ```{r}
-code here 
+dataset$age <- min_max_scaling(dataset$age)
 ```
-Define the Z_normalize() function
+
+ Normalize 'duration' variable
  ```{r}
-code here 
+dataset$duration <- min_max_scaling(dataset$duration)
 ```
-Z-normalize '***' variable
- ```{r}
-code here 
-```
+
 ## Graphs 
 
 ```{r}
