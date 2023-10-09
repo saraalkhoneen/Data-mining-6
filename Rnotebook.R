@@ -125,12 +125,15 @@ dataset$housing = factor(dataset$housing,levels = c("own","for free", "rent"), l
 ```{r}
 print(dataset)
 ```
+
 ## Graphs 
 
 ```{r}
 hist(dataset$age, main = "Histogram of Age", xlab = "Age", ylab = "Frequency", col = "lightblue")
 ```
 We ceated a histogram for the "Age" attribute for its importance in deciding a customers credits risks 
+, what we learned from the histogram is the age distribution of our dataset, which is an important factor in 
+deciding the credit risks of a customer. 
 
 ```{r}
 barplot(table(dataset$checking_status), main = "Bar Plot of Checking Status", 
@@ -142,16 +145,6 @@ This chart will show the distribution of individuals across different checking s
 library(ggplot2)
 ```
 ```{r}
-ggplot(data = dataset, aes(x = age, y = duration)) +
-  geom_point() +
-  labs(title = "Scatter Plot of Age vs. Duration",
-       x = "Age",
-       y = "Duration")
-```
-The distribution of loan durations , we can identify outliers and the central tendency of the loan duration in out dataset.
-
-
-```{r}
 ggplot(data = dataset, aes(x = credit_history, fill = class)) +
     geom_bar(position = "stack") +
      labs(title = "Credit History vs. Credit Risk",
@@ -160,7 +153,9 @@ ggplot(data = dataset, aes(x = credit_history, fill = class)) +
      scale_fill_manual(values = c("good" = "green", "bad" = "red")) 
 
 ```
-The bar chart shows the distribution of credit history categories and how they are associated with good and bad credit risks.
+The bar chart shows the distribution of credit history categories and how they are associated with good and bad credit risks, we used our class label which is the "class" attribute, to learn and understand how the credit history 
+affects the decision when deciding a good or a bad credit risks for a customer.
+
 
 ```{r}
 min_max_scaling <- function(x) {return (x - min(x)) / (max(x)- min(x))}
