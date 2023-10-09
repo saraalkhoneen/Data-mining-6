@@ -111,7 +111,20 @@ To find the row nummbers with the Outliers
 dataset <- dataset[-Find_outlierAge ,-Find_outlierDuration , ]
 ```
 Finally we removed the outliers , out dataset after remvoing the outliers have 997 objects.
-
+# Data Conversion (Encoding categorical data)/discretization
+```{r}
+dataset$checking_status <- factor(dataset$checking_status, levels = c("<0", "0<=X<200", "no checking"), labels = c(1, 2, 3))
+```
+```{r}
+dataset$class <- factor(dataset$class, levels = c("bad", "good"), labels = c(0, 1))
+```
+```{r}
+dataset$housing = factor(dataset$housing,levels = c("own","for free", "rent"), labels = c(1, 2, 3))
+```
+ Print the final preprocessed dataset
+```{r}
+print(dataset)
+```
 ## Graphs 
 
 ```{r}
