@@ -168,3 +168,13 @@ ggplot(data = dataset, aes(x = credit_history, fill = class)) +
 The bar chart shows the distribution of credit history categories and how they are associated with good and bad credit risks, we used our class label which is the "class" attribute, to learn and understand how the credit history 
 affects the decision when deciding a good or a bad credit risks for a customer.
 
+```{r}
+ggplot(dataset, aes(x = housing, fill = class)) +
+    geom_bar() +
+      labs(
+          x = "Housing",
+          y = "Count",
+          title = "Bar Graph of Housing vs. Credit Risk",
+          fill = "Credit Risk"
+      )
+```
