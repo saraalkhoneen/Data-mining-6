@@ -170,8 +170,4 @@ dataset$duration <- min_max_scaling(dataset$duration)
 ```
 The min_max_scaling () function help to normalize the age and duration variables to ensures uniformity in how our data looks and reads
 
-```{r}
-barplot(table(dataset$age), main = "Bar Chart for the Age Variable", xlab = "Checking Status", ylab = "Frequency", col = "yellow")
-
-```
-This bar chart is supposed to represent our sample of customers' age, we choose to represent that to give a better understanding of our dataset since the age variable may be a factor to determine a lot of our variables states like the employment variable, cheacking status, etc.. 
+ 
