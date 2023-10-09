@@ -171,3 +171,15 @@ ggplot(data = dataset, aes(x = credit_history, fill = class)) +
 
 ```
 The bar chart shows the distribution of credit history categories and how they are associated with good and bad credit risks.
+
+# Central Tendency Measurements (mean and variance)
+
+ Calculate mean and variance of 'duration'
+ ```{r}
+mean_duration <- mean(dataset$duration)
+var_duration <- var(dataset$duration)
+cat("Mean Duration:", mean_duration, "\n")
+cat("Variance of Duration:", var_duration, "\n")
+
+```
+ 
