@@ -139,9 +139,7 @@ dataset$duration <- min_max_scaling(dataset$duration)
 ```R
 hist(dataset$age, main = "Histogram of Age", xlab = "Age", ylab = "Frequency", col = "lightblue")
 ```
-We ceated a histogram for the "Age" attribute for its importance in deciding a customers credits risks 
-, what we learned from the histogram is the age distribution of our dataset, which is an important factor in 
-deciding the credit risks of a customer. 
+We ceated a histogram for the "Age" variable to show the age groups for our sample of customers to give a better understanding for our overall variables values and results.  
 
 ```R
 barplot(table(dataset$checking_status), main = "Bar Plot of Checking Status", 
