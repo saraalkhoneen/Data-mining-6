@@ -173,7 +173,22 @@ ggplot(dataset, aes(x = housing, fill = class)) +
       labs(
           x = "Housing",
           y = "Count",
-          title = "Bar Graph of Housing vs. Credit Risk",
+          title = "Housing vs. Credit Risk",
           fill = "Credit Risk"
       )
 ```
+
+\\ no correlation between the employment and class 
+
+```{r}
+ggplot(dataset, aes(x = employment, fill = class)) +
+   geom_bar() +
+     labs(
+         x = "employment",
+         y = "Count",
+         title = "employment vs. Credit Risk",
+         fill = "Credit Risk"
+     )
+```
+
+
