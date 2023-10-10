@@ -31,27 +31,27 @@ The "class" attribute which describes whether the customer is a good or bad cred
 
 ## Summary of the dataset
 
-```{r}
+```R
 dataset = read.csv('dataset.csv')
 ```
 
-```{r}
+```R
 nrow(dataset) 
 ```
 The output is 1000, which is the number of rows
 
-```{r}
+```R
  ncol(dataset)
 ```
 The output is 11, which is the number of columns
 
-```{r}
+```R
  summary(dataset)
 ```
-```{r}
+```R
 var_duration <- var(dataset$duration)
 ```
-```{r}
+```R
 var_age <- var(dataset$age)
 ```
 we got a closer look at our data.
@@ -62,101 +62,97 @@ we got a closer look at our data.
 
 ## Missing Values and Null Values
 
-```{r}
+```R
 is.na(dataset)
 ```
 The output is false for all atrributes , this indicates that the corresponding element in our dataset is not missing and contains a valid value.
 
-```{r}
+```R
 sum(is.na(dataset))
 ```
 We used this function to reassure we dont have missing values or Nulls in the the entire dataset the output is 0. 
 
 ## Outliers
 
-```{r}
+```R
 library(outliers)
 ```
-```{r}
+```R
 OutAge <- outlier(dataset$age, logical = TRUE)
 OutDuration <- outlier(dataset$duration, logical = TRUE)
 ```
 We created a variable "OutAge" , "OutDuration" to store the result of finding the outliers in the dataset , 
 logical true which specifies the outliers with true .
 
-```{r}
+```R
 sum(OutAge)
 sum(OutDuration)
 ```
 Then we calculated the sum of All the outliers, the result is 2 for the age / 1 for the duration. 
 
-```{r}
+```R
 Find_outlierAge <- which(OutAge == TRUE, arr.ind = TRUE)
 Find_outlierDuration <- which(OutDuration == TRUE, arr.ind = TRUE)
 ```
 To find the row nummbers with the Outliers 
 
-```{r}
+```R
 dataset <- dataset[-Find_outlierAge ,-Find_outlierDuration , ]
 ```
 
 Finally we removed the outliers , out dataset after remvoing the outliers have 997 objects.
 ## Data Conversion (Encoding categorical data)/discretization
 
-```{r}
+```R
 dataset$checking_status <- factor(dataset$checking_status, levels = c("<0", "0<=X<200", "no checking"), labels = c(1, 2, 3))
 ```
-```{r}
+```R
 dataset$class <- factor(dataset$class, levels = c("bad", "good"), labels = c(0, 1))
 ```
-```{r}
+```R
 dataset$housing = factor(dataset$housing,levels = c("own","for free", "rent"), labels = c(1, 2, 3))
 ```
  Print the final preprocessed dataset
-```{r}
+```R
 print(dataset)
 ```
-## Feature Scaling
-Apply feature scaling to non-categorical data
-```{r}
-code here 
-```
+
 ## Normalization
 
 Define the min_max_scaling() function
-```{r}
+```R
 min_max_scaling <- function(x) {return (x - min(x)) / (max(x)- min(x))}
 ```
 
- Normalize 'age' variable
- ```{r}
+Normalize 'age' variable
+```R
 dataset$age <- min_max_scaling(dataset$age)
 ```
 
- Normalize 'duration' variable
- ```{r}
+Normalize 'duration' variable
+```R
 dataset$duration <- min_max_scaling(dataset$duration)
 ```
 
 ## Graphs 
 
-```{r}
+```R
 hist(dataset$age, main = "Histogram of Age", xlab = "Age", ylab = "Frequency", col = "lightblue")
 ```
 We ceated a histogram for the "Age" attribute for its importance in deciding a customers credits risks 
 , what we learned from the histogram is the age distribution of our dataset, which is an important factor in 
 deciding the credit risks of a customer. 
 
-```{r}
+```R
 barplot(table(dataset$checking_status), main = "Bar Plot of Checking Status", 
 +         xlab = "Checking Status", ylab = "Frequency", col = "lightgreen")
 ```
 This chart will show the distribution of individuals across different checking status categories which then provide insights into the financial standing of the customers. 
 
-```{r}
+```R
 library(ggplot2)
 ```
-```{r}
+```R
 ggplot(data = dataset, aes(x = credit_history, fill = class)) +
      geom_bar(position = "stack") +
      labs(title = "Credit History vs. Credit Risk",
@@ -167,7 +163,7 @@ ggplot(data = dataset, aes(x = credit_history, fill = class)) +
 The bar chart shows the distribution of credit history categories and how they are associated with good and bad credit risks, we used our class label which is the "class" attribute, to learn and understand how the credit history 
 affects the decision when deciding a good or a bad credit risks for a customer.
 
-```{r}
+```R
 ggplot(dataset, aes(x = housing, fill = class)) +
     geom_bar() +
       labs(
@@ -180,7 +176,7 @@ ggplot(dataset, aes(x = housing, fill = class)) +
 
 \\ no correlation between the employment and class 
 
-```{r}
+```R
 ggplot(dataset, aes(x = employment, fill = class)) +
    geom_bar() +
      labs(
@@ -191,4 +187,36 @@ ggplot(dataset, aes(x = employment, fill = class)) +
      )
 ```
 
+## Feature Selection : 
+Insuring that caret package is installed on install it : 
 
+```R
+if (!require(caret)) {
+  install.packages("caret")
+}
+
+library(caret)
+```
+
+Choosing the feature matrix (X) and target variable (Y) :
+
+```R
+X <- dataset[, c("credit_history", "savings_status", "employment")]
+y <- dataset$class
+```
+
+Defining the number of cross-validation folds :
+
+```R
+CV_folds <- 10
+train_control <- trainControl(method = "cv", number = CV_folds)
+```
+
+Use glm method :
+
+```R
+method <- "glm"
+model <- train(X, y, method = method, trControl = train_control, metric = "AUC")
+selected_features <- varImp(model)
+print(selected_features)
+```
