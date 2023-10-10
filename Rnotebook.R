@@ -26,21 +26,22 @@ https://www.kaggle.com/datasets/ppb00x/credit-risk-customers
 3- class name and lable:
 The "class" attribute which describes whether the customer is a good or bad credit risks.
 
+
 ## Attribute description
 
 | Attribute name    | Data type |            Description             |
 |-------------------|-----------|------------------------------------|
-|checking_status    |Nominal    |the validity of credit card number  |
-|duration           |Numeric    |duration                            |
-|credit_history     |Nominal    |dept and other loans                |
-|savings_status     |Nominal    |if the customer is saving or not    |
-|age                |Numeric    |Age Of The credit customer          |
-|employment         |Nominal    |The employment status               |
-|other_payment_plans|Nominal |Other ways of payment                  |
-|personal_status    |Nominal     |single or married, male/female     |
-|housing            |Nominal     |The housing situation rent or owned| 
-|class              |Nominal     |good or bad credit risks           |
-
+|checking_status    |Nominal    |status of existing checking acount of loan applicant  |
+|duration           |Numeric    |duration of loan in months         |
+|credit_history     |Nominal    |credit history of loan applicant                |
+|savings_status     |Nominal    |status of savings accounts or bonds of the loan applicant    |
+|age                |Numeric    |Age of the loan applicant years       |
+|employment         |Nominal    |current employment status of the loan applicants in number of years              |
+|other_payment_plans|Nominal |represents other payment plans associated with the loan applicant                |
+|personal_status    |Nominal     | represents the sex and martial status of the loan applicant   |
+|housing            |Nominal     |The housing situation of the applicants| 
+|class              |Nominal     |represent wether a credit risk exists or not |
+|propetry_magnitude |Nominal     |the magnitude of the property owned by the loan applicant         |
 
 ## Summary of the dataset
 
@@ -64,8 +65,10 @@ The output is 11, which is the number of columns
 ```{r}
 var_duration <- var(dataset$duration)
 ```
-
-Te got a closer look at our data.
+```{r}
+var_age <- var(dataset$age)
+```
+we got a closer look at our data.
 1- The length 
 2- Class type 
 3- Central tendancy (mode, mean and median) of each attribute with the Q1 and Q3
@@ -110,8 +113,10 @@ To find the row nummbers with the Outliers
 ```{r}
 dataset <- dataset[-Find_outlierAge ,-Find_outlierDuration , ]
 ```
+
 Finally we removed the outliers , out dataset after remvoing the outliers have 997 objects.
-# Data Conversion (Encoding categorical data)/discretization
+## Data Conversion (Encoding categorical data)/discretization
+
 ```{r}
 dataset$checking_status <- factor(dataset$checking_status, levels = c("<0", "0<=X<200", "no checking"), labels = c(1, 2, 3))
 ```
@@ -124,6 +129,27 @@ dataset$housing = factor(dataset$housing,levels = c("own","for free", "rent"), l
  Print the final preprocessed dataset
 ```{r}
 print(dataset)
+```
+## Feature Scaling
+Apply feature scaling to non-categorical data
+```{r}
+code here 
+```
+## Normalization
+
+Define the min_max_scaling() function
+```{r}
+min_max_scaling <- function(x) {return (x - min(x)) / (max(x)- min(x))}
+```
+
+ Normalize 'age' variable
+ ```{r}
+dataset$age <- min_max_scaling(dataset$age)
+```
+
+ Normalize 'duration' variable
+ ```{r}
+dataset$duration <- min_max_scaling(dataset$duration)
 ```
 
 ## Graphs 
@@ -146,23 +172,37 @@ library(ggplot2)
 ```
 ```{r}
 ggplot(data = dataset, aes(x = credit_history, fill = class)) +
-    geom_bar(position = "stack") +
+     geom_bar(position = "stack") +
      labs(title = "Credit History vs. Credit Risk",
           x = "Credit History",
-          y = "Count") +
-     scale_fill_manual(values = c("good" = "green", "bad" = "red")) 
-
+          y = "Count" ,
+   fill = "credit history" )
 ```
 The bar chart shows the distribution of credit history categories and how they are associated with good and bad credit risks, we used our class label which is the "class" attribute, to learn and understand how the credit history 
 affects the decision when deciding a good or a bad credit risks for a customer.
 
+```{r}
+ggplot(dataset, aes(x = housing, fill = class)) +
+    geom_bar() +
+      labs(
+          x = "Housing",
+          y = "Count",
+          title = "Housing vs. Credit Risk",
+          fill = "Credit Risk"
+      )
+```
+
+\\ no correlation between the employment and class 
 
 ```{r}
-min_max_scaling <- function(x) {return (x - min(x)) / (max(x)- min(x))}
-dataset$age <- min_max_scaling(dataset$age)
-dataset$duration <- min_max_scaling(dataset$duration)
-
+ggplot(dataset, aes(x = employment, fill = class)) +
+   geom_bar() +
+     labs(
+         x = "employment",
+         y = "Count",
+         title = "employment vs. Credit Risk",
+         fill = "Credit Risk"
+     )
 ```
-The min_max_scaling () function help to normalize the age and duration variables to ensures uniformity in how our data looks and reads
 
- 
+
