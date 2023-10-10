@@ -173,8 +173,14 @@ ggplot(dataset, aes(x = housing, fill = class)) +
           fill = "Credit Risk"
       )
 ```
+This bar chart shows what kind of credit risk customers have based on their housing, we noticed that a big percentage of "for free" type of housing have a bad credit, 
+but to assist that we decided to define functions that will help us determine if our analysis to the chart was correct.
 
-\\ no correlation between the employment and class 
+```R
+forfree_bad_count <- nrow (subset(dataset,housing == "for free" & class == "bad"))
+```
+using this function, we discovered that more than 40% of customers who live in their houses for free have bad credits.
+
 
 ```R
 ggplot(dataset, aes(x = employment, fill = class)) +
@@ -186,6 +192,7 @@ ggplot(dataset, aes(x = employment, fill = class)) +
          fill = "Credit Risk"
      )
 ```
+
 
 ## Feature Selection : 
 Insuring that caret package is installed on install it : 
