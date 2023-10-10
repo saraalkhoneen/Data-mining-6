@@ -17,17 +17,17 @@ The "class" attribute which describes whether the customer is a good or bad cred
 
 | Attribute name    | Data type |            Description             |
 |-------------------|-----------|------------------------------------|
-|checking_status    |Nominal    |the validity of credit card number  |
-|duration           |Numeric    |duration                            |
-|credit_history     |Nominal    |dept and other loans                |
-|savings_status     |Nominal    |if the customer is saving or not    |
-|age                |Numeric    |Age Of The credit customer          |
-|employment         |Nominal    |The employment status               |
-|other_payment_plans|Nominal |Other ways of payment                  |
-|personal_status    |Nominal     |single or married, male/female     |
-|housing            |Nominal     |The housing situation rent or owned| 
+|checking_status    |Nominal    |status of existing checking acount of loan applicant  |
+|duration           |Numeric    |duration of loan in months         |
+|credit_history     |Nominal    |credit history of loan applicant                |
+|savings_status     |Nominal    |status of savings accounts or bonds of the loan applicant    |
+|age                |Numeric    |Age of the loan applicant years       |
+|employment         |Nominal    |current employment status of the loan applicants in number of years              |
+|other_payment_plans|Nominal |represents other payment plans associated with the loan applicant                |
+|personal_status    |Nominal     | represents the sex and martial status of the loan applicant   |
+|housing            |Nominal     |The housing situation of the applicants| 
 |class              |Nominal     |good or bad credit risks           |
-
+|propetry_magnitude |Nominal     |the magnitude of the property owned by the loan applicant         |
 
 ## Summary of the dataset
 
