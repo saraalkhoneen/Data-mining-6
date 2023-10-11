@@ -28,7 +28,8 @@ The "class" attribute which describes whether the customer is a good or bad cred
 |housing            |Nominal     |The housing situation of the applicants| 
 |class              |Nominal     |represent wether a credit risk exists or not |
 |propetry_magnitude |Nominal     |the magnitude of the property owned by the loan applicant         |
-
+|credit_amount |numeric     |This attribute represents the amount of credit being requested.  |
+|installment_commitment       |numeric     |This attribute represents the installment rate in percentage of disposable income.|
 ## Summary of the dataset
 
 ```R
