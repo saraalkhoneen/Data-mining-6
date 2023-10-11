@@ -216,7 +216,7 @@ From this bar chart we found out that trying to find out whether a customer has 
     main = "Credit Amount and Installment Commitment")
 
 ```
-
+based on this scatter plot, there is no clear relationship between the installment variable and the credit amount, so we will not proceed in studying this relationship any further
 
 ## Feature Selection : 
 Insuring that caret package is installed on install it : 
