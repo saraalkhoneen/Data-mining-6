@@ -7,8 +7,8 @@ The dataset was sourced from the kaggle website in this URL:
 https://www.kaggle.com/datasets/ppb00x/credit-risk-customers 
 
 ## General information 
-
-1- Number of Attributes: 11
+Origonaly our dataset consists of 21 attributes, but we only worked with 13 attributes that are going to help with our study of the credit risks of applicants.
+1- Number of Attributes: 13
 2- Number of Objects: 1001
 3- class name and lable:
 The "class" attribute which describes whether the customer is a good or bad credit risks.
@@ -43,7 +43,7 @@ The output is 1000, which is the number of rows
 ```R
  ncol(dataset)
 ```
-The output is 11, which is the number of columns
+The output is 13, which is the number of columns
 
 ```R
  summary(dataset)
@@ -53,6 +53,9 @@ var_duration <- var(dataset$duration)
 ```
 ```R
 var_age <- var(dataset$age)
+```
+```R
+var_amount <- var(dataset$credit_amount)
 ```
 we got a closer look at our data.
 1- The length 
