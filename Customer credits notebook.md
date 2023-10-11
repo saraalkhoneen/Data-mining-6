@@ -83,6 +83,8 @@ library(outliers)
 ```R
 OutAge <- outlier(dataset$age, logical = TRUE)
 OutDuration <- outlier(dataset$duration, logical = TRUE)
+Outamount <- outlier(dataset$credit_amount, logical = TRUE)
+
 ```
 We created a variable "OutAge" , "OutDuration" to store the result of finding the outliers in the dataset , 
 logical true which specifies the outliers with true .
@@ -90,20 +92,27 @@ logical true which specifies the outliers with true .
 ```R
 sum(OutAge)
 sum(OutDuration)
+sum(Outamount)
+
 ```
-Then we calculated the sum of All the outliers, the result is 2 for the age / 1 for the duration. 
+Then we calculated the sum of All the outliers, the result is 2 for the age / 1 for the duration. / 2  for the credit amount. 
 
 ```R
 Find_outlierAge <- which(OutAge == TRUE, arr.ind = TRUE)
 Find_outlierDuration <- which(OutDuration == TRUE, arr.ind = TRUE)
+Find_outlierAmount <- which(Outamount == TRUE, arr.ind = TRUE)
+
 ```
 To find the row nummbers with the Outliers 
 
 ```R
 dataset <- dataset[-Find_outlierAge ,-Find_outlierDuration , ]
+dataset <- dataset[-Find_outlierAmount ,]
+
 ```
 
-Finally we removed the outliers , out dataset after remvoing the outliers have 997 objects.
+Finally we removed the outliers , out dataset after remvoing the outliers have 996 objects.
+
 ## Data Conversion (Encoding categorical data)/discretization
 
 ```R
@@ -136,6 +145,11 @@ Normalize 'duration' variable
 ```R
 dataset$duration <- min_max_scaling(dataset$duration)
 ```
+Normalize 'credit_amount' variable
+```R
+dataset$credit_amount <- min_max_scaling(dataset$credit_amount)
+```
+
 
 ## Graphs 
 
@@ -148,7 +162,7 @@ We ceated a histogram for the "Age" variable to show the age groups for our samp
 barplot(table(dataset$checking_status), main = "Bar Plot of Checking Status", 
 +         xlab = "Checking Status", ylab = "Frequency", col = "lightgreen")
 ```
-This chart will show the distribution of individuals across different checking status categories which then provide insights into the financial standing of the customers. 
+This chart will show the distribution of individuals across different checking status categories which then provide insights into the financial standing of the customers and to better understand our overall variables values and results.  
 
 ```R
 library(ggplot2)
@@ -156,7 +170,7 @@ library(ggplot2)
 ```R
 ggplot(data = dataset, aes(x = credit_history, fill = class)) +
      geom_bar(position = "stack") +
-     labs(title = "Credit History vs. Credit Risk",
+     labs(title = "Credit Risks based on Credit History",
           x = "Credit History",
           y = "Count" ,
    fill = "credit history" )
@@ -170,7 +184,7 @@ ggplot(dataset, aes(x = housing, fill = class)) +
       labs(
           x = "Housing",
           y = "Count",
-          title = "Housing vs. Credit Risk",
+          title = "Credit Risks based on Housing",
           fill = "Credit Risk"
       )
 ```
@@ -189,7 +203,7 @@ ggplot(dataset, aes(x = employment, fill = class)) +
      labs(
          x = "employment",
          y = "Count",
-         title = "employment vs. Credit Risk",
+         title = "Credit Risks based on employment",
          fill = "Credit Risk"
      )
 ```
