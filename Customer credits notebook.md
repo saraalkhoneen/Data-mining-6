@@ -209,6 +209,14 @@ ggplot(dataset, aes(x = employment, fill = class)) +
 ```
 From this bar chart we found out that trying to find out whether a customer has a bad credit or a good one is difficult to determine based on their employment status only
 
+```R
+ plot(dataset$credit_amount, dataset$installment_committment,
+    xlab = "Credit Amount", ylab = "Installment Commitment",
+    main = "Credit Amount and Installment Commitment")
+
+```
+
+
 ## Feature Selection : 
 Insuring that caret package is installed on install it : 
 
