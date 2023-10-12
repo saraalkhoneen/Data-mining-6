@@ -64,6 +64,55 @@ we got a closer look at our data.
 3- Central tendancy (mode, mean and median) of each attribute with the Q1 and Q3
 4- Variance 
 
+
+
+## chi square 
+```R
+tbl = table(dataset$class, dataset$purpose)
+tbl 
+chisq.test(tbl)
+```
+```R
+tbl = table(dataset$class, dataset$personal_status)
+tbl 
+chisq.test(tbl)
+```
+```R
+tbl = table(dataset$class, dataset$other_parties)
+tbl 
+chisq.test(tbl)
+```
+```R
+tbl = table(dataset$class, dataset$property_magnitude)
+tbl 
+chisq.test(tbl)
+```
+
+```R
+tbl = table(dataset$class, dataset$housing)
+tbl 
+chisq.test(tbl)
+```
+
+```R
+tbl = table(dataset$class, dataset$job)
+tbl 
+chisq.test(tbl)
+```
+```R
+tbl = table(dataset$class, dataset$own_telephone)
+tbl 
+chisq.test(tbl)
+```
+```R
+tbl = table(dataset$class, dataset$other_payment_plans)
+tbl 
+chisq.test(tbl)
+```
+
+we have removed the job and the property magnitude based on the chi square value. 
+
+
 ## Missing Values and Null Values
 
 ```R
