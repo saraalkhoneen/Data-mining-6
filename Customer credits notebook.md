@@ -299,3 +299,28 @@ model <- train(X, y, method = method, trControl = train_control, metric = "AUC")
 selected_features <- varImp(model)
 print(selected_features)
 ```
+```R
+install.packages("pROC")
+library(pROC)
+```
+# Load the dataset
+```R
+data <- dataset
+target_column <- ncol(data)
+
+X <- data[, 1:(target_column - 1)]  # Predictor variables (exclude the target variable)
+Y <- data[, target_column]           # Target variable
+
+roc_scores <- list()
+
+for (i in 1:(target_column - 1)) {
+  roc_obj <- roc(Y, X[, i])
+  roc_scores[[names(data)[i]]] <- auc(roc_obj)
+}
+
+roc_imp <- data.frame(variable = names(roc_scores), score = sapply(roc_scores, function(x) x))
+roc_imp <- roc_imp[order(roc_imp$score, decreasing = TRUE),]
+
+
+```
+
