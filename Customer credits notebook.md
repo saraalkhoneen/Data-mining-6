@@ -8,7 +8,7 @@ https://www.kaggle.com/datasets/ppb00x/credit-risk-customers
 
 ## General information 
 Origonaly our dataset consists of 21 attributes, but we only worked with 13 attributes that are going to help with our study of the credit risks of applicants.
-1- Number of Attributes: 13
+1- Number of Attributes: 18
 2- Number of Objects: 1001
 3- class name and lable:
 The "class" attribute which describes whether the customer is a good or bad credit risks.
@@ -27,9 +27,19 @@ The "class" attribute which describes whether the customer is a good or bad cred
 |personal_status    |Nominal     | represents the sex and martial status of the loan applicant   |
 |housing            |Nominal     |The housing situation of the applicants| 
 |class              |Nominal     |represent wether a credit risk exists or not |
-|propetry_magnitude |Nominal     |the magnitude of the property owned by the loan applicant         |
 |credit_amount |numeric     |This attribute represents the amount of credit being requested.  |
-|installment_commitment       |numeric     |This attribute represents the installment rate in percentage of disposable income.|
+|residence_since |numeric     |This attribute represents the number of years the loan applicant has been residing at their current residence>  |
+|other_parties |nominal     |This attribute represents the other debtors or guarantors associated with the 'loan. It can take one of the following values: 'none', 'co-applicant', or 'guarantor.
+ |
+|foreign_worker |nominal     | This attribute represents whether the loan applicant is a foreign worker or 'not. It can take one of the following values: 'yes' or 'no.
+ |
+| |numeric     |This attribute represents the amount of credit being requested.  |
+|purpose: |nominal     |This attribute represents the purpose of the credit for which the loan is being taken. It can take one of the following values: 'car (new)', 'car (used)', 'furniture/equipment', 'radio/television', 'domestic appliances', 'repairs', 'education', 'vacation', 'retraining', or ''business.
+ |
+|existing_credits |nominal     |This attribute represents the number of existing credits the loan applicant has at the time of the loan application. |
+|num_dependents |numeric     |This attribute represents the number of dependents the loan applicant has. |
+|Own_telephone |numeric     |This attribute represents whether the loan applicant has their own 'telephone line or not. It can take one of the following values: 'none', or 'yes.|
+
 ## Summary of the dataset
 
 ```R
@@ -44,7 +54,7 @@ The output is 1000, which is the number of rows
 ```R
  ncol(dataset)
 ```
-The output is 13, which is the number of columns
+The output is 18 , which is the number of columns
 
 ```R
  summary(dataset)
@@ -111,19 +121,6 @@ chisq.test(tbl)
 ```
 
 we have removed the job and the property magnitude based on the chi square value. 
-
-
-## Missing Values and Null Values
-
-```R
-is.na(dataset)
-```
-The output is false for all atrributes , this indicates that the corresponding element in our dataset is not missing and contains a valid value.
-
-```R
-sum(is.na(dataset))
-```
-We used this function to reassure we dont have missing values or Nulls in the the entire dataset the output is 0. 
 
 ## Outliers
 
