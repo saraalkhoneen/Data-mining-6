@@ -174,6 +174,9 @@ dataset$class <- factor(dataset$class, levels = c("bad", "good"), labels = c(0, 
 ```R
 dataset$housing = factor(dataset$housing,levels = c("own","for free", "rent"), labels = c(1, 2, 3))
 ```
+```R
+dataset$foreign_worker <- factor(dataset$foreign_worker, levels = c("yes", "no"), labels = c(0, 1))
+```
  Print the final preprocessed dataset
 ```R
 print(dataset)
