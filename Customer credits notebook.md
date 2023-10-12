@@ -30,9 +30,7 @@ The "class" attribute which describes whether the customer is a good or bad cred
 |credit_amount |numeric     |This attribute represents the amount of credit being requested.  |
 |residence_since |numeric     |This attribute represents the number of years the loan applicant has been residing at their current residence>  |
 |other_parties |nominal     |This attribute represents the other debtors or guarantors associated with the 'loan. It can take one of the following values: 'none', 'co-applicant', or 'guarantor.|
-
-| foreign_worker | nominal     | This attribute represents whether the loan applicant is a foreign worker or 'not. It can take one of the following values: 'yes' or 'no.|
-
+|foreign_worker |Nominal |This attribute represents whether the loan applicant is a foreign worker or 'not. It can take one of the following values: 'yes' or 'no.|
 |purpose |nominal     |This attribute represents the purpose of the credit for which the loan is being taken. It can take one of the following values: 'car (new)', 'car (used)', 'furniture/equipment', 'radio/television', 'domestic appliances', 'repairs', 'education', 'vacation', 'retraining', or ''business.
  |
 |existing_credits |nominal     |This attribute represents the number of existing credits the loan applicant has at the time of the loan application. |
