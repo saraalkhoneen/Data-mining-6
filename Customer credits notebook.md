@@ -256,6 +256,16 @@ ggplot(dataset, aes(x = employment, fill = class)) +
 From this bar chart we found out that trying to find out whether a customer has a bad credit or a good one is difficult to determine based on their employment status only
 
 
+```R
+
+ plot(dataset$credit_amount, dataset$installment_duration,
+     xlab = "Credit Amount", ylab = "duration",
+     main = "Credit Amount and duration")
+```
+
+ from this scatter plot we can say that there is no clear correlation between the duration variable and the credit amount variable
+
+
 ## Feature Selection : 
 Insuring that caret package is installed on install it : 
 
