@@ -1,275 +1,380 @@
 ### Project Motivation:
-we will use this data set to assist financial institutions make informed decisions regarding loan approvals and deciding weather a customer has good or bad cedit risks by analyzing customers’ payment behavior, as well as all their relevant attributes such as age, income, loan amount, employment status, etc. By utilizing this data, predictive models can be built to forecast customers’ creditworthiness and may be used as a tool for risk assessment and decision-making.
+In this project, our primary goal is to classify customers as either good or bad credit risks. We aim to assist financial institutions in making informed decisions regarding loan approvals based on an analysis of customers' payment behavior and other relevant attributes, such as age, income, loan amount, and employment status. By utilizing this dataset, we will build predictive models to assess customers' creditworthiness and use these models as tools for risk assessment and decision-making.
 
 ### source
-
 The dataset was sourced from the kaggle website in this URL:
-https://www.kaggle.com/datasets/ppb00x/credit-risk-customers 
+  https://www.kaggle.com/datasets/ppb00x/credit-risk-customers 
 
 ## General information 
 Origonaly our dataset consists of 21 attributes, but we only worked with 18 attributes that are going to help with our study of the credit risks of applicants.
 1- Number of Attributes: 18
 2- Number of Objects: 1001
 3- class name and lable:
-The "class" attribute which describes whether the customer is a good or bad credit risks.
+  The "class" attribute which describes whether the customer is a good or bad credit risks.
 
 ## Attribute description
 
 | Attribute name    | Data type |            Description             |
-|-------------------|-----------|------------------------------------|
-|checking_status    |Nominal    |status of existing checking acount of loan applicant  |
-|duration           |Numeric    |duration of loan in months         |
-|credit_history     |Nominal    |credit history of loan applicant                |
-|savings_status     |Nominal    |status of savings accounts or bonds of the loan applicant    |
-|age                |Numeric    |Age of the loan applicant years       |
-|employment         |Nominal    |current employment status of the loan applicants in number of years              |
-|other_payment_plans|Nominal |represents other payment plans associated with the loan applicant                |
-|personal_status    |Nominal     | represents the sex and martial status of the loan applicant   |
-|housing            |Nominal     |The housing situation of the applicants| 
-|class              |Nominal     |represent wether a credit risk exists or not |
-|credit_amount |numeric     |This attribute represents the amount of credit being requested.  |
-|residence_since |numeric     |This attribute represents the number of years the loan applicant has been residing at their current residence>  |
-|other_parties |nominal     |This attribute represents the other debtors or guarantors associated with the 'loan. It can take one of the following values: 'none', 'co-applicant', or 'guarantor.|
-|foreign_worker |Nominal |This attribute represents whether the loan applicant is a foreign worker or 'not. It can take one of the following values: 'yes' or 'no.|
-|purpose |nominal     |This attribute represents the purpose of the credit for which the loan is being taken. It can take one of the following values: 'car (new)', 'car (used)', 'furniture/equipment', 'radio/television', 'domestic appliances', 'repairs', 'education', 'vacation', 'retraining', or ''business.|
-|existing_credits |nominal     |This attribute represents the number of existing credits the loan applicant has at the time of the loan application. |
-|num_dependents |numeric     |This attribute represents the number of dependents the loan applicant has. |
-|Own_telephone |numeric     |This attribute represents whether the loan applicant has their own 'telephone line or not. It can take one of the following values: 'none', or 'yes.|
-
-## Summary of the dataset
-
-```R
-dataset = read.csv('dataset.csv')
+  |-------------------|-----------|------------------------------------|
+  |checking_status    |Nominal    |status of existing checking acount of loan applicant  |
+  |duration           |Numeric    |duration of loan in months         |
+  |credit_history     |Nominal    |credit history of loan applicant                |
+  |savings_status     |Nominal    |status of savings accounts or bonds of the loan applicant    |
+  |age                |Numeric    |Age of the loan applicant years       |
+  |employment         |Nominal    |current employment status of the loan applicants in number of years              |
+  |other_payment_plans|Nominal |represents other payment plans associated with the loan applicant                |
+  |personal_status    |Nominal     | represents the sex and martial status of the loan applicant   |
+  |housing            |Nominal     |The housing situation of the applicants| 
+  |class              |Nominal     |represent wether a credit risk exists or not |
+  |credit_amount |numeric     |This attribute represents the amount of credit being requested.  |
+  |residence_since |numeric     |This attribute represents the number of years the loan applicant has been residing at their current residence>  |
+  |other_parties |nominal     |This attribute represents the other debtors or guarantors associated with the 'loan. It can take one of the following values: 'none', 'co-applicant', or 'guarantor.|
+  |foreign_worker |Nominal |This attribute represents whether the loan applicant is a foreign worker or 'not. It can take one of the following values: 'yes' or 'no.|
+  |purpose |nominal     |This attribute represents the purpose of the credit for which the loan is being taken. It can take one of the following values: 'car (new)', 'car (used)', 'furniture/equipment', 'radio/television', 'domestic appliances', 'repairs', 'education', 'vacation', 'retraining', or ''business.|
+  |existing_credits |nominal     |This attribute represents the number of existing credits the loan applicant has at the time of the loan application. |
+  |num_dependents |numeric     |This attribute represents the number of dependents the loan applicant has. |
+  |Own_telephone |numeric     |This attribute represents whether the loan applicant has their own 'telephone line or not. It can take one of the following values: 'none', or 'yes.|
+  
+  ## Summary of the dataset
+  
+```{r}
+setwd("C:/Users/jory0/OneDrive/Desktop/DataMining Phase 3")
 ```
 
-```R
+```{r}
+dataset <- read.csv("credit_customers.csv")
+```
+
+
+```{r}
 nrow(dataset) 
 ```
+
 The output is 1000, which is the number of rows
-
-```R
- ncol(dataset)
+```{r}
+ncol(dataset)
 ```
-The output is 18 , which is the number of columns
 
-```R
- summary(dataset)
+The output is 21 , which is the number of columns
+
+```{r}
+summary(dataset)
 ```
-```R
+This summary provides an initial understanding of the data's structure and characteristics. 
+
+now we want to calculate the variance for the numeric attributes to learn about the spread of the data and how close they are from the mean.
+
+```{r}
 var_duration <- var(dataset$duration)
 ```
-```R
+
+```{r}
 var_age <- var(dataset$age)
 ```
-```R
+
+```{r}
 var_amount <- var(dataset$credit_amount)
 ```
-we got a closer look at our data.
+
+
+```{r}
+print(var_duration)
+```
+
+A variance of 145.415 suggests that the data points in the "duration" attribute have some degree of variability. Data points are not tightly clustered around the mean, and there are variations in the durations.
+
+
+```{r}
+print(var_age)
+```
+129.4013 for the "age" attribute indicates that there is variability in the ages of individuals represented in the dataset. The ages are not highly consistent, and there are differences among individuals.
+
+```{r}
+print(var_amount)
+
+```
+A very high variance of 7,967,843 for the "credit_amount" attribute suggests a significant spread or variability in the credit amounts requested by individuals in the dataset. Some requests may be substantially higher or lower than the mean credit amount, indicating a wide range of credit requests.
+
+
+we got a closer look at our data using these statical mearues: 
 1- The length 
 2- Class type 
 3- Central tendancy (mode, mean and median) of each attribute with the Q1 and Q3
 4- Variance 
+TTo gain deeper insights, we want want to explore and visualize the data further using graphs. 
+
+## Graphs 
+
+1- we created a bar chart for the class label to know if our dataset is balanced or unbalanced. 
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+ggplot(dataset, aes(x = class)) +
+  geom_bar() +
+  labs(x = "Good Or Bad Credit Score", y = "Count") +
+  ggtitle("Credit Risks Distribution") 
+
+```
+
+since one of the bars is significantly taller than the other, Our dataset is unbalanced. 
 
 
+2- 
+
+```{r}
+ggplot(dataset, aes(x = housing, fill = class)) +
+  geom_bar() +
+  labs(
+    x = "Housing",
+    y = "Count",
+    title = "Credit Risks based on Housing",
+    fill = "Credit Risk"
+  )
+```
+a graph for our class label and the housing attribute to understand the correlation between the two attributes. 
+
+```{r}
+forfree_bad_count <- nrow (subset(dataset,housing == "for free" & class == "bad"))
+
+```
+
+using this function, we discovered that more than 40% of customers who live in their houses for free have bad credits.
+
+
+
+3- 
+
+```{r}
+hist(dataset$age, main = "Histogram of Age", xlab = "Age", ylab = "Frequency", col = "lightblue")
+```
+We ceated a histogram for the "Age" variable to show the age groups for our sample of customers to give a better understanding for our overall variables values and results.  
+most of the custemers age lies between (20 - 50) some custemers being a bit olde . 
+4-
+
+```{r}
+plot(dataset$credit_amount, dataset$installment_duration,
+     xlab = "Credit Amount", ylab = "duration",
+     main = "Credit Amount and duration")
+```
+We created a Scatter plot for the "credit amount" and "duration" attributes to see if there is a correlation between them, from this scatter plot we can say that there is no clear correlation between the duration variable and the credit amount variable
+
+5-
+
+
+```{r}
+# Load the ggplot2 library if not already loaded
+library(ggplot2)
+
+# Create a grouped violin plot with 'checking_status' on the x-axis and 'credit_amount' on the y-axis
+ggplot(dataset, aes(x = checking_status, y = credit_amount)) +
+  geom_violin(fill = "lightblue", color = "blue") +
+  labs(x = "Checking Status", y = "Credit Amount", title = "Grouped Violin Plot")
+
+
+```
+
+The graph illustrates how the credit amounts are distributed within different categories of checking status. Each violin represents a category of checking status, and its width indicates the density of data points. Also whether there are variations in credit amounts based on checking status.
+
+
+
+```{r}
+
+total_missing_values <- sum(is.na(dataset))
+print(total_missing_values)
+
+```
 
 ## chi square 
-```R
+
+```{r}
 tbl = table(dataset$class, dataset$purpose)
 tbl 
 chisq.test(tbl)
 ```
-```R
+
+
+```{r}
 tbl = table(dataset$class, dataset$personal_status)
 tbl 
 chisq.test(tbl)
 ```
-```R
+
+```{r}
 tbl = table(dataset$class, dataset$other_parties)
 tbl 
 chisq.test(tbl)
 ```
-```R
+
+
+```{r}
 tbl = table(dataset$class, dataset$property_magnitude)
 tbl 
 chisq.test(tbl)
 ```
 
-```R
+```{r}
 tbl = table(dataset$class, dataset$housing)
 tbl 
 chisq.test(tbl)
 ```
 
-```R
+
+```{r}
 tbl = table(dataset$class, dataset$job)
 tbl 
 chisq.test(tbl)
 ```
-```R
+
+```{r}
+tbl = table(dataset$class, dataset$job)
+tbl 
+chisq.test(tbl)
+```
+
+```{r}
 tbl = table(dataset$class, dataset$own_telephone)
 tbl 
 chisq.test(tbl)
 ```
-```R
+
+```{r}
 tbl = table(dataset$class, dataset$other_payment_plans)
 tbl 
 chisq.test(tbl)
 ```
 
+
 we have removed the job and the property magnitude based on the chi square value. 
 
 ## Outliers
 
-```R
+```{r}
 library(outliers)
 ```
-```R
+
+```{r}
 OutAge <- outlier(dataset$age, logical = TRUE)
 OutDuration <- outlier(dataset$duration, logical = TRUE)
 Outamount <- outlier(dataset$credit_amount, logical = TRUE)
-
 ```
+
 We created a variable "OutAge" , "OutDuration" to store the result of finding the outliers in the dataset , 
 logical true which specifies the outliers with true .
 
-```R
+
+```{r}
 sum(OutAge)
 sum(OutDuration)
 sum(Outamount)
-
 ```
+
 Then we calculated the sum of All the outliers, the result is 2 for the age / 1 for the duration. / 2  for the credit amount. 
 
-```R
+```{r}
 Find_outlierAge <- which(OutAge == TRUE, arr.ind = TRUE)
 Find_outlierDuration <- which(OutDuration == TRUE, arr.ind = TRUE)
 Find_outlierAmount <- which(Outamount == TRUE, arr.ind = TRUE)
 
 ```
+
 To find the row nummbers with the Outliers 
 
-```R
-dataset <- dataset[-Find_outlierAge ,-Find_outlierDuration , ]
-dataset <- dataset[-Find_outlierAmount ,]
+now we create a plot to decide whether to remove or not to remove the missing values 
+
+```{r}
+p1 <- ggplot(dataset, aes(y = age)) +
+  geom_boxplot() +
+  labs(y = "Age", title = "Box Plot for Age")
+
+p2 <- ggplot(dataset, aes(y = duration)) +
+  geom_boxplot() +
+  labs(y = "Duration", title = "Box Plot for Duration")
+
+p3 <- ggplot(dataset, aes(y = credit_amount)) +
+  geom_boxplot() +
+  labs(y = "Credit Amount", title = "Box Plot for Credit Amount")
+```
+
+
+```{r}
+library(gridExtra)
+grid.arrange(p1, p2, p3, ncol = 3)
+```
+
+NOTE!! what to do with the outliers?? 
+
+## Checking for Missing Values 
+
+```{r}
+
+total_missing_values <- sum(is.na(dataset))
+print(total_missing_values)
 
 ```
 
-Finally we removed the outliers , out dataset after remvoing the outliers have 996 objects.
+our dataset has not missing values so no need for filling or deleting any rows in that sense. 
+
 
 ## Data Conversion (Encoding categorical data)/discretization
 
-```R
+```{r}
 dataset$checking_status <- factor(dataset$checking_status, levels = c("<0", "0<=X<200", "no checking"), labels = c(1, 2, 3))
 ```
-```R
+
+```{r}
 dataset$class <- factor(dataset$class, levels = c("bad", "good"), labels = c(0, 1))
+
 ```
-```R
+
+```{r}
 dataset$housing = factor(dataset$housing,levels = c("own","for free", "rent"), labels = c(1, 2, 3))
 ```
-```R
+
+```{r}
 dataset$foreign_worker <- factor(dataset$foreign_worker, levels = c("yes", "no"), labels = c(0, 1))
 ```
- Print the final preprocessed dataset
-```R
-print(dataset)
+
+Print the final preprocessed dataset
+```{r}
+print(head(dataset))
 ```
+
 
 ## Normalization
 
 Define the min_max_scaling() function
-```R
+```{r}
 min_max_scaling <- function(x) {return (x - min(x)) / (max(x)- min(x))}
 ```
 
+
 Normalize 'age' variable
-```R
+
+```{r}
 dataset$age <- min_max_scaling(dataset$age)
 ```
 
+
 Normalize 'duration' variable
-```R
+
+```{r}
 dataset$duration <- min_max_scaling(dataset$duration)
 ```
+
 Normalize 'credit_amount' variable
-```R
+```{r}
 dataset$credit_amount <- min_max_scaling(dataset$credit_amount)
+
 ```
-
-
-## Graphs 
-
-```R
-hist(dataset$age, main = "Histogram of Age", xlab = "Age", ylab = "Frequency", col = "lightblue")
-```
-We ceated a histogram for the "Age" variable to show the age groups for our sample of customers to give a better understanding for our overall variables values and results.  
-
-```R
-barplot(table(dataset$checking_status), main = "Bar Plot of Checking Status", 
-+         xlab = "Checking Status", ylab = "Frequency", col = "lightgreen")
-```
-This chart will show the distribution of individuals across different checking status categories which then provide insights into the financial standing of the customers and to better understand our overall variables values and results.  
-
-```R
-library(ggplot2)
-```
-```R
-ggplot(data = dataset, aes(x = credit_history, fill = class)) +
-     geom_bar(position = "stack") +
-     labs(title = "Credit Risks based on Credit History",
-          x = "Credit History",
-          y = "Count" ,
-   fill = "credit history" )
-```
-The bar chart shows the distribution of credit history categories and how they are associated with good and bad credit risks, we used our class label which is the "class" attribute, to learn and understand how the credit history 
-affects the decision when deciding a good or a bad credit risks for a customer.
-
-```R
-ggplot(dataset, aes(x = housing, fill = class)) +
-    geom_bar() +
-      labs(
-          x = "Housing",
-          y = "Count",
-          title = "Credit Risks based on Housing",
-          fill = "Credit Risk"
-      )
-```
-This bar chart shows what kind of credit risk customers have based on their housing, we noticed that a big percentage of "for free" type of housing have a bad credit, 
-but to assist that we decided to define functions that will help us determine if our analysis to the chart was correct.
-
-```R
-forfree_bad_count <- nrow (subset(dataset,housing == "for free" & class == "bad"))
-```
-using this function, we discovered that more than 40% of customers who live in their houses for free have bad credits.
-
-
-```R
-ggplot(dataset, aes(x = employment, fill = class)) +
-   geom_bar() +
-     labs(
-         x = "employment",
-         y = "Count",
-         title = "Credit Risks based on employment",
-         fill = "Credit Risk"
-     )
-```
-From this bar chart we found out that trying to find out whether a customer has a bad credit or a good one is difficult to determine based on their employment status only
-
-
-```R
-
- plot(dataset$credit_amount, dataset$installment_duration,
-     xlab = "Credit Amount", ylab = "duration",
-     main = "Credit Amount and duration")
-```
-
- from this scatter plot we can say that there is no clear correlation between the duration variable and the credit amount variable
 
 
 ## Feature Selection : 
 Insuring that caret package is installed on install it : 
 
-```R
+```{r}
 if (!require(caret)) {
   install.packages("caret")
 }
@@ -279,32 +384,32 @@ library(caret)
 
 Choosing the feature matrix (X) and target variable (Y) :
 
-```R
+```{r}
 X <- dataset[, c("credit_history", "savings_status", "employment")]
 y <- dataset$class
 ```
 
 Defining the number of cross-validation folds :
 
-```R
+```{r}
 CV_folds <- 10
 train_control <- trainControl(method = "cv", number = CV_folds)
 ```
 
 Use glm method :
 
-```R
+```{r}
 method <- "glm"
 model <- train(X, y, method = method, trControl = train_control, metric = "AUC")
 selected_features <- varImp(model)
 print(selected_features)
-```
-```R
+
+
 install.packages("pROC")
 library(pROC)
 ```
 # Load the dataset
-```R
+```{r}
 data <- dataset
 target_column <- ncol(data)
 
@@ -323,4 +428,26 @@ roc_imp <- roc_imp[order(roc_imp$score, decreasing = TRUE),]
 
 
 ```
+
+
+
+# Load the dataset
+```{r}
+data <- dataset
+target_column <- ncol(data)
+
+X <- data[, 1:(target_column - 1)]  # Predictor variables (exclude the target variable)
+Y <- data[, target_column]           # Target variable
+
+roc_scores <- list()
+
+for (i in 1:(target_column - 1)) {
+  roc_obj <- roc(Y, X[, i])
+  roc_scores[[names(data)[i]]] <- auc(roc_obj)
+}
+
+roc_imp <- data.frame(variable = names(roc_scores), score = sapply(roc_scores, function(x) x))
+roc_imp <- roc_imp[order(roc_imp$score, decreasing = TRUE),]
+```
+
 
