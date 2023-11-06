@@ -319,23 +319,52 @@ our dataset has not missing values so no need for filling or deleting any rows i
 
 
 ## Data Conversion (Encoding categorical data)/discretization
+To prepare the data for analysis, we need to convert certain categorical attributes into numerical values. 
+
+Let's take a closer look at how this is done for specific attributes:
+
+ Encoding "checking_status"
+
+The "checking_status" attribute represents the status of the existing checking account of the loan applicant.
 
 ```{r}
 dataset$checking_status <- factor(dataset$checking_status, levels = c("<0", "0<=X<200", "no checking"), labels = c(1, 2, 3))
 ```
+We've encoded it as follows:
+- "<0" is labeled as 1.
+- "0<=X<200" is labeled as 2.
+- "no checking" is labeled as 3.
 
 ```{r}
 dataset$class <- factor(dataset$class, levels = c("bad", "good"), labels = c(0, 1))
 
 ```
+Encoding "class"
+The "class" attribute describes whether the customer is a good or bad credit risk. We've encoded it as follows:
+
+"bad" is labeled as 0.
+"good" is labeled as 1
 
 ```{r}
 dataset$housing = factor(dataset$housing,levels = c("own","for free", "rent"), labels = c(1, 2, 3))
 ```
+Encoding "housing"
+The "housing" attribute represents the housing situation of the applicants. We've encoded it as follows:
+
+"own" is labeled as 1.
+"for free" is labeled as 2.
+"rent" is labeled as 3.
 
 ```{r}
 dataset$foreign_worker <- factor(dataset$foreign_worker, levels = c("yes", "no"), labels = c(0, 1))
 ```
+Encoding "foreign_worker"
+The "foreign_worker" attribute represents whether the loan applicant is a foreign worker or not. We've encoded it as follows:
+
+"yes" is labeled as 0.
+"no" is labeled as 1.
+
+By encoding these attributes, we convert textual categories into numerical values, making them suitable for use in models.
 
 Print the final preprocessed dataset
 ```{r}
