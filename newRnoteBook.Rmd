@@ -105,7 +105,7 @@ TTo gain deeper insights, we want want to explore and visualize the data further
 
 ## Graphs 
 
-1- we created a bar chart for the class label to know if our dataset is balanced or unbalanced. 
+1- We created a bar chart for the class label to know if our dataset is balanced or unbalanced. 
 
 ```{r}
 library(ggplot2)
@@ -118,8 +118,7 @@ ggplot(dataset, aes(x = class)) +
   ggtitle("Credit Risks Distribution") 
 
 ```
-We noticed that the 'good' class label bar is significantly higher than the 'bad' class label bar resulting in uneven distribution of observations.
-
+From this bar chart we can see that we do not have an imbalanced dataset, with 70% 'good' and 30% 'bad' labeled records this dataset is acceptable as it is and we do not need to take further actions regarding this matter.
 
 
 2- 
