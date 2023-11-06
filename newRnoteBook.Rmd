@@ -133,14 +133,14 @@ ggplot(dataset, aes(x = housing, fill = class)) +
     fill = "Credit Risk"
   )
 ```
-a graph for our class label and the housing attribute to understand the correlation between the two attributes. 
+From this graph we interpreted that 'for free' value for the housing attribute has a large percent of the 'bad' class value.
 
 ```{r}
 forfree_bad_count <- nrow (subset(dataset,housing == "for free" & class == "bad"))
 
 ```
 
-using this function, we discovered that more than 40% of customers who live in their houses for free have bad credits.
+To make sure that we had the correct result we used this function and we discovered that more than 40% of customers who live in their houses for free have bad credits.
 
 
 
