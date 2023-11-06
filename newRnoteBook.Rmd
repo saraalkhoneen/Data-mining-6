@@ -118,8 +118,8 @@ ggplot(dataset, aes(x = class)) +
   ggtitle("Credit Risks Distribution") 
 
 ```
+We noticed that the 'good' class label bar is significantly higher than the 'bad' class label bar resulting in uneven distribution of observations.
 
-since one of the bars is significantly taller than the other, Our dataset is unbalanced. 
 
 
 2- 
