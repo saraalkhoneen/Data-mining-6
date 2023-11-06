@@ -372,15 +372,24 @@ print(head(dataset))
 ```
 
 
+
 ## Normalization
+Normalization is an essential data preprocessing step to ensure that numeric attributes are on a consistent scale
+
+Here, we perform min-max scaling to normalize specific attributes in our dataset.
+
 
 Define the min_max_scaling() function
 ```{r}
 min_max_scaling <- function(x) {return (x - min(x)) / (max(x)- min(x))}
 ```
 
+We define a custom min-max scaling function, `min_max_scaling()`, which scales values to a range between 0 and 1. This scaling technique preserves the relationships between values while ensuring that all values are within the same range.
 
-Normalize 'age' variable
+Now, let's apply the min-max scaling to the relevant attributes in our dataset:
+
+Normalizing 'age'
+We normalize the 'age' variable using min-max scaling:
 
 ```{r}
 dataset$age <- min_max_scaling(dataset$age)
@@ -399,6 +408,7 @@ dataset$credit_amount <- min_max_scaling(dataset$credit_amount)
 
 ```
 
+After normalization, the values of these attributes will now fall within the range[0,1], ensuring that they are all on a common scale and ready for further analysis.
 
 ## Feature Selection : 
 Insuring that caret package is installed on install it : 
