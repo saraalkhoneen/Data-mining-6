@@ -251,6 +251,16 @@ we have removed the job and the property magnitude based on the chi square value
 
 ## Outliers
 
+First we find the range of each one of the attributes which is collected in the statical measures we did in the
+first step using the "summary()" function, using the Min and Max to find the range. 
+this would help us in finding if the outliers detected fall in the range or not
+
+credit_amount range: [250 , 18424 ]
+
+duration range: [4.0 ,72.0]
+
+Age range [19.00 , 75.00]
+
 ```{r}
 library(outliers)
 ```
@@ -279,32 +289,35 @@ Find_outlierDuration <- which(OutDuration == TRUE, arr.ind = TRUE)
 Find_outlierAmount <- which(Outamount == TRUE, arr.ind = TRUE)
 
 ```
-
-To find the row nummbers with the Outliers 
-
-now we create a plot to decide whether to remove or not to remove the missing values 
+Then we find the exact values of the outliers and study them. 
 
 ```{r}
-p1 <- ggplot(dataset, aes(y = age)) +
-  geom_boxplot() +
-  labs(y = "Age", title = "Box Plot for Age")
+cat("Outliers in credit_amount:", Find_outlierAmount, "\n")
+cat("Outliers in duration:", Find_outlierDuration, "\n")
+cat("Outliers in age:", Find_outlierAge, "\n")
 
-p2 <- ggplot(dataset, aes(y = duration)) +
-  geom_boxplot() +
-  labs(y = "Duration", title = "Box Plot for Duration")
+```
 
-p3 <- ggplot(dataset, aes(y = credit_amount)) +
-  geom_boxplot() +
-  labs(y = "Credit Amount", title = "Box Plot for Credit Amount")
+Age: it is impossible to have an age of 331 or 537, this is obvesouly due to
+data entry mistakes and human error. 
+that is why we removed the Age outiers. 
+
+credit_amount: in most financial contexts, a "credit amount" of 1 doesn't make sense. The credit amount is typically a numerical value representing the total amount of credit or loan that an individual or entity has borrowed. It is expected to be a positive numeric value that reflects the amount of money borrowed.
+this is also due to data entry mistakes and human error. for the value 916 it falls in the range so we wont do anything to it. 
+that is why we remove the credit_amount=1 outier. 
+
+
+duration: Loan durations are typically measured in months, and values like 678 and 1 may indicate potential issues with the data which could also be due to data entry mistakes and human error. 
+that is why we removed the duration outiers. 
+
+
+```{r}
+data <- data[!OutAge, !OutDuration ,]
+data <- data[data$credit_amount != 1, ]
+
 ```
 
 
-```{r}
-library(gridExtra)
-grid.arrange(p1, p2, p3, ncol = 3)
-```
-
-NOTE!! what to do with the outliers?? 
 
 ## Checking for Missing Values 
 
