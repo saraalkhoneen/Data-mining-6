@@ -56,7 +56,7 @@ summary(dataset)
 this summary provides an overview of the distribution and central tendency of each variable in the dataset. It helps us make informed decisions about preprocessing steps, such as dealing with outliers which we did in the outliers detection section.
 
 now we want to calculate the variance for the numeric attributes to learn about the spread of the data and how close they are from the mean.
-now we want to calculate the variance for the numeric attributes to learn about the spread of the data and how close they are from the mean.
+
 
 ```{r}
 var_duration <- var(dataset$duration)
