@@ -311,9 +311,10 @@ duration: Loan durations are typically measured in months, and values like 678 a
 that is why we removed the duration outiers. 
 
 
+
 ```{r}
-data <- data[!OutAge, !OutDuration ,]
-data <- data[data$credit_amount != 1, ]
+dataset <- dataset[!OutAge, !OutDuration ,]
+dataset <- dataset[data$credit_amount != 1, ]
 
 ```
 
