@@ -39,15 +39,6 @@ Origonaly our dataset consists of 21 attributes
   ## Summary of the dataset
   
 ```{r}
-setwd("C:/Users/jory0/OneDrive/Desktop/DataMining Phase 3")
-```
-
-```{r}
-dataset <- read.csv("credit_customers.csv")
-```
-
-
-```{r}
 nrow(dataset) 
 ```
 
@@ -61,8 +52,10 @@ The output is 21 , which is the number of columns
 ```{r}
 summary(dataset)
 ```
-This summary provides an initial understanding of the data's structure and characteristics. 
 
+this summary provides an overview of the distribution and central tendency of each variable in the dataset. It helps us make informed decisions about preprocessing steps, such as dealing with outliers which we did in the outliers detection section.
+
+now we want to calculate the variance for the numeric attributes to learn about the spread of the data and how close they are from the mean.
 now we want to calculate the variance for the numeric attributes to learn about the spread of the data and how close they are from the mean.
 
 ```{r}
