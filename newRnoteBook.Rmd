@@ -209,7 +209,7 @@ OutDuration <- outlier(dataset$duration, logical = TRUE)
 Outamount <- outlier(dataset$credit_amount, logical = TRUE)
 ```
 
-We created a variable "OutAge" , "OutDuration" to store the result of finding the outliers in the dataset , 
+We created a variable "OutAge" , "OutDuration" and "Outamount" to store the result of finding the outliers in the dataset , 
 logical true which specifies the outliers with true .
 
 
@@ -238,15 +238,15 @@ cat("Outliers in age:", Find_outlierAge, "\n")
 ```
 
 Age: it is impossible to have an age of 331 or 537, this is obvesouly due to
-data entry mistakes and human error. 
+data entry mistakes and/or human error. 
 that is why we removed the Age outiers. 
 
 credit_amount: in most financial contexts, a "credit amount" of 1 doesn't make sense. The credit amount is typically a numerical value representing the total amount of credit or loan that an individual or entity has borrowed. It is expected to be a positive numeric value that reflects the amount of money borrowed.
-this is also due to data entry mistakes and human error. for the value 916 it falls in the range so we wont do anything to it. 
-that is why we remove the credit_amount=1 outier. 
+This is also due to data entry mistakes and/or human error. For the value 916 it falls in the range so we wont do anything to it. 
+After removing the outlier with a value of '1' we are left with 1 outlier for the attribute 'credit_amount'. 
 
 
-duration: Loan durations are typically measured in months, and values like 678 and 1 may indicate potential issues with the data which could also be due to data entry mistakes and human error. 
+duration: Loan durations are typically measured in months, and values like 678 months (56+ years) and 1 month may indicate potential issues with the data which could also be due to data entry mistakes and/or human error. 
 that is why we removed the duration outiers. 
 
 
