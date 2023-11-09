@@ -6,8 +6,9 @@ The dataset was sourced from the kaggle website in this URL:
   https://www.kaggle.com/datasets/ppb00x/credit-risk-customers 
 
 ## General information 
-Origonaly our dataset consists of 21 attributes, but we only worked with 18 attributes that are going to help with our study of the credit risks of applicants.
-1- Number of Attributes: 18
+
+Origonaly our dataset consists of 21 attributes
+1- Number of Attributes: 21
 2- Number of Objects: 1001
 3- class name and lable:
   The "class" attribute which describes whether the customer is a good or bad credit risks.
