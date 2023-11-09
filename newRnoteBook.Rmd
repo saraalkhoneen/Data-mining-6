@@ -10,7 +10,7 @@ Origonaly our dataset consists of 21 attributes, but we only worked with 18 attr
 1- Number of Attributes: 21
 2- Number of Objects: 1001
 3- class name and lable:
-  The "class" attribute which describes whether the customer is a good or bad credit risks.
+  The "class" attribute which describes whether the customer has a good or bad credit risks.
 
 ## Attribute description
 
@@ -186,67 +186,6 @@ print(total_missing_values)
 
 ```
 
-## chi square 
-
-```{r}
-tbl = table(dataset$class, dataset$purpose)
-tbl 
-chisq.test(tbl)
-```
-
-
-```{r}
-tbl = table(dataset$class, dataset$personal_status)
-tbl 
-chisq.test(tbl)
-```
-
-```{r}
-tbl = table(dataset$class, dataset$other_parties)
-tbl 
-chisq.test(tbl)
-```
-
-
-```{r}
-tbl = table(dataset$class, dataset$property_magnitude)
-tbl 
-chisq.test(tbl)
-```
-
-```{r}
-tbl = table(dataset$class, dataset$housing)
-tbl 
-chisq.test(tbl)
-```
-
-
-```{r}
-tbl = table(dataset$class, dataset$job)
-tbl 
-chisq.test(tbl)
-```
-
-```{r}
-tbl = table(dataset$class, dataset$job)
-tbl 
-chisq.test(tbl)
-```
-
-```{r}
-tbl = table(dataset$class, dataset$own_telephone)
-tbl 
-chisq.test(tbl)
-```
-
-```{r}
-tbl = table(dataset$class, dataset$other_payment_plans)
-tbl 
-chisq.test(tbl)
-```
-
-
-we have removed the job and the property magnitude based on the chi square value. 
 
 ## Outliers
 
@@ -425,6 +364,91 @@ dataset$credit_amount <- min_max_scaling(dataset$credit_amount)
 After normalization, the values of these attributes will now fall within the range[0,1], ensuring that they are all on a common scale and ready for further analysis.
 
 ## Feature Selection : 
+
+## First: chi square 
+We will apply chi square for all nominal data in our dataset to measure weather the distribution of the variables and the dataset class is independent or not.
+
+```{r}
+tbl = table(dataset$class, dataset$purpose)
+tbl 
+chisq.test(tbl)
+```
+Here we put the attribute 'class' values and the attribute 'purpose' values in a table where the rows represent 'class' and the columns 'purpose', then we checked the chi square for the table.
+The p-value we got as a result of this test was 0.0001157 which is less than 0.05. Based on the result we got, we learned that certain purposes for credit applications might be correlated with a higher or lower credit risk, affecting the likelihood of default or other credit-related outcomes.
+
+
+```{r}
+tbl = table(dataset$class, dataset$personal_status)
+tbl 
+chisq.test(tbl)
+```
+Here we put the attribute 'class' values and the attribute 'personal_status' values in a table where the rows represent 'class' and the columns 'personal_status', then we checked the chi square for the table.
+The p-value we got as a result of this test was 0.02224 which is less than 0.05. Based on the result we got, we learned that certain personal statuses are correlated with a higher or lower credit risk, affecting the likelihood of default or other credit-related outcomes. 
+
+
+```{r}
+tbl = table(dataset$class, dataset$other_parties)
+tbl 
+chisq.test(tbl)
+```
+Here we put the attribute 'class' values and the attribute 'other_parties' values in a table where the rows represent 'class' and the columns 'other_parties', then we checked the chi square for the table.
+The p-value we got as a result of this test was 0.03606 which is less than 0.05. Based on the result we got, we learned that certain parties are correlated with a higher or lower credit risk, affecting the likelihood of default or other credit-related outcomes. 
+
+```{r}
+tbl = table(dataset$class, dataset$property_magnitude)
+tbl 
+chisq.test(tbl)
+```
+Here we put the attribute 'class' values and the attribute 'property_magnitude' values in a table where the rows represent 'class' and the columns 'property_magnitude', then we checked the chi square for the table.
+The p-value we got as a result of this test was 2.858e-05 which is less than 0.05. Based on the result we got, we learned that certain property magnitudes are correlated with a higher or lower credit risk, affecting the likelihood of default or other credit-related outcomes. 
+
+```{r}
+tbl = table(dataset$class, dataset$housing)
+tbl 
+chisq.test(tbl)
+```
+Here we put the attribute 'class' values and the attribute 'housing' values in a table where the rows represent 'class' and the columns 'housing', then we checked the chi square for the table.
+The p-value we got as a result of this test was 0.0001117 which is less than 0.05. Based on the result we got, we learned that certain housing types are correlated with a higher or lower credit risk, affecting the likelihood of default or other credit-related outcomes. 
+
+```{r}
+tbl = table(dataset$class, dataset$job)
+tbl 
+chisq.test(tbl)
+```
+Here we put the attribute 'class' values and the attribute 'job' values in a table where the rows represent 'class' and the columns 'job', then we checked the chi square for the table.
+The p-value we got as a result of this test was 0.5966 which is more than 0.05. Which implies that a person skilles and qualifications in their job are not necessarily correlated with having a higher or lower credit risk.
+
+```{r}
+tbl = table(dataset$class, dataset$foreign_worker)
+tbl 
+chisq.test(tbl)
+```
+Here we put the attribute 'class' values and the attribute 'foreign_worker' values in a table where the rows represent 'class' and the columns 'foreign_worker', then we checked the chi square for the table.
+The p-value we got as a result of this test was 0.01583 which is less than 0.05. Based on the result we got, we learned that weather someone is a foregin worker or not could lead to a higher or lower credit risk.
+
+```{r}
+tbl = table(dataset$class, dataset$own_telephone)
+tbl 
+chisq.test(tbl)
+```
+Here we put the attribute 'class' values and the attribute 'own_telephone' values in a table where the rows represent 'class' and the columns 'own_telephone', then we checked the chi square for the table.
+The p-value we got as a result of this test was 0.2789 which is more than 0.05. Which implies that weather a person own a telephone or not does not necessarily correlate with having a higher or lower credit risk.
+
+```{r}
+tbl = table(dataset$class, dataset$other_payment_plans)
+tbl 
+chisq.test(tbl)
+```
+Here we put the attribute 'class' values and the attribute 'other_payment_plans' values in a table where the rows represent 'class' and the columns 'other_payment_plans', then we checked the chi square for the table.
+The p-value we got as a result of this test was 0.001629 which is less than 0.05. Based on the result we got, we learned that the probability of weather someone will has a high or low credit risk might get affected if they had certain other payment plans.
+
+
+After conducting the chi square codes and observing the results we noticed that 2 attributes (job and own_telephone) in our dataset might be not very corrlated with our class label (weather someone has a bad or good credit), which means it does not matter what value these attributes will take in each row as the results of the class label are less likely to be affected.
+
+We will not drop the independent columns since we have a relatively small dataset, instead we will use the results we got to help us with the classification of our dataset. 
+
+
+
 Insuring that caret package is installed on install it : 
 
 ```{r}
