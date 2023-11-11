@@ -188,7 +188,6 @@ print(total_missing_values)
 
 
 ## Outliers
-
 First we find the range of each one of the attributes which is collected in the statical measures we did in the
 first step using the "summary()" function, using the Min and Max to find the range. 
 this would help us in finding if the outliers detected fall in the range or not
@@ -214,21 +213,48 @@ logical true which specifies the outliers with true .
 
 
 ```{r}
+
 sum(OutAge)
 sum(OutDuration)
 sum(Outamount)
+
+
 ```
 
-Then we calculated the sum of All the outliers, the result is 2 for the age / 1 for the duration. / 2  for the credit amount. 
+Then we calculated the sum of All the outliers, the result is 2 for the age / 1 for the duration. / 2  for the credit amount.
 
 ```{r}
+
 Find_outlierAge <- which(OutAge == TRUE, arr.ind = TRUE)
 Find_outlierDuration <- which(OutDuration == TRUE, arr.ind = TRUE)
 Find_outlierAmount <- which(Outamount == TRUE, arr.ind = TRUE)
 
 ```
+after that we want to know the specefic values of the outliers and we saved them in Find_outlierAge,Find_outlierDuration,Find_outlierAmount
 
-Then we find the exact values of the outliers and study them. 
+```{r}
+outlierRowsAge <- dataset[Find_outlierAge, ]
+outlierRowsDuration <- dataset[Find_outlierDuration, ]
+outlierRowsAmount <- dataset[Find_outlierAmount, ]
+
+```
+
+```{r}
+print(outlierRowsAge)
+```
+the rows with the Age is found to be outliers 
+```{r}
+print(outlierRowsDuration)
+```
+the rows with the Duraction is found to be outliers
+
+```{r}
+print(outlierRowsAmount)
+```
+the rows with the credit_amount is found to be outliers
+
+
+
 
 ```{r}
 cat("Outliers in credit_amount:", Find_outlierAmount, "\n")
@@ -251,10 +277,13 @@ that is why we removed the duration outiers.
 
 
 ```{r}
-dataset <- dataset[!OutAge, !OutDuration ,]
-dataset <- dataset[data$credit_amount != 1, ]
-
+dataset <- dataset[-Find_outlierAge, ]
+dataset <- dataset[!(678:nrow(dataset) %in% Find_outlierDuration), ]
+dataset <- dataset[dataset$credit_amount != 1, ]
 ```
+
+finaly removing the outliers for the reasons we mentioned above.
+
 
 
 
