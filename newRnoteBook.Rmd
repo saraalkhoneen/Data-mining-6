@@ -317,6 +317,98 @@ The "foreign_worker" attribute represents whether the loan applicant is a foreig
 "yes" is labeled as 0.
 "no" is labeled as 1.
 
+```{r}
+dataset$credit_history = factor(dataset$credit_history,levels = c("no credits/all paid","all paid", "existing paid", "delayed previously", "critical/other existing credit"), labels = c(1, 2, 3, 4, 5))
+```
+Encoding "credit_history"
+The "credit_history" attribute represents the credit history for the lone applicant.
+We've encoded it as follows (going from best case to worst) :
+
+"no credits/all paid" is labeled as 1.
+"all paid" is labeled as 2.
+"existing paid" is labeled as 3.
+"delayed previously" is labeled as 4.
+"critical/other existing credit" is labeled as 5.
+
+
+```{r}
+ dataset$savings_status <- factor(dataset$savings_status, levels = c('no known savings', '<100', '100<=X<500', '500<=X<1000', '>=1000'), labels = c(1, 2, 3, 4, 5))
+```
+Encoding "savings_status"
+The "savings_status" attribute represents the status of the savings account or bond of the loan applicant.
+We've encoded it as follows (going from least to greatest) :
+
+"no known savings" is labeled as 1.
+"<100" is labeled as 2.
+"100<=X<500" is labeled as 3.
+"500<=X<1000" is labeled as 4.
+">=1000" is labeled as 5.
+
+```{r}
+dataset$employment <- factor(dataset$employment, levels = c('unemployed', '<1', '1<=X<4', '4<=X<7', '>=7'), labels = c(1, 2, 3, 4, 5))
+```
+Encoding "employment"
+The "empolyment" attribute represents the current employment status of the loan applicant in number of years. 
+
+We've encoded it as follows (going from least to greatest) :
+
+"unemployed" is labeled as 1.
+"<1" is labeled as 2.
+"1<=X<4" is labeled as 3.
+"4<=X<7" is labeled as 4.
+">=7" is labeled as 5.
+
+```{r}
+dataset$other_parties <- factor(dataset$other_parties, levels = c('none', 'guarantor', 'co applicant'), labels = c(1, 2, 3))
+```
+Encoding "other_parties"
+The "other_parties" attribute represents the debtors or guarantors associated with the loan. 
+
+We've encoded it as follows :
+
+"none" is labeled as 1.
+"guarantor" is labeled as 2.
+"co applicant" is labeled as 3.
+
+```{r}
+ dataset$property_magnitude <- factor(dataset$property_magnitude, levels = c('no known property', 'car', 'life insurance', 'real estate'), labels = c(1, 2, 3, 4))
+```
+Encoding "property_magnitude"
+The "property_magnitude" attribute represents the magnitude of the property owned by the loan applicant.
+We've encoded it as follows (going from the least magnitude to the greatest) :
+
+"no known property" is labeled as 1.
+"car" is labeled as 2.
+"life insurance" is labeled as 3.
+"real estate" is labeled as 4.
+
+```{r}
+dataset$other_payment_plans <- factor(dataset$other_payment_plans, levels = c('none', 'bank', 'stores'), labels = c(1, 2, 3))
+```
+Encoding "other_payment_plans"
+The "other_payment_plans" attribute represents other payment plans associated with the loan.
+
+We've encoded it as follows :
+
+"none" is labeled as 1.
+"bank" is labeled as 2.
+"stores insurance" is labeled as 3.
+
+```{r}
+ dataset$job <- factor(dataset$job, levels = c('unemp/unskilled non res u', 'unskilled resident', 'skilled', 'high qualif/self emp/mgmt'), labels = c(1, 2, 3, 4))
+```
+Encoding "job"
+The "job" attribute represents the type of job of the loan applicant.
+
+We've encoded it as follows (from least to highest) :
+
+"unemp/unskilled non res u" is labeled as 1.
+"unskilled resident" is labeled as 2.
+"skilled" is labeled as 3.
+"high qualif/self emp/mgmt" is labeled as 4.
+
+
+
 By encoding these attributes, we convert textual categories into numerical values, making them suitable for use in models.
 
 Print the final preprocessed dataset
