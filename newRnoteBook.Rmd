@@ -518,78 +518,111 @@ After normalization, the values of these attributes will now fall within the ran
 We will apply chi square for all nominal data in our dataset to measure weather the distribution of the variables and the dataset class is independent or not.
 
 ```{r}
-tbl = table(dataset$class, dataset$purpose)
-tbl 
-chisq.test(tbl)
+tbl1 = table(dataset$class, dataset$purpose)
+tbl1 
+chisq.test(tbl1)
 ```
+
 Here we put the attribute 'class' values and the attribute 'purpose' values in a table where the rows represent 'class' and the columns 'purpose', then we checked the chi square for the table.
 The p-value we got as a result of this test was 0.0001157 which is less than 0.05. Based on the result we got, we learned that certain purposes for credit applications might be correlated with a higher or lower credit risk, affecting the likelihood of default or other credit-related outcomes.
 
 
 ```{r}
-tbl = table(dataset$class, dataset$personal_status)
-tbl 
-chisq.test(tbl)
+tbl2 = table(dataset$class, dataset$personal_status)
+tbl2 
+chisq.test(tbl2)
 ```
 Here we put the attribute 'class' values and the attribute 'personal_status' values in a table where the rows represent 'class' and the columns 'personal_status', then we checked the chi square for the table.
 The p-value we got as a result of this test was 0.02224 which is less than 0.05. Based on the result we got, we learned that certain personal statuses are correlated with a higher or lower credit risk, affecting the likelihood of default or other credit-related outcomes. 
 
 
 ```{r}
-tbl = table(dataset$class, dataset$other_parties)
-tbl 
-chisq.test(tbl)
+tbl3 = table(dataset$class, dataset$other_parties)
+tbl3 
+chisq.test(tbl3)
 ```
+
 Here we put the attribute 'class' values and the attribute 'other_parties' values in a table where the rows represent 'class' and the columns 'other_parties', then we checked the chi square for the table.
 The p-value we got as a result of this test was 0.03606 which is less than 0.05. Based on the result we got, we learned that certain parties are correlated with a higher or lower credit risk, affecting the likelihood of default or other credit-related outcomes. 
 
 ```{r}
-tbl = table(dataset$class, dataset$property_magnitude)
-tbl 
-chisq.test(tbl)
+tbl4 = table(dataset$class, dataset$property_magnitude)
+tbl4 
+chisq.test(tbl4)
 ```
 Here we put the attribute 'class' values and the attribute 'property_magnitude' values in a table where the rows represent 'class' and the columns 'property_magnitude', then we checked the chi square for the table.
 The p-value we got as a result of this test was 2.858e-05 which is less than 0.05. Based on the result we got, we learned that certain property magnitudes are correlated with a higher or lower credit risk, affecting the likelihood of default or other credit-related outcomes. 
 
 ```{r}
-tbl = table(dataset$class, dataset$housing)
-tbl 
-chisq.test(tbl)
+tbl5 = table(dataset$class, dataset$housing)
+tbl5 
+chisq.test(tbl5)
 ```
 Here we put the attribute 'class' values and the attribute 'housing' values in a table where the rows represent 'class' and the columns 'housing', then we checked the chi square for the table.
 The p-value we got as a result of this test was 0.0001117 which is less than 0.05. Based on the result we got, we learned that certain housing types are correlated with a higher or lower credit risk, affecting the likelihood of default or other credit-related outcomes. 
 
 ```{r}
-tbl = table(dataset$class, dataset$job)
-tbl 
-chisq.test(tbl)
+tbl6 = table(dataset$class, dataset$job)
+tbl6 
+chisq.test(tbl6)
 ```
 Here we put the attribute 'class' values and the attribute 'job' values in a table where the rows represent 'class' and the columns 'job', then we checked the chi square for the table.
 The p-value we got as a result of this test was 0.5966 which is more than 0.05. Which implies that a person skilles and qualifications in their job are not necessarily correlated with having a higher or lower credit risk.
 
 ```{r}
-tbl = table(dataset$class, dataset$foreign_worker)
-tbl 
-chisq.test(tbl)
+tbl7 = table(dataset$class, dataset$foreign_worker)
+tbl7 
+chisq.test(tbl7)
 ```
 Here we put the attribute 'class' values and the attribute 'foreign_worker' values in a table where the rows represent 'class' and the columns 'foreign_worker', then we checked the chi square for the table.
 The p-value we got as a result of this test was 0.01583 which is less than 0.05. Based on the result we got, we learned that whether someone is a foregin worker or not could lead to a higher or lower credit risk.
 
 ```{r}
-tbl = table(dataset$class, dataset$own_telephone)
-tbl 
-chisq.test(tbl)
+tbl8 = table(dataset$class, dataset$own_telephone)
+tbl8 
+chisq.test(tbl8)
 ```
 Here we put the attribute 'class' values and the attribute 'own_telephone' values in a table where the rows represent 'class' and the columns 'own_telephone', then we checked the chi square for the table.
 The p-value we got as a result of this test was 0.2789 which is more than 0.05. Which implies that whether a person own a telephone or not does not necessarily correlate with having a higher or lower credit risk.
 
 ```{r}
-tbl = table(dataset$class, dataset$other_payment_plans)
-tbl 
-chisq.test(tbl)
+tbl9 = table(dataset$class, dataset$other_payment_plans)
+tbl9 
+chisq.test(tbl9)
+
 ```
 Here we put the attribute 'class' values and the attribute 'other_payment_plans' values in a table where the rows represent 'class' and the columns 'other_payment_plans', then we checked the chi square for the table.
 The p-value we got as a result of this test was 0.001629 which is less than 0.05. Based on the result we got, we learned that the probability of weather someone will has a high or low credit risk might get affected if they had certain other payment plans.
+
+```{r}
+tbl10 = table(dataset$class, dataset$existing_credits)
+tbl10
+chisq.test(tbl10)
+```
+
+```{r}
+tbl11 = table(dataset$class, dataset$employment)
+tbl11 
+chisq.test(tbl11)
+```
+
+```{r}
+tbl12 = table(dataset$class, dataset$savings_status)
+tbl12 
+chisq.test(tbl12)
+```
+
+```{r}
+tbl13 = table(dataset$class, dataset$credit_history)
+tbl13 
+chisq.test(tbl13)
+```
+
+```{r}
+tbl14 = table(dataset$class, dataset$checking_status)
+tbl14 
+chisq.test(tbl14)
+```
 
 
 After conducting the chi square codes and observing the results we noticed that 2 attributes (job and own_telephone) in our dataset might be not very corrlated with our class label (weather someone has a bad or good credit), which means it does not matter what value these attributes will take in each row as the results of the class label are less likely to be affected.
@@ -597,64 +630,32 @@ After conducting the chi square codes and observing the results we noticed that 
 We will not drop the independent columns since we have a relatively small dataset, instead we will use the results we got to help us with the classification of our dataset. 
 
 
-
-Insuring that caret package is installed on install it : 
-
-```{r}
-if (!require(caret)) {
-  install.packages("caret")
-}
-
-library(caret)
-```
-
-Choosing the feature matrix (X) and target variable (Y) :
+# Correlation between numeric attributes and the class label
 
 ```{r}
-X <- dataset[, c("credit_history", "savings_status", "employment")]
-y <- dataset$class
+set.seed(123)
+Data <- data.frame(
+  duration = runif(999),
+  age = runif(999),
+  credit_amount = runif(999),
+  residence_since = runif(999),
+  num_dependents = runif(999),
+  installment_commitment = runif(999),
+  Own_telephone = sample(c(0, 1), 999, replace = TRUE),
+  Class = sample(c(0, 1), 999, replace = TRUE)
+)
 ```
 
-Defining the number of cross-validation folds :
+# Calculate correlation between each numeric column and the 'Class' variable
 
 ```{r}
-CV_folds <- 10
-train_control <- trainControl(method = "cv", number = CV_folds)
+cor_with_class <- sapply(Data[, -ncol(Data)], function(x) cor(x, Data$Class))
 ```
 
-Use glm method :
-
+# Print the correlation values
 ```{r}
-method <- "glm"
-model <- train(X, y, method = method, trControl = train_control, metric = "AUC")
-selected_features <- varImp(model)
-print(selected_features)
-
-
-install.packages("pROC")
-library(pROC)
+print(cor_with_class)
 ```
-# Load the dataset
-```{r}
-data <- dataset
-target_column <- ncol(data)
-
-X <- data[, 1:(target_column - 1)]  # Predictor variables (exclude the target variable)
-Y <- data[, target_column]           # Target variable
-
-roc_scores <- list()
-
-for (i in 1:(target_column - 1)) {
-  roc_obj <- roc(Y, X[, i])
-  roc_scores[[names(data)[i]]] <- auc(roc_obj)
-}
-
-roc_imp <- data.frame(variable = names(roc_scores), score = sapply(roc_scores, function(x) x))
-roc_imp <- roc_imp[order(roc_imp$score, decreasing = TRUE),]
-
-
-```
-
 
 
 # Load the dataset
