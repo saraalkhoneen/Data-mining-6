@@ -407,6 +407,34 @@ We've encoded it as follows (from least to highest) :
 "skilled" is labeled as 3.
 "high qualif/self emp/mgmt" is labeled as 4.
 
+```{r}
+dataset$own_telephone <- factor(dataset$own_telephone, levels = c("none", "yes"), labels = c(0, 1))
+```
+Encoding "own_telephone"
+The "own_telephone" attribute represents whether the loan applicant has their own telephone line or not.
+
+We've encoded it as follows:
+
+"none" is labeled as 0.
+"yes" is labeled as 1.
+
+```{r}
+dataset$personal_status <- factor(dataset$personal_status, levels = c('female div/dep/mar', 'div/sep male', 'male mar/wid', 'male single'))
+```
+Encoding "personal_status"
+The "personal_status" attribute represents the sex and marital status of the loan applicant.
+
+Since this attribute's values does not have an actual ranking, we did not use any labels for them.
+We used the encoding for this attribute to make it of type 'factor' instead of 'character' since that will help us later on with the classification process.
+
+```{r}
+dataset$purpose <- factor(dataset$purpose, levels = c('business', 'domestic appliance', 'education', 'furniture/equipment', 'new car', 'other', 'radio/tv', 'repairs', 'retraining', 'used car'))
+```
+Encoding "purpose"
+The "purpose" attribute represents the purpose of the credit, which the loan is being taken.
+
+Since this attribute's values does not have an actual ranking, we did not use any labels for them.
+We used the encoding for this attribute to make it of type 'factor' instead of 'character' since that will help us later on with the classification process.
 
 
 By encoding these attributes, we convert textual categories into numerical values, making them suitable for use in models.
@@ -516,7 +544,7 @@ tbl
 chisq.test(tbl)
 ```
 Here we put the attribute 'class' values and the attribute 'foreign_worker' values in a table where the rows represent 'class' and the columns 'foreign_worker', then we checked the chi square for the table.
-The p-value we got as a result of this test was 0.01583 which is less than 0.05. Based on the result we got, we learned that weather someone is a foregin worker or not could lead to a higher or lower credit risk.
+The p-value we got as a result of this test was 0.01583 which is less than 0.05. Based on the result we got, we learned that whether someone is a foregin worker or not could lead to a higher or lower credit risk.
 
 ```{r}
 tbl = table(dataset$class, dataset$own_telephone)
@@ -524,7 +552,7 @@ tbl
 chisq.test(tbl)
 ```
 Here we put the attribute 'class' values and the attribute 'own_telephone' values in a table where the rows represent 'class' and the columns 'own_telephone', then we checked the chi square for the table.
-The p-value we got as a result of this test was 0.2789 which is more than 0.05. Which implies that weather a person own a telephone or not does not necessarily correlate with having a higher or lower credit risk.
+The p-value we got as a result of this test was 0.2789 which is more than 0.05. Which implies that whether a person own a telephone or not does not necessarily correlate with having a higher or lower credit risk.
 
 ```{r}
 tbl = table(dataset$class, dataset$other_payment_plans)
