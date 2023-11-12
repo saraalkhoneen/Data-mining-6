@@ -678,3 +678,103 @@ roc_imp <- roc_imp[order(roc_imp$score, decreasing = TRUE),]
 ```
 
 
+clustring "1st trailer only"
+```{r}
+# Load necessary packages
+if (!require(caret)) {
+  install.packages("caret")
+}
+if (!require(cluster)) {
+  install.packages("cluster")
+}
+if (!require(fpc)) {
+  install.packages("fpc")
+}
+if (!require(ggplot2)) {
+  install.packages("ggplot2")
+}
+library(caret)
+library(cluster)
+library(fpc)
+library(ggplot2)
+
+# Assuming 'dataset' is your data frame
+# Specify the numeric and categorical attributes
+numeric_attributes <- c("duration", "credit_amount", "age")
+categorical_attributes <- setdiff(names(dataset), c("duration", "credit_amount", "age", "class"))
+
+# Extract the relevant columns
+numeric_data <- dataset[, numeric_attributes]
+categorical_data <- dataset[, categorical_attributes]
+
+# Normalize numeric data (optional but often recommended)
+normalized_numeric_data <- scale(numeric_data)
+
+# Elbow method for determining the optimal number of clusters (k-means)
+wss <- numeric(length = 10)
+for (k in 1:10) {
+  kmeans_model <- kmeans(normalized_numeric_data, centers = k, nstart = 10)
+  wss[k] <- sum(kmeans_model$withinss)
+}
+
+# Plot the Elbow method graph with adjusted margins
+par(mar = c(5, 4, 4, 2) + 0.1)
+plot(1:10, wss, type = "b", main = "Elbow Method for Optimal k (k-means)",
+     xlab = "Number of Clusters (k)", ylab = "Within-Cluster Sum of Squares (WSS)")
+
+# Choose three different sizes of K based on the Elbow plot
+optimal_k <- which.min(wss)
+k_values <- c(optimal_k, optimal_k - 1, optimal_k + 1)
+
+# Create a list to store k-means plots
+kmeans_plots <- list()
+
+for (k in k_values) {
+  # Perform k-means clustering
+  kmeans_model <- kmeans(normalized_numeric_data, centers = k, nstart = 10)
+
+  # Plot the clusters for k-means with adjusted margins
+  par(mar = c(5, 4, 4, 2) + 0.1)
+  kmeans_plot <- ggplot(data = as.data.frame(normalized_numeric_data), aes(x = duration, y = credit_amount, color = factor(kmeans_model$cluster))) +
+    geom_point(size = 3) +
+    labs(title = paste("K-Means Clustering Results (k =", k, ")"), x = "Duration", y = "Credit Amount", color = "Cluster") +
+    theme_minimal()
+  
+  # Print the plot
+  print(kmeans_plot)
+  
+  # Store the plot in the list
+  kmeans_plots[[as.character(k)]] <- kmeans_plot
+}
+
+# Display k-means plots
+kmeans_plots
+
+# Perform k-medoids clustering on categorical data
+dissimilarity_matrix <- daisy(categorical_data, metric = "gower")
+kmedoids_model <- pam(dissimilarity_matrix, k = 3)
+
+# Print the k-medoids clustering results
+cat("\nK-Medoids Clustering Results:\n")
+print(kmedoids_model)
+
+# Evaluate clustering using Silhouette coefficient for k-medoids
+silhouette_kmedoids <- silhouette(kmedoids_model$cluster, dissimilarity_matrix)
+cat("\nSilhouette Coefficient for K-Medoids Clustering:\n")
+print(silhouette_kmedoids)
+
+# Evaluate BCubed precision and recall for k-medoids
+bcubed_kmedoids <- cluster.stats(dissimilarity_matrix, kmedoids_model$cluster)$bcubed
+cat("\nBCubed Precision and Recall for K-Medoids Clustering:\n")
+print(bcubed_kmedoids)
+
+# Plot the clusters for k-medoids with adjusted margins
+par(mar = c(5, 4, 4, 2) + 0.1)
+kmedoids_plot <- ggplot(data = as.data.frame(categorical_data), aes(x = factor(1), y = factor(2), color = factor(kmedoids_model$cluster))) +
+  geom_point(size = 3) +
+  labs(title = "K-Medoids Clustering Results", x = "Category 1", y = "Category 2", color = "Cluster") +
+  theme_minimal()
+
+# Print the k-medoids plot
+print(kmedoids_plot)
+```
