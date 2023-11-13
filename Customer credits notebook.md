@@ -1,12 +1,4 @@
----
-title: "Your Document Title"
-output: html_document
----
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-library(caret)
-```
 
 ### Project Motivation:
 In this project, our primary goal is to classify customers as either good or bad credit risks. We aim to assist financial institutions in making informed decisions regarding loan approvals based on an analysis of customers' payment behavior and other relevant attributes, such as age, income, loan amount, and employment status. By utilizing this dataset, we will build predictive models to assess customers' creditworthiness and use these models as tools for risk assessment and decision-making.
