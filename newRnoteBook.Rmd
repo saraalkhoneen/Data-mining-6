@@ -669,7 +669,7 @@ roc_imp <- roc_imp[order(roc_imp$score, decreasing = TRUE),]
 ```
 
 
-clustring "1st trailer only"
+##clustring "1st trailer only"
 ```{r}
 # Load necessary packages
 if (!require(caret)) {
@@ -768,4 +768,5 @@ kmedoids_plot <- ggplot(data = as.data.frame(categorical_data), aes(x = factor(1
 
 # Print the k-medoids plot
 print(kmedoids_plot)
+
 ```
