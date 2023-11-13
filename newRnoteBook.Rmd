@@ -955,10 +955,11 @@ for (fold in seq_along(folds)) {
    
     # Build the decision tree
     id3_model <- rpart(class ~ ., data = train_data, method = "class", control = rpart.control(cp = 0.01), parms = list(split = "information"))
-    
-  # Print and plot the decision tree
+ }
+
+# Print and plot the decision tree
  print(id3_model)
- plot(id3_model, uniform = TRUE, main = paste("Pruned Decision Tree - Fold", fold))
+ prp(id3_model, uniform = TRUE, main = paste("Pruned Decision Tree - Fold", fold))
  text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
   
      # Make predictions on the test set
@@ -967,7 +968,6 @@ predictions <- predict(id3_model, newdata = test_data, type = "class")
      # Print confusion matrix for the current fold
     confusion_matrix <- table(predictions, test_data$class)
      print(confusion_matrix)
- }
 
 ```
 ## 5 folds 
@@ -985,9 +985,11 @@ for (fold in seq_along(folds)) {
     # Build the decision tree
     id3_model <- rpart(class ~ ., data = train_data, method = "class", control = rpart.control(cp = 0.01), parms = list(split = "information"))
     
+ }
+
   # Print and plot the decision tree
  print(id3_model)
- plot(id3_model, uniform = TRUE, main = paste("Pruned Decision Tree - Fold", fold))
+ prp(id3_model, uniform = TRUE, main = paste("Pruned Decision Tree - Fold", fold))
  text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
   
      # Make predictions on the test set
@@ -996,7 +998,6 @@ predictions <- predict(id3_model, newdata = test_data, type = "class")
      # Print confusion matrix for the current fold
     confusion_matrix <- table(predictions, test_data$class)
      print(confusion_matrix)
- }
 
 ```
 
@@ -1015,9 +1016,11 @@ for (fold in seq_along(folds)) {
     # Build the decision tree
     id3_model <- rpart(class ~ ., data = train_data, method = "class", control = rpart.control(cp = 0.01), parms = list(split = "information"))
     
+ }
+
   # Print and plot the decision tree
  print(id3_model)
- plot(id3_model, uniform = TRUE, main = paste("Pruned Decision Tree - Fold", fold))
+ prp(id3_model, uniform = TRUE, main = paste("Pruned Decision Tree - Fold", fold))
  text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
   
      # Make predictions on the test set
@@ -1026,7 +1029,6 @@ predictions <- predict(id3_model, newdata = test_data, type = "class")
      # Print confusion matrix for the current fold
     confusion_matrix <- table(predictions, test_data$class)
      print(confusion_matrix)
- }
 ```
 
 
