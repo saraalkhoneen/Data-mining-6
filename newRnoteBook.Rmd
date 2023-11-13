@@ -664,6 +664,11 @@ the success of the classification model will be evaluated based on its ability t
 
 We will construct 9 different decision tree using 3 different algorithms, Gini Index with Cart algorithm, Gain Ratio using C4.5 algorithm and Information Gain using ID3 algorithm. This section contains 3 different part for each tree, inside each part there is 3 different trees using 3 different folds (3,5,10) and the results we got from this tree construction.
 
+--------------------------------------------------------------------------
+
+We wanted to use Cross-validation (try different folds) on our trees to evaluate our model on different training and test sets, the only way we were able to get different trees for different folds was by constructing the models with different folds inside a loop which performed the steps for each fold separately. We believe that the reason why we got different trees using this method is because the code itself repeat the process so there was no mistakes that caused that error.
+
+Outstide the loop and after we reached the desired fold we printed, plotted and got the matrix for our trees.
 
 
 
@@ -1183,6 +1188,28 @@ False Negative (FN): 13 - The number of instances incorrectly predicted as class
  text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
   
 ```
+
+As mentioned earlier, we constructed 9 different trees using different algorithms and folds and this is what we found:
+
+In terms of algorithms we found that the information gain (ID3) algorithm performed the best compared to the other 2 with accuracy between 76.53% - 71.99% for different folds. We noticed that models were consistent with their accuracy using fold (3) and that's probably because the data in fold 3 was a representative well-balanced sample of the dataset or that the chosen algorithms were well-suited for the characteristics of the data in this fold. 
+
+On the other hand, fold 10 gave the highest (with Information Gain) and the lowest (with Ratio Gain) accuracy on the same time, we believe that fold ten data's characteristics was well fitted for the information gain split but it might targeted the sensitivity of the ratio gain tree.
+
+Since more than half of our dataset attributes were of categorial (nominal) type, it was expected for Ratio Gain to perform worse than the others since it does not handle nominal data as effective as them.
+
+If we were looking at it in terms of accuracy we highly recommend using information gain with 10 folds (or any fold) to classifiy this model since it gave the highest accuracy out of the three algorithms.
+
+
+
+
+
+
+
+
+
+
+
+
 ## clustring: 
 
 
