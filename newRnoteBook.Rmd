@@ -448,7 +448,7 @@ We've encoded it as follows:
 "yes" is labeled as 1.
 
 ```{r}
-dataset$personal_status <- factor(dataset$personal_status, levels = c('female div/dep/mar', ' male div/sep', 'male mar/wid', 'male single'))
+dataset$personal_status <- factor(dataset$personal_status, levels = c('female div/dep/mar', 'male div/sep', 'male mar/wid', 'male single'))
 ```
 Encoding "personal_status"
 The "personal_status" attribute represents the sex and marital status of the loan applicant.
