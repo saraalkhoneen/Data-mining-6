@@ -47,9 +47,7 @@ Origonaly our dataset consists of 21 attributes, but we only worked with 21 attr
   
 ## Summary of the dataset
   
-```{r}
-setwd("C:/Users/jory0/OneDrive/Desktop/DataMining Phase 3")
-```
+
 
 ```{r}
 dataset <- read.csv("credit_customers.csv")
@@ -673,6 +671,18 @@ install.packages("rpart")
 library(rpart)
 install.packages("caret")
 library(caret)
+
+```{r}
+
+install.packages("rpart.plot")
+install.packages("rattle")
+library(rpart)
+library(caret)
+library(C50)
+library(rpart.plot)
+library(rattle)
+
+```
 set.seed(123)
 k <- 10
 
