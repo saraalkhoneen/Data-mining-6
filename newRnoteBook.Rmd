@@ -648,25 +648,6 @@ cor_with_class <- sapply(Data[, -ncol(Data)], function(x) cor(x, Data$Class))
 print(cor_with_class)
 ```
 
-
-# Load the dataset
-```{r}
-data <- dataset
-target_column <- ncol(data)
-
-X <- data[, 1:(target_column - 1)]  # Predictor variables (exclude the target variable)
-Y <- data[, target_column]           # Target variable
-
-roc_scores <- list()
-
-for (i in 1:(target_column - 1)) {
-  roc_obj <- roc(Y, X[, i])
-  roc_scores[[names(data)[i]]] <- auc(roc_obj)
-}
-
-roc_imp <- data.frame(variable = names(roc_scores), score = sapply(roc_scores, function(x) x))
-roc_imp <- roc_imp[order(roc_imp$score, decreasing = TRUE),]
-```
 ## classification 
 our goal is to develop a predictive model that accurately categorizes instances into predefined classes based on the provided attributes. 
 using different algorithms we want to build a model that can accurately predict the 'class' attribute for each instance in our dataset.
@@ -676,20 +657,21 @@ We will construct 9 different decision tree using 3 different algorithms, Gini I
 
 
 
+
 ## using Gini Index CART Tree 
 The Gini index is a measure of impurity or purity used in decision tree algorithms, including CART (Classification and Regression Trees) which the one we used to plot the trees.
 
 ## 10 folds 
 
 ```{r}
-install.packages("rpart.plot")
 
-library(rpart.plot)
-
-set.seed(123)  
+set.seed(123)
 k <- 10
 
 folds <- createFolds(dataset$class, k = k, list = TRUE, returnTrain = FALSE)
+
+# Initialize variables to store metrics
+sensitivity_vec <- specificity_vec <- precision_vec <- numeric(k)
 
 for (i in 1:k) {
   test_indices <- unlist(folds[[i]])
@@ -707,28 +689,46 @@ for (i in 1:k) {
 
   confusion_matrix <- table(predictions, testing_set$class)
   accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
- gini <- 1 - sum((table(predictions) / length(predictions))^2)
+  gini <- 1 - sum((table(predictions, testing_set$class) / length(predictions))^2)  # Corrected this line
   
-  cat(sprintf("Fold: %d, Accuracy: %.2f%%, Gini Index: %.4f\n", i, accuracy * 100, gini))
+  # Store metrics
+  sensitivity_vec[i] <- confusionMatrix(predictions, testing_set$class)[["byClass"]]["Sensitivity"]
+  specificity_vec[i] <- confusionMatrix(predictions, testing_set$class)[["byClass"]]["Specificity"]
+  precision_vec[i] <- confusionMatrix(predictions, testing_set$class)[["byClass"]]["Pos Pred Value"]
+  
+
 }
+cat(sprintf("Fold: %d, Accuracy: %.2f%%, Gini Index: %.4f\n", i, accuracy * 100, gini))
+  print(confusion_matrix)
+# Print or use the average values of Sensitivity, Specificity, Precision
+cat(sprintf("Average Sensitivity: %.2f%%\n", mean(sensitivity_vec) * 100))
+cat(sprintf("Average Specificity: %.2f%%\n", mean(specificity_vec) * 100))
+cat(sprintf("Average Precision: %.2f%%\n", mean(precision_vec) * 100))
+
 ```
-in fold 8 The model achieved a relatively high accuracy of 77.78% indicating that it performed well in predicting the class labels for the test data in this fold.
-The Gini Index for Fold 8 is 0.2975. This value suggests that the decision tree's splits in this fold are reasonably pure, contributing to the model's effectiveness in distinguishing between classes.
-Compared to other folds, Fold 8 shows a good balance between accuracy and purity of splits. It has a higher accuracy than Folds 2 and 5, and a lower Gini Index than Fold 2. This suggests that the decision tree in Fold 8 achieved a good trade-off between predictive power and purity of the splits.
-Fold 9 exhibits a higher accuracy than most other folds, indicating that the decision tree in this fold is particularly effective in making accurate predictions. The Gini Index is moderate, suggesting a balance between predictive power and the purity of splits.
+Fold: 10, Accuracy: 73.74%, Gini Index: 0.5661
+Sensitivity (True Positive Rate, Recall): The average sensitivity is approximately 40.82%. This metric represents the ability of the model to correctly identify positive instances (class 1). A lower sensitivity suggests that the model may be missing a significant number of positive instances.
+
+Specificity (True Negative Rate): The average specificity is approximately 88.06%. This metric represents the ability of the model to correctly identify negative instances (class 0). A higher specificity indicates that the model is good at avoiding false alarms for negative instances.
+
+Precision (Positive Predictive Value): The average precision is approximately 59.46%. This metric represents the accuracy of positive predictions made by the model. A lower precision suggests that there are false positives in the predictions.
 
 ```{r}
 rpart.plot(tree_model, uniform = TRUE ,cex = 0.5, main = "CART Tree - Fold 10")
 text(tree_model, use.n = TRUE, cex = 0.8)
 ```
 
-## 5 folds
+## five folds
 
 ```{r}
-set.seed(123)  
-k <- 5  
+
+set.seed(123)
+k <- 5
 
 folds <- createFolds(dataset$class, k = k, list = TRUE, returnTrain = FALSE)
+
+# Initialize variables to store metrics
+sensitivity_vec <- specificity_vec <- precision_vec <- numeric(k)
 
 for (i in 1:k) {
   test_indices <- unlist(folds[[i]])
@@ -746,17 +746,28 @@ for (i in 1:k) {
 
   confusion_matrix <- table(predictions, testing_set$class)
   accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
- gini <- 1 - sum((table(predictions) / length(predictions))^2)
+  gini <- 1 - sum((table(predictions, testing_set$class) / length(predictions))^2)  # Corrected this line
   
-  cat(sprintf("Fold: %d, Accuracy: %.2f%%, Gini Index: %.4f\n", i, accuracy * 100, gini))
+  # Store metrics
+  sensitivity_vec[i] <- confusionMatrix(predictions, testing_set$class)[["byClass"]]["Sensitivity"]
+  specificity_vec[i] <- confusionMatrix(predictions, testing_set$class)[["byClass"]]["Specificity"]
+  precision_vec[i] <- confusionMatrix(predictions, testing_set$class)[["byClass"]]["Pos Pred Value"]
+  
+
 }
+cat(sprintf("Fold: %d, Accuracy: %.2f%%, Gini Index: %.4f\n", i, accuracy * 100, gini))
+  print(confusion_matrix)
+# Print or use the average values of Sensitivity, Specificity, Precision
+cat(sprintf("Average Sensitivity: %.2f%%\n", mean(sensitivity_vec) * 100))
+cat(sprintf("Average Specificity: %.2f%%\n", mean(specificity_vec) * 100))
+cat(sprintf("Average Precision: %.2f%%\n", mean(precision_vec) * 100))
+
 
 ```
-The accuracy Indicates the proportion of correctly classified instances. in Fold 5 , 74.87% of the instances were classified correctly.
-The Gini Index Measures the impurity or disorder in the dataset. Fold 3 has the highest Gini Index (0.3661), suggesting that the split created in this fold is less pure compared to others. while in fold 4 the gini index  (0.2121) suggesting that the split created in this fold is the purest compared to others.
-
-
-
+fold 5: Accuracy: 71.36%, Gini Index: 0.5844
+Average Sensitivity: 39.80% - The average proportion of true positives among all actual positives. Indicates the model's ability to identify positive instances.
+Average Specificity: 87.34% - The average proportion of true negatives among all actual negatives. Indicates the model's ability to identify negative instances.
+Average Precision: 59.04% - The average precision, or positive predictive value, measures the accuracy of positive predictions.
 ```{r}
 rpart.plot(tree_model, uniform = TRUE,cex = 0.5, main = "CART Tree - Fold 5")
 text(tree_model, use.n = TRUE, cex = 0.8)
@@ -765,10 +776,14 @@ text(tree_model, use.n = TRUE, cex = 0.8)
 ## 3 folds
 
 ```{r}
-set.seed(123)  
+
+set.seed(123)
 k <- 3
 
 folds <- createFolds(dataset$class, k = k, list = TRUE, returnTrain = FALSE)
+
+# Initialize variables to store metrics
+sensitivity_vec <- specificity_vec <- precision_vec <- numeric(k)
 
 for (i in 1:k) {
   test_indices <- unlist(folds[[i]])
@@ -786,54 +801,64 @@ for (i in 1:k) {
 
   confusion_matrix <- table(predictions, testing_set$class)
   accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
- gini <- 1 - sum((table(predictions) / length(predictions))^2)
+  gini <- 1 - sum((table(predictions, testing_set$class) / length(predictions))^2)  # Corrected this line
   
-  cat(sprintf("Fold: %d, Accuracy: %.2f%%, Gini Index: %.4f\n", i, accuracy * 100, gini))
+  # Store metrics
+  sensitivity_vec[i] <- confusionMatrix(predictions, testing_set$class)[["byClass"]]["Sensitivity"]
+  specificity_vec[i] <- confusionMatrix(predictions, testing_set$class)[["byClass"]]["Specificity"]
+  precision_vec[i] <- confusionMatrix(predictions, testing_set$class)[["byClass"]]["Pos Pred Value"]
+  
+
 }
+cat(sprintf("Fold: %d, Accuracy: %.2f%%, Gini Index: %.4f\n", i, accuracy * 100, gini))
+  print(confusion_matrix)
+# Print or use the average values of Sensitivity, Specificity, Precision
+cat(sprintf("Average Sensitivity: %.2f%%\n", mean(sensitivity_vec) * 100))
+cat(sprintf("Average Specificity: %.2f%%\n", mean(specificity_vec) * 100))
+cat(sprintf("Average Precision: %.2f%%\n", mean(precision_vec) * 100))
+
 
 ```
-In Fold 3, the accuracy is 74.32%, and the Gini Index decreased to 0.3082. A lower Gini Index is generally desirable, indicating a purer split. This suggests that the model performed relatively well on this subset, and the data might be more separable or less impure.
+Fold: 3: Accuracy: 71.60%, Gini Index: 0.5844
+
+Average Sensitivity: This is relatively low at 42.13%. It indicates the proportion of actual positive instances correctly predicted as positive. A higher sensitivity is desirable, especially if identifying positive instances is crucial.
+
+Average Specificity: This is relatively high at 85.90%. It indicates the proportion of actual negative instances correctly predicted as negative. High specificity is generally good, but it might be due to the imbalance in the dataset.
+
+Average Precision: Precision is the proportion of true positive predictions among all positive predictions. The average precision is 56.95%, suggesting that about 57% of the instances predicted as positive are true positives.
 
 ```{r}
 rpart.plot(tree_model, uniform = TRUE,cex = 0.5, main = "CART Tree - Fold 3")
 text(tree_model, use.n = TRUE, cex = 0.8)
 ```
 ## gain ratio (C4.5 algorithm) 
+The C5.0 function is using the gain ratio for splitting nodes in the decision tree. The control argument is specifying additional parameters, and CF in this case is controlling the cost factor for misclassification. It doesn't affect the splitting criterion, which remains gain ratio by default.
 
+## 10 folds
 ```{r}
-
-
-# Define the formula
-myFormula <- class ~ checking_status + duration + credit_history + purpose + credit_amount + savings_status +
-  employment + installment_commitment + personal_status + other_parties + residence_since +
-  property_magnitude + age + other_payment_plans + housing + existing_credits + job +
-  num_dependents + own_telephone + foreign_worker
-
-# Set seed for reproducibility
 set.seed(123)
 
 # Define the number of folds
 num_folds <- 10
 
-# Create folds
+# Initialize variables to store overall performance metrics
+overall_sensitivity <- 0
+overall_specificity <- 0
+overall_precision <- 0
+
+# Perform cross-validation with C5.0 and pruning
 folds <- createFolds(dataset$class, k = num_folds, list = TRUE, returnTrain = FALSE)
 
-# Perform cross-validation with C5.0
 for (i in 1:num_folds) {
- 
-# Define the percentage for training data
-train_percentage <- 0.50 # 80% for training, 20% for testing
+  # Extract the indices for the current fold
+  test_indices <- unlist(folds[[i]])
 
-# Create an index for splitting
-split_index <- sample(1:nrow(dataset), size = round(train_percentage * nrow(dataset)))
+  # Create training and testing sets
+  training_set <- dataset[-test_indices, ]
+  testing_set <- dataset[test_indices, ]
 
-# Create training and testing sets
-training_set <- dataset[split_index, ]
-testing_set <- dataset[-split_index, ]
-
-
-  # Train the C5.0 model
-  tree_model <- C5.0(myFormula, data = training_set)
+  # Train the C5.0 model with pruning
+  tree_model <- C5.0(myFormula, data = training_set, control = C5.0Control(CF = 0.01))
 
   # Make predictions on the testing set
   predictions <- predict(tree_model, newdata = testing_set)
@@ -842,18 +867,47 @@ testing_set <- dataset[-split_index, ]
   confusion_matrix <- table(predictions, testing_set$class)
   accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
 
-  # Print or store the results
-  cat(sprintf("Fold: %d, Accuracy: %.2f%%\n", i, accuracy * 100))
+  # Compute Sensitivity, Specificity, Precision using caret's confusionMatrix
+  perf_metrics <- confusionMatrix(predictions, testing_set$class)$byClass
+
+  # Aggregate metrics for overall performance
+  overall_sensitivity <- overall_sensitivity + perf_metrics["Sensitivity"]
+  overall_specificity <- overall_specificity + perf_metrics["Specificity"]
+  overall_precision <- overall_precision + perf_metrics["Pos Pred Value"]
+
+ 
 }
+ cat(sprintf("Fold: %d, Accuracy: %.2f%%\n", i, accuracy * 100))
+  print(confusion_matrix)
+  
+# Calculate average metrics over all folds
+avg_sensitivity <- overall_sensitivity / num_folds
+avg_specificity <- overall_specificity / num_folds
+avg_precision <- overall_precision / num_folds
+
+# Print or use the average values as needed
+cat(sprintf("Average Sensitivity: %.2f%%\n", avg_sensitivity * 100))
+cat(sprintf("Average Specificity: %.2f%%\n", avg_specificity * 100))
+cat(sprintf("Average Precision: %.2f%%\n", avg_precision * 100))
 
 
 ```
+Fold 10: accuracy:68.69%.
 
+Average Sensitivity: 40.13%
+ measures the proportion of actual positive instances that were correctly identified by the model. In this case, the model, on average, correctly identified only 40.13% of the actual positive instances.
+
+Average Specificity: 86.19%
+Specificity (True Negative Rate) measures the proportion of actual negative instances that were correctly identified by the model. The model, on average, correctly identified 86.19% of the actual negative instances.
+
+Average Precision: 56.80%
+Precision (Positive Predictive Value) measures the proportion of positive instances among the instances predicted as positive by the model. On average, 56.80% of the instances predicted as positive by the model were actually positive.
 ```{r}
-plot(tree_model, uniform = TRUE, main = "C4.5 Tree - Fold 10")
+plot(tree_model, uniform = TRUE, cex = 0.7,main = "C4.5 Tree - Fold 10")
 
 ```
 
+## 5 folds
 ```{r}
 
 set.seed(123)
@@ -861,10 +915,14 @@ set.seed(123)
 # Define the number of folds
 num_folds <- 5
 
-# Create folds
+# Initialize variables to store overall performance metrics
+overall_sensitivity <- 0
+overall_specificity <- 0
+overall_precision <- 0
+
+# Perform cross-validation with C5.0 and pruning
 folds <- createFolds(dataset$class, k = num_folds, list = TRUE, returnTrain = FALSE)
 
-# Perform cross-validation
 for (i in 1:num_folds) {
   # Extract the indices for the current fold
   test_indices <- unlist(folds[[i]])
@@ -873,28 +931,60 @@ for (i in 1:num_folds) {
   training_set <- dataset[-test_indices, ]
   testing_set <- dataset[test_indices, ]
 
-  # Train the rpart model with information split method
-  tree_model <- rpart(myFormula, data = training_set, method = 'class', parms = list(split = 'information'))
+  # Train the C5.0 model with pruning
+  tree_model <- C5.0(myFormula, data = training_set, control = C5.0Control(CF = 0.01))
 
   # Make predictions on the testing set
-  predictions <- predict(tree_model, newdata = testing_set, type = 'class')
+  predictions <- predict(tree_model, newdata = testing_set)
 
-  # Evaluate the model (you can customize this based on your evaluation criteria)
+  # Evaluate the model
   confusion_matrix <- table(predictions, testing_set$class)
   accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
 
-  # Print or store the results
-  cat(sprintf("Fold: %d, Accuracy: %.2f%%\n", i, accuracy * 100))
+  # Compute Sensitivity, Specificity, Precision using caret's confusionMatrix
+  perf_metrics <- confusionMatrix(predictions, testing_set$class)$byClass
+
+  # Aggregate metrics for overall performance
+  overall_sensitivity <- overall_sensitivity + perf_metrics["Sensitivity"]
+  overall_specificity <- overall_specificity + perf_metrics["Specificity"]
+  overall_precision <- overall_precision + perf_metrics["Pos Pred Value"]
+
+ 
 }
+ cat(sprintf("Fold: %d, Accuracy: %.2f%%\n", i, accuracy * 100))
+  print(confusion_matrix)
+  
+# Calculate average metrics over all folds
+avg_sensitivity <- overall_sensitivity / num_folds
+avg_specificity <- overall_specificity / num_folds
+avg_precision <- overall_precision / num_folds
+
+# Print or use the average values as needed
+cat(sprintf("Average Sensitivity: %.2f%%\n", avg_sensitivity * 100))
+cat(sprintf("Average Specificity: %.2f%%\n", avg_specificity * 100))
+cat(sprintf("Average Precision: %.2f%%\n", avg_precision * 100))
 
 ```
 
+fold5: Accuracy: 69.35%
+
+Average Sensitivity: 38.49%:
+Sensitivity (also called recall or true positive rate) is the ability of the model to correctly identify positive instances.
+In this case, the average sensitivity is relatively low at 38.49%, suggesting that the model has difficulty correctly identifying positive cases.
+
+Average Specificity: 85.18%:
+Specificity is the ability of the model to correctly identify negative instances.
+The average specificity is relatively high at 85.18%, indicating that the model is performing well in identifying negative cases.
+
+Average Precision: 52.27%:
+Precision is the ratio of correctly predicted positive observations to the total predicted positives.
+An average precision of 52.27% suggests that, on average, around half of the instances predicted as positive by the model are true positives.
 ```{r}
 plot(tree_model, uniform = TRUE, main = "C4.5 Tree - Fold 5")
-text(tree_model, use.n = TRUE, cex = 0.8)
 
 ```
 
+## 3 folds
 ```{r}
 
 set.seed(123)
@@ -902,10 +992,11 @@ set.seed(123)
 # Define the number of folds
 num_folds <- 3
 
-# Create folds
+
+
+# Perform cross-validation with C5.0 and pruning
 folds <- createFolds(dataset$class, k = num_folds, list = TRUE, returnTrain = FALSE)
 
-# Perform cross-validation
 for (i in 1:num_folds) {
   # Extract the indices for the current fold
   test_indices <- unlist(folds[[i]])
@@ -914,28 +1005,37 @@ for (i in 1:num_folds) {
   training_set <- dataset[-test_indices, ]
   testing_set <- dataset[test_indices, ]
 
-  # Train the rpart model with information split method
-  tree_model <- rpart(myFormula, data = training_set, method = 'class', parms = list(split = 'information'))
+  # Train the C5.0 model with pruning
+  tree_model <- C5.0(myFormula, data = training_set, control = C5.0Control(CF = 0.01))
 
   # Make predictions on the testing set
-  predictions <- predict(tree_model, newdata = testing_set, type = 'class')
+  predictions <- predict(tree_model, newdata = testing_set)
 
-  # Evaluate the model (you can customize this based on your evaluation criteria)
+  # Evaluate the model
   confusion_matrix <- table(predictions, testing_set$class)
   accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
 
-  # Print or store the results
-  cat(sprintf("Fold: %d, Accuracy: %.2f%%\n", i, accuracy * 100))
+ 
 }
+ cat(sprintf("Fold: %d, Accuracy: %.2f%%\n", i, accuracy * 100))
+  print(confusion_matrix)
+  
+
 
 ```
 
+Fold 3, Accuracy: 71.60%:
+True Positive (TP): 200
+True Negative (TN): 37
+False Positive (FP): 31
+False Negative (FN): 63
+This fold shows that the model correctly identified 200 instances of class 1 and 37 instances of class 0. However, it misclassified 31 instances of class 0 as class 1 and 63 instances of class 1 as class 0.
 
 ```{r}
 plot(tree_model, uniform = TRUE, main = "C4.5 Tree - Fold 3")
-text(tree_model, use.n = TRUE, cex = 0.8)
 
 ```
+
 
 
 ## information gain usning ID3 algorithm 
