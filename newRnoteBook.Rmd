@@ -973,7 +973,7 @@ train_control <- trainControl(method = "cv", number = num_folds)
 print(id3_model)
 
 #plotting the tree
- plot(id3_model, uniform = TRUE, main = "Pruned Decision Tree")
+ prp (id3_model, uniform = TRUE, main = "Pruned Decision Tree")
 text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
 
 # Making Predictions 
@@ -987,6 +987,74 @@ confusion_matrix <- table(predictions, new_data$class)
  print(confusion_matrix)
 
 ```
+## 5 folds 
+
+library(rpart)
+
+# Assuming 'dataset' is the data frame
+
+# Define the number of folds
+num_folds <- 5
+
+# Sets up the control parameters for cross-validation
+train_control <- trainControl(method = "cv", number = num_folds)
+
+# Builds an ID3 decision tree 
+ id3_model <- rpart(class ~ checking_status + duration + credit_history + purpose + credit_amount + savings_status + employment + installment_commitment + personal_status + other_parties + residence_since + property_magnitude + age + other_payment_plans + housing + existing_credits + job + num_dependents + own_telephone + foreign_worker, data = dataset, method = "class", control = rpart.control(cp = 0.01), parms = list(split = "information"), xval = num_folds)
+
+# printing the tree's info
+print(id3_model)
+
+#plotting the tree
+ prp (id3_model, uniform = TRUE, main = "Pruned Decision Tree")
+text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
+
+# Making Predictions 
+new_data <- data.frame(dataset)
+
+predictions <- predict(id3_model, newdata = new_data, type = "class")
+
+# Confusion Matrix:
+confusion_matrix <- table(predictions, new_data$class)
+
+ print(confusion_matrix)
+
+```
+
+## 10 folds 
+
+library(rpart)
+
+# Assuming 'dataset' is the data frame
+
+# Define the number of folds
+num_folds <- 10
+
+# Sets up the control parameters for cross-validation
+train_control <- trainControl(method = "cv", number = num_folds)
+
+# Builds an ID3 decision tree 
+ id3_model <- rpart(class ~ checking_status + duration + credit_history + purpose + credit_amount + savings_status + employment + installment_commitment + personal_status + other_parties + residence_since + property_magnitude + age + other_payment_plans + housing + existing_credits + job + num_dependents + own_telephone + foreign_worker, data = dataset, method = "class", control = rpart.control(cp = 0.01), parms = list(split = "information"), xval = num_folds)
+
+# printing the tree's info
+print(id3_model)
+
+#plotting the tree
+ prp (id3_model, uniform = TRUE, main = "Pruned Decision Tree")
+text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
+
+# Making Predictions 
+new_data <- data.frame(dataset)
+
+predictions <- predict(id3_model, newdata = new_data, type = "class")
+
+# Confusion Matrix:
+confusion_matrix <- table(predictions, new_data$class)
+
+ print(confusion_matrix)
+
+```
+
 
 
 ##clustring "1st trailer only"
