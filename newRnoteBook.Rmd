@@ -1211,28 +1211,229 @@ If we were looking at it in terms of accuracy we highly recommend using Informat
 
 
 ## clustring: 
+Clustering is the process of organizing a collection of objects in a manner where items within the same group (cluster) share similarities, distinguishing them from objects in other groups (clusters). In the upcoming section, we aim to partition our dataset using the k-means algorithm, exploring three distinct k-means values (2, 3, and 4). For each trial, we will assess the average silhouette, total within-cluster sum of squares, and BCubed metrics (precision and recall).
 
+```{r setup-libraries}
+options(repos = c(CRAN = "https://cran.rstudio.com"))
 
-##clustring "1st trailer only"
+# Install and load necessary libraries
+install.packages("tidyverse")
+install.packages("cluster")
+install.packages("fastDummies")
+
+library(tidyverse)
+library(cluster)  # For clustering
+library(fastDummies)  # For one-hot encoding
+
+```
+
 ```{r}
-# Load necessary packages
-if (!require(caret)) {
-  install.packages("caret")
-}
-if (!require(cluster)) {
-  install.packages("cluster")
-}
-if (!require(fpc)) {
+# Load the data
+data <- read.csv("credit_customers.csv")
+
+# Convert numeric columns to numeric types (if they are not already)
+numeric_columns <- c("duration", "credit_amount", "installment_commitment", "age", "existing_credits", "num_dependents")
+data[numeric_columns] <- lapply(data[numeric_columns], as.numeric)
+
+# One-hot encode categorical variables
+categorical_columns <- c("checking_status", "credit_history", "purpose", "savings_status", "employment",
+                         "personal_status", "other_parties", "property_magnitude", "other_payment_plans", 
+                         "housing", "job", "own_telephone", "foreign_worker", "class")
+data <- dummy_cols(data, select_columns = categorical_columns)
+```
+```{r}
+# Remove the original categorical columns after encoding
+data <- data %>% select(-all_of(categorical_columns))
+```
+
+```{r}
+# Handle missing values (if any)
+data <- na.omit(data) 
+
+# Z-score Standardization
+# Apply standardization only to numeric columns
+data_standardized <- data
+data[numeric_columns] <- scale(data[numeric_columns])
+# Assuming you have already standardized your data and it is stored in `data_standardized`
+
+# Step 2: Perform PCA
+pca_result <- prcomp(data_standardized, center = FALSE, scale. = FALSE)  # Data is already standardized
+
+# Step 3: Analyze PCA Results
+# View summary of PCA results
+print(summary(pca_result))
+
+# Decide how many principal components to keep based on variance explained
+# For example, you might decide to keep components that explain 80% of the variance
+# This is just an example, adjust based on your analysis
+cum_var_explained <- cumsum(pca_result$sdev^2 / sum(pca_result$sdev^2))
+num_components <- which(cum_var_explained >= 0.8)[1]
+
+# Step 4: Use Principal Components for Clustering
+# Select the number of principal components to use
+data_pca <- pca_result$x[, 1:num_components]
+
+loadings <- pca_result$rotation[, 1]
+print(loadings)
+
+data_pca <- pca_result$x[, 1]
+k2_pca <- kmeans(data_pca, centers = 2, nstart = 25)
+
+data_for_plot <- cbind(data_pca, rep(0, length(data_pca)))
+data_pca_df <- as.data.frame(data_pca)
+# Extracting the first three principal components
+data_pca <- pca_result$x[, 1:3]
+
+# Convert the PCA results to a data frame 
+data_pca_df <- as.data.frame(data_pca)
+```
+
+```{r}
+# Load necessary library for visualization
+library(factoextra)
+
+# Clustering and plotting for k = 2, 3, and 4
+set.seed(123)  # For reproducibility
+
+# Clustering for k = 2
+k2 <- kmeans(data_pca_df, centers = 2, nstart = 25)
+fviz_cluster(k2, data = data_pca_df, geom = "point", 
+             stand = FALSE, frame = FALSE, 
+             main = "Cluster Visualization (k=2)")
+print(paste("Total WSS for k=2:", k2$tot.withinss))
+
+
+# Clustering for k = 3
+k3 <- kmeans(data_pca_df, centers = 3, nstart = 25)
+fviz_cluster(k3, data = data_pca_df, geom = "point", 
+             stand = FALSE, frame = FALSE, 
+             main = "Cluster Visualization (k=3)")
+print(paste("Total WSS for k=3:", k3$tot.withinss))
+
+
+# Clustering for k = 4
+k4 <- kmeans(data_pca_df, centers = 4, nstart = 25)
+fviz_cluster(k4, data = data_pca_df, geom = "point", 
+             stand = FALSE, frame = FALSE, 
+             main = "Cluster Visualization (k=4)")
+print(paste("Total WSS for k=4:", k4$tot.withinss))
+
+
+```
+
+1. **Load Data:** Reads a CSV file named "credit_customers.csv" into the variable 'data.'
+
+2. **Numeric Conversion:** Converts specific columns (duration, credit_amount, installment_commitment, age, existing_credits, num_dependents) to numeric types if they are not already.
+
+3. **One-Hot Encoding:** Performs one-hot encoding on categorical variables listed in 'categorical_columns,' creating dummy variables for each category. This expands the dataset with binary columns representing each category.
+
+4. **Remove Original Categorical Columns:** Removes the original categorical columns after one-hot encoding to avoid redundancy.
+
+5. **Handle Missing Values:** Uses `na.omit` to remove rows with missing values from the dataset.
+
+In short, the code prepares the dataset for analysis by converting numeric types, one-hot encoding categorical variables, and handling missing values.
+
+
+```{r clustering}
+set.seed(123)  # For reproducibility
+
+# Perform k-means clustering with different K values
+k2 <- kmeans(data, centers = 2, nstart = 25)
+k3 <- kmeans(data, centers = 3, nstart = 25)
+k4 <- kmeans(data, centers = 4, nstart = 25)
+
+# Print cluster centers for a quick check
+print(k2$centers)
+print(k3$centers)
+print(k4$centers)
+```
+```{r evaluate-clusters}
+# Silhouette width for each K
+sil_width2 <- silhouette(k2$cluster, dist(data))
+sil_width3 <- silhouette(k3$cluster, dist(data))
+sil_width4 <- silhouette(k4$cluster, dist(data))
+
+# Calculate average silhouette width for each K
+avg_sil_width2 <- mean(sil_width2[, "sil_width"])
+avg_sil_width3 <- mean(sil_width3[, "sil_width"])
+avg_sil_width4 <- mean(sil_width4[, "sil_width"])
+```
+
+
+```{r}
+# Print average silhouette widths
+print(avg_sil_width2)
+print(avg_sil_width3)
+print(avg_sil_width4)
+
+# Total within-cluster sum of squares for each K
+total_withinss2 <- k2$tot.withinss
+total_withinss3 <- k3$tot.withinss
+total_withinss4 <- k4$tot.withinss
+
+# Print total within-cluster sum of squares
+print(total_withinss2)
+print(total_withinss3)
+print(total_withinss4)
+
+# BCubed precision and recall (requires additional computations, shown here as placeholders)
+# bcubed_precision2 <- ...
+# bcubed_recall2 <- ...
+# Similarly for k3 and k4
+```
+
+
+The output includes evaluation metrics for clustering:
+
+- **Average Silhouette Width:** Measures cluster separation. Higher values(e.g., 0.722 for K=2) indicate better-defined clusters.
+  
+- **Total Within-Cluster Sum of Squares:** Reflects cluster compactness. Smaller values suggest more compact clusters (e.g., 2,405,448,167 for K=2).
+
+These metrics favor K=2 as it has higher silhouette width and lower within-cluster sum of squares. Additional computations are needed for BCubed precision and recall.
+
+
+
+
+```{r visualize-clusters}
+# Load necessary library for visualization
+library(factoextra)
+
+# Plot for K=2
+fviz_cluster(k2, data = data)
+
+# Plot for K=3
+fviz_cluster(k3, data = data)
+
+# Plot for K=4
+fviz_cluster(k4, data = data)
+
+```
+`
+
+- **K=2:**
+  - **Cluster 1:** Higher credit, longer duration, likely good credit.
+  - **Cluster 2:** Lower credit, shorter duration, likely bad credit.
+
+- **K=3:**
+  - **Cluster 1:** Similar to K=2 Cluster 2.
+  - **Cluster 2:** Similar to K=2 Cluster 1, more varied.
+  - **Cluster 3:** Moderate values between Clusters 1 and 2.
+
+- **K=4:**
+  - **Cluster 1:** Higher credit, longer duration, likely good credit.
+  - **Cluster 2:** Lower credit, shorter duration, likely bad credit.
+  - **Cluster 3:** Moderate values, more likely to have a car.
+  - **Cluster 4:** Similar to K=4 Cluster 1, more varied.
+  
+  Increasing overlap in clusters with higher K suggests that the algorithm may be creating more detailed and potentially noise-driven clusters. It's crucial to balance model metrics and consider the meaningful interpretation of clusters. Reevaluate K using methods like the elbow method and silhouette analysis and incorporate domain knowledge for context.
+
+
+```{r}
+if (!require(fpc)){
   install.packages("fpc")
 }
-if (!require(ggplot2)) {
-  install.packages("ggplot2")
-}
-library(caret)
 library(cluster)
 library(fpc)
-library(ggplot2)
-
 # Assuming 'dataset' is your data frame
 # Specify the numeric and categorical attributes
 numeric_attributes <- c("duration", "credit_amount", "age")
@@ -1261,29 +1462,6 @@ plot(1:10, wss, type = "b", main = "Elbow Method for Optimal k (k-means)",
 optimal_k <- which.min(wss)
 k_values <- c(optimal_k, optimal_k - 1, optimal_k + 1)
 
-# Create a list to store k-means plots
-kmeans_plots <- list()
-
-for (k in k_values) {
-  # Perform k-means clustering
-  kmeans_model <- kmeans(normalized_numeric_data, centers = k, nstart = 10)
-
-  # Plot the clusters for k-means with adjusted margins
-  par(mar = c(5, 4, 4, 2) + 0.1)
-  kmeans_plot <- ggplot(data = as.data.frame(normalized_numeric_data), aes(x = duration, y = credit_amount, color = factor(kmeans_model$cluster))) +
-    geom_point(size = 3) +
-    labs(title = paste("K-Means Clustering Results (k =", k, ")"), x = "Duration", y = "Credit Amount", color = "Cluster") +
-    theme_minimal()
-  
-  # Print the plot
-  print(kmeans_plot)
-  
-  # Store the plot in the list
-  kmeans_plots[[as.character(k)]] <- kmeans_plot
-}
-
-# Display k-means plots
-kmeans_plots
 
 # Perform k-medoids clustering on categorical data
 dissimilarity_matrix <- daisy(categorical_data, metric = "gower")
@@ -1303,14 +1481,26 @@ bcubed_kmedoids <- cluster.stats(dissimilarity_matrix, kmedoids_model$cluster)$b
 cat("\nBCubed Precision and Recall for K-Medoids Clustering:\n")
 print(bcubed_kmedoids)
 
-# Plot the clusters for k-medoids with adjusted margins
-par(mar = c(5, 4, 4, 2) + 0.1)
-kmedoids_plot <- ggplot(data = as.data.frame(categorical_data), aes(x = factor(1), y = factor(2), color = factor(kmedoids_model$cluster))) +
-  geom_point(size = 3) +
-  labs(title = "K-Medoids Clustering Results", x = "Category 1", y = "Category 2", color = "Cluster") +
-  theme_minimal()
 
-# Print the k-medoids plot
-print(kmedoids_plot)
 
 ```
+
+ 
+
+The output shows the results of k-medoids clustering:
+
+- **Medoids:** Representative data points for each cluster.
+- **Clustering vector:** Assigns each data point to a cluster.
+- **Objective function:** The optimization criterion for clustering.
+
+The clusters are formed based on the dissimilarity matrix. Each data point is assigned to the medoid (representative) that minimizes the dissimilarity within its cluster.
+
+In our specific output:
+- Cluster 1: Medoids at IDs 308, 52, 887
+- Cluster 2: Medoids at IDs 309, 53, 892
+- Cluster 3: Medoids at IDs 52, 53, 892
+
+The "Objective function" values represent the quality of the clustering, with lower values indicating better-defined clusters. The "build" and "swap" values show the contributions to the objective function during the build and swap phases of the algorithm.
+
+Overall, the k-medoids algorithm has divided your data into three clusters, and the medoids represent central points within each cluster.
+
