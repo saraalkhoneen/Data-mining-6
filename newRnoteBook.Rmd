@@ -1,3 +1,13 @@
+---
+title: "Your Document Title"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(caret)
+```
+
 ### Project Motivation:
 In this project, our primary goal is to classify customers as either good or bad credit risks. We aim to assist financial institutions in making informed decisions regarding loan approvals based on an analysis of customers' payment behavior and other relevant attributes, such as age, income, loan amount, and employment status. By utilizing this dataset, we will build predictive models to assess customers' creditworthiness and use these models as tools for risk assessment and decision-making.
 
@@ -35,7 +45,7 @@ Origonaly our dataset consists of 21 attributes, but we only worked with 21 attr
   |num_dependents |numeric     |This attribute represents the number of dependents the loan applicant has. |
   |Own_telephone |numeric     |This attribute represents whether the loan applicant has their own 'telephone line or not. It can take one of the following values: 'none', or 'yes.|
   
-  ## Summary of the dataset
+## Summary of the dataset
   
 ```{r}
 setwd("C:/Users/jory0/OneDrive/Desktop/DataMining Phase 3")
@@ -61,6 +71,8 @@ The output is 21 , which is the number of columns
 summary(dataset)
 ```
 This summary provides an initial understanding of the data's structure and characteristics. 
+the min and max in different catagories would help us know the range of the attributes, therefore help us in dealing with the outliers.
+the mean and median gave us insights that will be helpful during the preproccesing part.
 
 now we want to calculate the variance for the numeric attributes to learn about the spread of the data and how close they are from the mean.
 
@@ -101,8 +113,7 @@ we got a closer look at our data using these statical mearues:
 2- Class type 
 3- Central tendancy (mode, mean and median) of each attribute with the Q1 and Q3
 4- Variance 
-TTo gain deeper insights, we want want to explore and visualize the data further using graphs. 
-
+now that we have a deeper insights, we want want to explore and visualize the data further using graphs. 
 
 ## Graphs 
 
@@ -119,7 +130,7 @@ ggplot(dataset, aes(x = class)) +
   ggtitle("Credit Risks Distribution") 
 
 ```
-From this bar chart we can see that we do have an balanced dataset, with 70% 'good' and 30% 'bad' labeled records this dataset is acceptable as it is and we do not need to take further actions regarding this matter.
+From this bar chart we can see that we do not have an balanced dataset, with 70% 'good' and 30% 'bad' labeled records this dataset is acceptable as it is and we do not need to take further actions regarding this matter.
 
 
 2- 
@@ -139,7 +150,16 @@ increases the chances of getting good credit risks, however there are 15% of peo
 meaning there are other factors in deciding the credits risks. 
 renting and housing for free customers mostly have good credits risks. 
 
-3-
+
+```{r}
+forfree_bad_count <- nrow (subset(dataset,housing == "for free" & class == "bad"))
+
+```
+
+using this function, we discovered that more than 40% of customers who live in their houses for free have bad credits.
+
+
+3- 
 ```{r}
 ggplot(dataset, aes(x = checking_status, fill = class)) +
   geom_bar(position = "dodge", stat = "count") +
@@ -148,36 +168,45 @@ ggplot(dataset, aes(x = checking_status, fill = class)) +
        y = "Count",
        fill = "Class")
 ```
+this graphs showed us how different checking status is distributed with our class atrribute
+most costumers that have no checking status is considered having good credit risks 
+meaning having no checking status increases the chances of getting good credit risks 
 
-
-
-
-
-4- 
+4-
 
 ```{r}
-
+hist(dataset$age, main = "Histogram of Age", xlab = "Age", ylab = "Frequency", col = "lightblue")
 ```
-
+We ceated a histogram for the "Age" variable to show the age groups for our sample of customers to give a better understanding for our overall variables values and results.  
+most of the custemers age lies between (20 - 50) some custemers being a bit older 
+there is some outliers in the age 70 that we will study in the outliers section.
 
 5-
 
 ```{r}
-
+plot(dataset$credit_amount, dataset$installment_duration,
+     xlab = "Credit Amount", ylab = "duration",
+     main = "Credit Amount and duration")
 ```
+We created a Scatter plot for the "credit amount" and "duration" attributes to see if there is a correlation between them, from this scatter plot we can say that there is no clear correlation between the duration variable and the credit amount variable
 
 6-
-
-
 ```{r}
 
 
+# Create a grouped violin plot with 'checking_status' on the x-axis and 'credit_amount' on the y-axis
+ggplot(dataset, aes(x = checking_status, y = credit_amount)) +
+  geom_violin(fill = "lightblue", color = "blue") +
+  labs(x = "Checking Status", y = "Credit Amount", title = "Grouped Violin Plot")
+
 
 ```
 
+The graph illustrates how the credit amounts are distributed within different categories of checking status. Each violin represents a category of checking status, and its width indicates the density of data points. Also whither there are variations in credit amounts based on checking status which is based on the graph, the checkings status varies in the credit amount.
 
 
 ## Outliers
+
 First we find the range of each one of the attributes which is collected in the statical measures we did in the
 first step using the "summary()" function, using the Min and Max to find the range. 
 this would help us in finding if the outliers detected fall in the range or not
@@ -212,7 +241,6 @@ sum(Outamount)
 ```
 
 Then we calculated the sum of All the outliers, the result is 2 for the age / 1 for the duration. / 2  for the credit amount.
-
 ```{r}
 
 Find_outlierAge <- which(OutAge == TRUE, arr.ind = TRUE)
@@ -220,7 +248,6 @@ Find_outlierDuration <- which(OutDuration == TRUE, arr.ind = TRUE)
 Find_outlierAmount <- which(Outamount == TRUE, arr.ind = TRUE)
 
 ```
-after that we want to know the specefic values of the outliers and we saved them in Find_outlierAge,Find_outlierDuration,Find_outlierAmount
 
 ```{r}
 outlierRowsAge <- dataset[Find_outlierAge, ]
@@ -232,19 +259,27 @@ outlierRowsAmount <- dataset[Find_outlierAmount, ]
 ```{r}
 print(outlierRowsAge)
 ```
-the rows with the Age is found to be outliers 
+
 ```{r}
 print(outlierRowsDuration)
 ```
-the rows with the Duraction is found to be outliers
 
 ```{r}
 print(outlierRowsAmount)
 ```
-the rows with the credit_amount is found to be outliers
 
 
 
+to find the exact row which the outliers are in.
+
+```{r}
+Find_outlierAge <- which(OutAge == TRUE, arr.ind = TRUE)
+Find_outlierDuration <- which(OutDuration == TRUE, arr.ind = TRUE)
+Find_outlierAmount <- which(Outamount == TRUE, arr.ind = TRUE)
+
+```
+
+Then we find the exact values of the outliers and study them. 
 
 ```{r}
 cat("Outliers in credit_amount:", Find_outlierAmount, "\n")
@@ -276,8 +311,6 @@ finaly removing the outliers for the reasons we mentioned above.
 
 
 
-
-
 ## Checking for Missing Values 
 
 ```{r}
@@ -290,7 +323,7 @@ print(total_missing_values)
 our dataset has not missing values so no need for filling or deleting any rows in that sense. 
 
 
-## Data Conversion (Encoding categorical data)/
+## Data Conversion (Encoding categorical data)
 To prepare the data for analysis, we need to convert certain categorical attributes into numerical values. 
 
 Let's take a closer look at how this is done for specific attributes:
@@ -466,6 +499,9 @@ print(head(dataset))
 
 
 
+
+
+
 ## Normalization
 Normalization is an essential data preprocessing step to ensure that numeric attributes are on a consistent scale
 
@@ -503,131 +539,91 @@ dataset$credit_amount <- min_max_scaling(dataset$credit_amount)
 
 After normalization, the values of these attributes will now fall within the range[0,1], ensuring that they are all on a common scale and ready for further analysis.
 
-## Feature Selection : 
 
 ## First: chi square 
+
 We will apply chi square for all nominal data in our dataset to measure weather the distribution of the variables and the dataset class is independent or not.
 
 ```{r}
-tbl1 = table(dataset$class, dataset$purpose)
-tbl1 
-chisq.test(tbl1)
+tbl = table(dataset$class, dataset$purpose)
+tbl 
+chisq.test(tbl)
 ```
-
 Here we put the attribute 'class' values and the attribute 'purpose' values in a table where the rows represent 'class' and the columns 'purpose', then we checked the chi square for the table.
 The p-value we got as a result of this test was 0.0001157 which is less than 0.05. Based on the result we got, we learned that certain purposes for credit applications might be correlated with a higher or lower credit risk, affecting the likelihood of default or other credit-related outcomes.
 
 
 ```{r}
-tbl2 = table(dataset$class, dataset$personal_status)
-tbl2 
-chisq.test(tbl2)
+tbl = table(dataset$class, dataset$personal_status)
+tbl 
+chisq.test(tbl)
 ```
 Here we put the attribute 'class' values and the attribute 'personal_status' values in a table where the rows represent 'class' and the columns 'personal_status', then we checked the chi square for the table.
 The p-value we got as a result of this test was 0.02224 which is less than 0.05. Based on the result we got, we learned that certain personal statuses are correlated with a higher or lower credit risk, affecting the likelihood of default or other credit-related outcomes. 
 
 
 ```{r}
-tbl3 = table(dataset$class, dataset$other_parties)
-tbl3 
-chisq.test(tbl3)
+tbl = table(dataset$class, dataset$other_parties)
+tbl 
+chisq.test(tbl)
 ```
-
 Here we put the attribute 'class' values and the attribute 'other_parties' values in a table where the rows represent 'class' and the columns 'other_parties', then we checked the chi square for the table.
 The p-value we got as a result of this test was 0.03606 which is less than 0.05. Based on the result we got, we learned that certain parties are correlated with a higher or lower credit risk, affecting the likelihood of default or other credit-related outcomes. 
 
 ```{r}
-tbl4 = table(dataset$class, dataset$property_magnitude)
-tbl4 
-chisq.test(tbl4)
+tbl = table(dataset$class, dataset$property_magnitude)
+tbl 
+chisq.test(tbl)
 ```
 Here we put the attribute 'class' values and the attribute 'property_magnitude' values in a table where the rows represent 'class' and the columns 'property_magnitude', then we checked the chi square for the table.
 The p-value we got as a result of this test was 2.858e-05 which is less than 0.05. Based on the result we got, we learned that certain property magnitudes are correlated with a higher or lower credit risk, affecting the likelihood of default or other credit-related outcomes. 
 
 ```{r}
-tbl5 = table(dataset$class, dataset$housing)
-tbl5 
-chisq.test(tbl5)
+tbl = table(dataset$class, dataset$housing)
+tbl 
+chisq.test(tbl)
 ```
 Here we put the attribute 'class' values and the attribute 'housing' values in a table where the rows represent 'class' and the columns 'housing', then we checked the chi square for the table.
 The p-value we got as a result of this test was 0.0001117 which is less than 0.05. Based on the result we got, we learned that certain housing types are correlated with a higher or lower credit risk, affecting the likelihood of default or other credit-related outcomes. 
 
 ```{r}
-tbl6 = table(dataset$class, dataset$job)
-tbl6 
-chisq.test(tbl6)
+tbl = table(dataset$class, dataset$job)
+tbl 
+chisq.test(tbl)
 ```
 Here we put the attribute 'class' values and the attribute 'job' values in a table where the rows represent 'class' and the columns 'job', then we checked the chi square for the table.
 The p-value we got as a result of this test was 0.5966 which is more than 0.05. Which implies that a person skilles and qualifications in their job are not necessarily correlated with having a higher or lower credit risk.
 
 ```{r}
-tbl7 = table(dataset$class, dataset$foreign_worker)
-tbl7 
-chisq.test(tbl7)
+tbl = table(dataset$class, dataset$foreign_worker)
+tbl 
+chisq.test(tbl)
 ```
 Here we put the attribute 'class' values and the attribute 'foreign_worker' values in a table where the rows represent 'class' and the columns 'foreign_worker', then we checked the chi square for the table.
 The p-value we got as a result of this test was 0.01583 which is less than 0.05. Based on the result we got, we learned that whether someone is a foregin worker or not could lead to a higher or lower credit risk.
 
 ```{r}
-tbl8 = table(dataset$class, dataset$own_telephone)
-tbl8 
-chisq.test(tbl8)
+tbl = table(dataset$class, dataset$own_telephone)
+tbl 
+chisq.test(tbl)
 ```
 Here we put the attribute 'class' values and the attribute 'own_telephone' values in a table where the rows represent 'class' and the columns 'own_telephone', then we checked the chi square for the table.
 The p-value we got as a result of this test was 0.2789 which is more than 0.05. Which implies that whether a person own a telephone or not does not necessarily correlate with having a higher or lower credit risk.
 
 ```{r}
-tbl9 = table(dataset$class, dataset$other_payment_plans)
-tbl9 
-chisq.test(tbl9)
-
+tbl = table(dataset$class, dataset$other_payment_plans)
+tbl 
+chisq.test(tbl)
 ```
 Here we put the attribute 'class' values and the attribute 'other_payment_plans' values in a table where the rows represent 'class' and the columns 'other_payment_plans', then we checked the chi square for the table.
 The p-value we got as a result of this test was 0.001629 which is less than 0.05. Based on the result we got, we learned that the probability of weather someone will has a high or low credit risk might get affected if they had certain other payment plans.
-
-```{r}
-tbl10 = table(dataset$class, dataset$existing_credits)
-tbl10
-chisq.test(tbl10)
-```
-
-```{r}
-tbl11 = table(dataset$class, dataset$employment)
-tbl11 
-chisq.test(tbl11)
-```
-Here we put the attribute 'class' values and the attribute 'employment' values in a table where the rows represent 'class' and the columns 'employment', then we checked the chi square for the table.
-The p-value we got as a result of this test was 0.001045 which is less than 0.05. Based on it, we can say that the employment status influences credit risks which is logically correct.
-
-```{r}
-tbl12 = table(dataset$class, dataset$savings_status)
-tbl12 
-chisq.test(tbl12)
-```
-Here we put the attribute 'class' values and the attribute 'savings_status' values in a table where the rows represent 'class' and the columns 'savings_status', then we checked the chi square for the table.
-The p-value we got as a result of this test was  2.761e-07 which is much less than 0.05. which implies that the savings status influences credit risks strongly.
-
-```{r}
-tbl13 = table(dataset$class, dataset$credit_history)
-tbl13 
-chisq.test(tbl13)
-```
-Here we put the attribute 'class' values and the attribute 'credit_history' values in a table where the rows represent 'class' and the columns 'credit_history', then we checked the chi square for the table.
-The p-value we got as a result of this test was 1.279e-12 which is much less than 0.05. and based on it, credit history strongly affect the credit risks.
-
-```{r}
-tbl14 = table(dataset$class, dataset$checking_status)
-tbl14 
-chisq.test(tbl14)
-```
-Here we put the attribute 'class' values and the attribute 'checking_status' values in a table where the rows represent 'class' and the columns 'checking_status', then we checked the chi square for the table.
-The p-value we got as a result of this test was 2.2e-16 which is much less than 0.05. Based on this number we can say thet credit satatus strongly affect the credit risks.
-
 
 
 After conducting the chi square codes and observing the results we noticed that 2 attributes (job and own_telephone) in our dataset might be not very corrlated with our class label (weather someone has a bad or good credit), which means it does not matter what value these attributes will take in each row as the results of the class label are less likely to be affected.
 
 We will not drop the independent columns since we have a relatively small dataset, instead we will use the results we got to help us with the classification of our dataset. 
+
+
 
 
 # Correlation between numeric attributes and the class label
@@ -662,14 +658,9 @@ our goal is to develop a predictive model that accurately categorizes instances 
 using different algorithms we want to build a model that can accurately predict the 'class' attribute for each instance in our dataset.
 the success of the classification model will be evaluated based on its ability to accurately classify instances according to the specified 'class' attribute, considering the unique patterns and characteristics present in our dataset.
 
-We will construct 9 different decision tree using 3 different algorithms, Gini Index with Cart algorithm, Gain Ratio using C4.5 algorithm and Information Gain using ID3 algorithm. This section contains 3 different part for each tree, inside each part there is 3 different trees using 3 different folds (3,5,10) and the results we got from this tree construction.
-
---------------------------------------------------------------------------
-
 We wanted to use Cross-validation (try different folds) on our trees to evaluate our model on different training and test sets, the only way we were able to get different trees for different folds was by constructing the models with different folds inside a loop which performed the steps for each fold separately. We believe that the reason why we got different trees using this method is because the code itself repeat the process so there was no mistakes that caused that error.
 
-Outstide the loop and after we reached the desired fold we printed, plotted and got the matrix for our trees.
-
+Outstide the loop and after we reached the desired fold we printed, plotted and got the matrix for our trees.
 
 
 ## using Gini Index CART Tree 
@@ -678,7 +669,10 @@ The Gini index is a measure of impurity or purity used in decision tree algorith
 ## 10 folds 
 
 ```{r}
-
+install.packages("rpart")
+library(rpart)
+install.packages("caret")
+library(caret)
 set.seed(123)
 k <- 10
 
@@ -851,6 +845,10 @@ The C5.0 function is using the gain ratio for splitting nodes in the decision tr
 ## 10 folds
 ```{r}
 set.seed(123)
+myFormula <- class ~ checking_status + duration + credit_history + purpose + credit_amount + savings_status +
+  employment + installment_commitment + personal_status + other_parties + residence_since +
+  property_magnitude + age + other_payment_plans + housing + existing_credits + job +
+  num_dependents + own_telephone + foreign_worker
 
 # Define the number of folds
 num_folds <- 10
@@ -925,7 +923,10 @@ plot(tree_model, uniform = TRUE, cex = 0.7,main = "C4.5 Tree - Fold 10")
 ```{r}
 
 set.seed(123)
-
+myFormula <- class ~ checking_status + duration + credit_history + purpose + credit_amount + savings_status +
+  employment + installment_commitment + personal_status + other_parties + residence_since +
+  property_magnitude + age + other_payment_plans + housing + existing_credits + job +
+  num_dependents + own_telephone + foreign_worker
 # Define the number of folds
 num_folds <- 5
 
@@ -1006,7 +1007,10 @@ set.seed(123)
 # Define the number of folds
 num_folds <- 3
 
-
+myFormula <- class ~ checking_status + duration + credit_history + purpose + credit_amount + savings_status +
+  employment + installment_commitment + personal_status + other_parties + residence_since +
+  property_magnitude + age + other_payment_plans + housing + existing_credits + job +
+  num_dependents + own_telephone + foreign_worker
 
 # Perform cross-validation with C5.0 and pruning
 folds <- createFolds(dataset$class, k = num_folds, list = TRUE, returnTrain = FALSE)
@@ -1050,9 +1054,8 @@ plot(tree_model, uniform = TRUE, main = "C4.5 Tree - Fold 3")
 
 ```
 
-
-
 ## information gain ID3 
+
 
 ## 3 folds 
 
@@ -1188,25 +1191,15 @@ False Negative (FN): 13 - The number of instances incorrectly predicted as class
  text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
   
 ```
-
 As mentioned earlier, we constructed 9 different trees using different algorithms and folds and this is what we found:
 
-In terms of algorithms we found that the Information Gain (ID3 algorithm) performed the best compared to the other 2 with accuracy between 76.53% - 71.99% for different folds. We noticed that models were consistent with their accuracy using fold (3) and that's probably because the data in fold 3 was a representative well-balanced sample of the dataset or that the chosen algorithms were well-suited for the characteristics of the data in this fold. 
+In terms of algorithms we found that the information gain (ID3) algorithm performed the best compared to the other 2 with accuracy between 76.53% - 71.99% for different folds. We noticed that models were consistent with their accuracy using fold (3) and that's probably because the data in fold 3 was a representative well-balanced sample of the dataset or that the chosen algorithms were well-suited for the characteristics of the data in this fold. 
 
-On the other hand, fold 10 gave the highest (with Information Gain) and the lowest (with Ratio Gain) accuracy on the same time, we believe that fold ten data's characteristics was well fitted for the Information Gain split but it might triggered the sensitivity of the Ratio Gain tree.
+On the other hand, fold 10 gave the highest (with Information Gain) and the lowest (with Ratio Gain) accuracy on the same time, we believe that fold ten data's characteristics was well fitted for the information gain split but it might targeted the sensitivity of the ratio gain tree.
 
 Since more than half of our dataset attributes were of categorial (nominal) type, it was expected for Ratio Gain to perform worse than the others since it does not handle nominal data as effective as them.
 
-If we were looking at it in terms of accuracy we highly recommend using Information Gain with 10 folds (or any fold) to classifiy this model since it gave the highest accuracy out of the three algorithms.
-
-
-
-
-
-
-
-
-
+if we were looking at it in terms of accuracy we highly recommend using information gain with 10 folds (or any fold) to classifiy this model since it gave the highest accuracy out of the three algorithms.
 
 
 
