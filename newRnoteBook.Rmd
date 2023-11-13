@@ -672,18 +672,8 @@ our goal is to develop a predictive model that accurately categorizes instances 
 using different algorithms we want to build a model that can accurately predict the 'class' attribute for each instance in our dataset.
 the success of the classification model will be evaluated based on its ability to accurately classify instances according to the specified 'class' attribute, considering the unique patterns and characteristics present in our dataset.
 
-## Handling the imbalanced dataset
+We will construct 9 different decision tree using 3 different algorithms, Gini Index with Cart algorithm, Gain Ratio using C4.5 algorithm and Information Gain using ID3 algorithm. This section contains 3 different part for each tree, inside each part there is 3 different trees using 3 different folds (3,5,10) and the results we got from this tree construction.
 
-```{r}
-# Install and load necessary packages
-install.packages("SuperLearner")
-install.packages("ROSE")
-install.packages("rpart.plot")
-
-library(SuperLearner)
-library(ROSE)
-library(rpart.plot)
-```
 
 
 ## using Gini Index CART Tree 
