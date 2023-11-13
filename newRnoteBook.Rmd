@@ -310,12 +310,13 @@ Let's take a closer look at how this is done for specific attributes:
 The "checking_status" attribute represents the status of the existing checking account of the loan applicant.
 
 ```{r}
-dataset$checking_status <- factor(dataset$checking_status, levels = c("<0", "0<=X<200", "no checking"), labels = c(1, 2, 3))
+dataset$checking_status <- factor(dataset$checking_status, levels = c("no checking","<0", ">=200", "0<=X<200"), labels = c(1, 2, 3, 4))
 ```
 We've encoded it as follows:
-- "<0" is labeled as 1.
-- "0<=X<200" is labeled as 2.
-- "no checking" is labeled as 3.
+- "no checking" is labeled as 1.
+- "<0" is labeled as 2.
+- ">=200" is labeled as 3.
+- "0<=X<200" is labeled as 4.
 
 ```{r}
 dataset$class <- factor(dataset$class, levels = c("bad", "good"), labels = c(0, 1))
