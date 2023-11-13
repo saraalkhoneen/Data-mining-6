@@ -1191,13 +1191,13 @@ False Negative (FN): 13 - The number of instances incorrectly predicted as class
 
 As mentioned earlier, we constructed 9 different trees using different algorithms and folds and this is what we found:
 
-In terms of algorithms we found that the information gain (ID3) algorithm performed the best compared to the other 2 with accuracy between 76.53% - 71.99% for different folds. We noticed that models were consistent with their accuracy using fold (3) and that's probably because the data in fold 3 was a representative well-balanced sample of the dataset or that the chosen algorithms were well-suited for the characteristics of the data in this fold. 
+In terms of algorithms we found that the Information Gain (ID3 algorithm) performed the best compared to the other 2 with accuracy between 76.53% - 71.99% for different folds. We noticed that models were consistent with their accuracy using fold (3) and that's probably because the data in fold 3 was a representative well-balanced sample of the dataset or that the chosen algorithms were well-suited for the characteristics of the data in this fold. 
 
-On the other hand, fold 10 gave the highest (with Information Gain) and the lowest (with Ratio Gain) accuracy on the same time, we believe that fold ten data's characteristics was well fitted for the information gain split but it might targeted the sensitivity of the ratio gain tree.
+On the other hand, fold 10 gave the highest (with Information Gain) and the lowest (with Ratio Gain) accuracy on the same time, we believe that fold ten data's characteristics was well fitted for the Information Gain split but it might triggered the sensitivity of the Ratio Gain tree.
 
 Since more than half of our dataset attributes were of categorial (nominal) type, it was expected for Ratio Gain to perform worse than the others since it does not handle nominal data as effective as them.
 
-If we were looking at it in terms of accuracy we highly recommend using information gain with 10 folds (or any fold) to classifiy this model since it gave the highest accuracy out of the three algorithms.
+If we were looking at it in terms of accuracy we highly recommend using Information Gain with 10 folds (or any fold) to classifiy this model since it gave the highest accuracy out of the three algorithms.
 
 
 
