@@ -947,7 +947,7 @@ text(tree_model, use.n = TRUE, cex = 0.8)
 num_folds <- 3
  
 folds <- createFolds(dataset$class, k = num_folds, list = TRUE, returnTrain = FALSE)
-or (fold in seq_along(folds)) {
+for (fold in seq_along(folds)) {
  # Extract training and testing sets for the current fold
  test_indices <- folds[[fold]]
  train_data <- dataset[-test_indices, ]
@@ -976,7 +976,7 @@ predictions <- predict(id3_model, newdata = test_data, type = "class")
 num_folds <- 5
  
 folds <- createFolds(dataset$class, k = num_folds, list = TRUE, returnTrain = FALSE)
-or (fold in seq_along(folds)) {
+for (fold in seq_along(folds)) {
  # Extract training and testing sets for the current fold
  test_indices <- folds[[fold]]
  train_data <- dataset[-test_indices, ]
@@ -1006,7 +1006,7 @@ predictions <- predict(id3_model, newdata = test_data, type = "class")
 num_folds <- 10
  
 folds <- createFolds(dataset$class, k = num_folds, list = TRUE, returnTrain = FALSE)
-or (fold in seq_along(folds)) {
+for (fold in seq_along(folds)) {
  # Extract training and testing sets for the current fold
  test_indices <- folds[[fold]]
  train_data <- dataset[-test_indices, ]
