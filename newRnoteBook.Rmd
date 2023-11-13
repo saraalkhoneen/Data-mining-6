@@ -103,9 +103,10 @@ we got a closer look at our data using these statical mearues:
 4- Variance 
 TTo gain deeper insights, we want want to explore and visualize the data further using graphs. 
 
+
 ## Graphs 
 
-1- We created a bar chart for the class label to know if our dataset is balanced or unbalanced. 
+1- We created a bar chart for the class label to know if our dataset is balanced or imbalanced 
 
 ```{r}
 library(ggplot2)
@@ -118,7 +119,7 @@ ggplot(dataset, aes(x = class)) +
   ggtitle("Credit Risks Distribution") 
 
 ```
-From this bar chart we can see that we do not have an imbalanced dataset, with 70% 'good' and 30% 'bad' labeled records this dataset is acceptable as it is and we do not need to take further actions regarding this matter.
+From this bar chart we can see that we do not have an balanced dataset, with 70% 'good' and 30% 'bad' labeled records this dataset is acceptable as it is and we do not need to take further actions regarding this matter.
 
 
 2- 
@@ -133,58 +134,47 @@ ggplot(dataset, aes(x = housing, fill = class)) +
     fill = "Credit Risk"
   )
 ```
-From this graph we interpreted that 'for free' value for the housing attribute has a large percent of the 'bad' class value.
+From this graph we interpreted that most customers that have their own house have good credit risks implying that having an owned housing 
+increases the chances of getting good credit risks, however there are 15% of people that have their own house still have bad credit risks 
+meaning there are other factors in deciding the credits risks. 
+renting and housing for free customers mostly have good credits risks. 
+
+3-
+```{r}
+ggplot(dataset, aes(x = checking_status, fill = class)) +
+  geom_bar(position = "dodge", stat = "count") +
+  labs(title = "Distribution of Checking Status by Class",
+       x = "Checking Status",
+       y = "Count",
+       fill = "Class")
+```
+
+
+
+
+
+4- 
 
 ```{r}
-forfree_bad_count <- nrow (subset(dataset,housing == "for free" & class == "bad"))
 
 ```
 
-To make sure that we had the correct result we used this function and we discovered that more than 40% of customers who live in their houses for free have bad credits.
-
-
-
-3- 
-
-```{r}
-hist(dataset$age, main = "Histogram of Age", xlab = "Age", ylab = "Frequency", col = "lightblue")
-```
-We ceated a histogram for the "Age" variable to show the age groups for our sample of customers to give a better understanding for our overall variables values and results.  
-most of the custemers age lies between (20 - 50) some custemers being a bit olde . 
-4-
-
-```{r}
-plot(dataset$credit_amount, dataset$installment_duration,
-     xlab = "Credit Amount", ylab = "duration",
-     main = "Credit Amount and duration")
-```
-We created a Scatter plot for the "credit amount" and "duration" attributes to see if there is a correlation between them, from this scatter plot we can say that there is no clear correlation between the duration variable and the credit amount variable
 
 5-
 
-
 ```{r}
-# Load the ggplot2 library if not already loaded
-library(ggplot2)
-
-# Create a grouped violin plot with 'checking_status' on the x-axis and 'credit_amount' on the y-axis
-ggplot(dataset, aes(x = checking_status, y = credit_amount)) +
-  geom_violin(fill = "lightblue", color = "blue") +
-  labs(x = "Checking Status", y = "Credit Amount", title = "Grouped Violin Plot")
-
 
 ```
 
-The graph illustrates how the credit amounts are distributed within different categories of checking status. Each violin represents a category of checking status, and its width indicates the density of data points. Also whether there are variations in credit amounts based on checking status.
-
+6-
 
 
 ```{r}
 
-total_missing_values <- sum(is.na(dataset))
-print(total_missing_values)
+
 
 ```
+
 
 
 ## Outliers
