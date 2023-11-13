@@ -1038,8 +1038,7 @@ plot(tree_model, uniform = TRUE, main = "C4.5 Tree - Fold 3")
 
 
 
-## information gain usning ID3 algorithm 
-
+## information gain ID3 
 
 ## 3 folds 
 
@@ -1057,20 +1056,39 @@ for (fold in seq_along(folds)) {
     id3_model <- rpart(class ~ ., data = train_data, method = "class", control = rpart.control(cp = 0.01), parms = list(split = "information"))
  }
 
-# Print and plot the decision tree
- print(id3_model)
- prp(id3_model, uniform = TRUE, main = paste("Pruned Decision Tree - Fold", fold))
- text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
-  
+
      # Make predictions on the test set
 predictions <- predict(id3_model, newdata = test_data, type = "class")
     
      # Print confusion matrix for the current fold
     confusion_matrix <- table(predictions, test_data$class)
+# Compute accuracy
+accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
+cat(sprintf("Fold: %d, Accuracy: %.2f%%\n", fold, accuracy * 100))
+
      print(confusion_matrix)
 
+
 ```
+
+Fold: 3, Accuracy: 71.99%
+True Positive (TP): 194 - The number of instances correctly predicted as class 1.
+True Negative (TN): 45 - The number of instances correctly predicted as class 0.
+False Positive (FP): 38 - The number of instances incorrectly predicted as class 1.
+False Negative (FN): 55 - The number of instances incorrectly predicted as class 0.
+
+
+```{r}
+# Print and plot the decision tree
+ print(id3_model)
+ prp(id3_model, uniform = TRUE, main = paste("Pruned Decision Tree - Fold", fold))
+ text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
+  
+```
+
 ## 5 folds 
+
+
 
 ```{r}
 num_folds <- 5
@@ -1087,20 +1105,34 @@ for (fold in seq_along(folds)) {
     
  }
 
-  # Print and plot the decision tree
- print(id3_model)
- prp(id3_model, uniform = TRUE, main = paste("Pruned Decision Tree - Fold", fold))
- text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
   
+ 
+
      # Make predictions on the test set
 predictions <- predict(id3_model, newdata = test_data, type = "class")
     
      # Print confusion matrix for the current fold
     confusion_matrix <- table(predictions, test_data$class)
+# Compute accuracy
+accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
+cat(sprintf("Fold: %d, Accuracy: %.2f%%\n", fold, accuracy * 100))
      print(confusion_matrix)
 
 ```
 
+Fold: 5, Accuracy: 73.37%
+True Positive (TP): 123 - The number of instances correctly predicted as class 1.
+True Negative (TN): 23 - The number of instances correctly predicted as class 0.
+False Positive (FP): 16 - The number of instances incorrectly predicted as class 1.
+False Negative (FN): 37 - The number of instances incorrectly predicted as class 0.
+
+```{r}
+# Print and plot the decision tree
+ print(id3_model)
+ prp(id3_model, uniform = TRUE, main = paste("Pruned Decision Tree - Fold", fold))
+ text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
+  
+```
 ## 10 folds 
 
 ```{r}
@@ -1118,19 +1150,31 @@ for (fold in seq_along(folds)) {
     
  }
 
-  # Print and plot the decision tree
- print(id3_model)
- prp(id3_model, uniform = TRUE, main = paste("Pruned Decision Tree - Fold", fold))
- text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
   
      # Make predictions on the test set
 predictions <- predict(id3_model, newdata = test_data, type = "class")
     
      # Print confusion matrix for the current fold
     confusion_matrix <- table(predictions, test_data$class)
+    # Compute accuracy
+accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
+cat(sprintf("Fold: %d, Accuracy: %.2f%%\n", fold, accuracy * 100))
      print(confusion_matrix)
 ```
+Fold: 10, Accuracy: 76.53%
+True Positive (TP): 59 - The number of instances correctly predicted as class 1.
+True Negative (TN): 16 - The number of instances correctly predicted as class 0.
+False Positive (FP): 10 - The number of instances incorrectly predicted as class 1.
+False Negative (FN): 13 - The number of instances incorrectly predicted as class 0.
 
+```{r}
+# Print and plot the decision tree
+ print(id3_model)
+ prp(id3_model, uniform = TRUE, main = paste("Pruned Decision Tree - Fold", fold))
+ text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
+  
+```
+## clustring: 
 
 
 ##clustring "1st trailer only"
