@@ -119,7 +119,7 @@ ggplot(dataset, aes(x = class)) +
   ggtitle("Credit Risks Distribution") 
 
 ```
-From this bar chart we can see that we do not have an balanced dataset, with 70% 'good' and 30% 'bad' labeled records this dataset is acceptable as it is and we do not need to take further actions regarding this matter.
+From this bar chart we can see that we do have an balanced dataset, with 70% 'good' and 30% 'bad' labeled records this dataset is acceptable as it is and we do not need to take further actions regarding this matter.
 
 
 2- 
