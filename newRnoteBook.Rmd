@@ -596,24 +596,33 @@ tbl11 = table(dataset$class, dataset$employment)
 tbl11 
 chisq.test(tbl11)
 ```
+Here we put the attribute 'class' values and the attribute 'employment' values in a table where the rows represent 'class' and the columns 'employment', then we checked the chi square for the table.
+The p-value we got as a result of this test was 0.001045 which is less than 0.05. Based on it, we can say that the employment status influences credit risks which is logically correct.
 
 ```{r}
 tbl12 = table(dataset$class, dataset$savings_status)
 tbl12 
 chisq.test(tbl12)
 ```
+Here we put the attribute 'class' values and the attribute 'savings_status' values in a table where the rows represent 'class' and the columns 'savings_status', then we checked the chi square for the table.
+The p-value we got as a result of this test was  2.761e-07 which is much less than 0.05. which implies that the savings status influences credit risks strongly.
 
 ```{r}
 tbl13 = table(dataset$class, dataset$credit_history)
 tbl13 
 chisq.test(tbl13)
 ```
+Here we put the attribute 'class' values and the attribute 'credit_history' values in a table where the rows represent 'class' and the columns 'credit_history', then we checked the chi square for the table.
+The p-value we got as a result of this test was 1.279e-12 which is much less than 0.05. and based on it, credit history strongly affect the credit risks.
 
 ```{r}
 tbl14 = table(dataset$class, dataset$checking_status)
 tbl14 
 chisq.test(tbl14)
 ```
+Here we put the attribute 'class' values and the attribute 'checking_status' values in a table where the rows represent 'class' and the columns 'checking_status', then we checked the chi square for the table.
+The p-value we got as a result of this test was 2.2e-16 which is much less than 0.05. Based on this number we can say thet credit satatus strongly affect the credit risks.
+
 
 
 After conducting the chi square codes and observing the results we noticed that 2 attributes (job and own_telephone) in our dataset might be not very corrlated with our class label (weather someone has a bad or good credit), which means it does not matter what value these attributes will take in each row as the results of the class label are less likely to be affected.
