@@ -300,7 +300,7 @@ print(total_missing_values)
 our dataset has not missing values so no need for filling or deleting any rows in that sense. 
 
 
-## Data Conversion (Encoding categorical data)/discretization
+## Data Conversion (Encoding categorical data)/
 To prepare the data for analysis, we need to convert certain categorical attributes into numerical values. 
 
 Let's take a closer look at how this is done for specific attributes:
