@@ -732,7 +732,7 @@ rpart.plot(tree_model, uniform = TRUE ,cex = 0.5, main = "CART Tree - Fold 10")
 text(tree_model, use.n = TRUE, cex = 0.8)
 ```
 
-## five folds
+## 5 folds
 
 ```{r}
 set.seed(123)  
@@ -950,50 +950,38 @@ text(tree_model, use.n = TRUE, cex = 0.8)
 
 ## information gain usning ID3 algorithm 
 
+
+## 3 folds 
+
 ```{r}
 # Assuming 'dataset' is your data frame
-install.packages("C50")
-
-library(C50)
-
-# Define the formula
-myFormula <- class ~ checking_status + duration + credit_history + purpose + credit_amount + savings_status +
-  employment + installment_commitment + personal_status + other_parties + residence_since +
-  property_magnitude + age + other_payment_plans + housing + existing_credits + job +
-  num_dependents + own_telephone + foreign_worker
-
-# Set seed for reproducibility
-set.seed(123)
 
 # Define the number of folds
-num_folds <- 10
+num_folds <- 3
 
-# Create folds
-folds <- createFolds(dataset$class, k = num_folds, list = TRUE, returnTrain = FALSE)
+train_control <- trainControl(method = "cv", number = num_folds)
 
-# Perform cross-validation with C4.5
-for (i in 1:num_folds) {
-  # Extract the indices for the current fold
-  test_indices <- unlist(folds[[i]])
+install.packages("rpart")
 
-  # Create training and testing sets
-  training_set <- dataset[-test_indices, ]
-  testing_set <- dataset[test_indices, ]
+library(rpart)
 
-  # Train the C4.5 model with information gain
-  tree_model <- C5.0(myFormula, data = training_set, control = C5.0Control(allowSurrogates = FALSE))
 
-  # Make predictions on the testing set
-  predictions <- predict(tree_model, newdata = testing_set)
+ id3_model <- rpart(class ~ checking_status + duration + credit_history + purpose + credit_amount + savings_status + employment + installment_commitment + personal_status + other_parties + residence_since + property_magnitude + age + other_payment_plans + housing + existing_credits + job + num_dependents + own_telephone + foreign_worker, data = dataset, method = "class", control = rpart.control(cp = 0.01), parms = list(split = "information"), xval = num_folds)
 
-  # Evaluate the model
-  confusion_matrix <- table(predictions, testing_set$class)
-  accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
 
-  # Print or store the results
-  cat(sprintf("Fold: %d, Accuracy: %.2f%%\n", i, accuracy * 100))
-}
+print(id3_model)
 
+ plot(id3_model, uniform = TRUE, main = "Pruned Decision Tree")
+text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
+
+
+new_data <- data.frame(dataset)
+
+predictions <- predict(id3_model, newdata = new_data, type = "class")
+
+confusion_matrix <- table(predictions, new_data$class)
+
+ print(confusion_matrix)
 
 ```
 
