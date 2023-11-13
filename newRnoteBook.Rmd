@@ -944,105 +944,89 @@ text(tree_model, use.n = TRUE, cex = 0.8)
 ## 3 folds 
 
 ```{r}
-install.packages("rpart")
-
-library(rpart)
-
-# Assuming 'dataset' is the data frame
-
-# Define the number of folds
 num_folds <- 3
-
-# Sets up the control parameters for cross-validation
-train_control <- trainControl(method = "cv", number = num_folds)
-
-# Builds an ID3 decision tree 
- id3_model <- rpart(class ~ checking_status + duration + credit_history + purpose + credit_amount + savings_status + employment + installment_commitment + personal_status + other_parties + residence_since + property_magnitude + age + other_payment_plans + housing + existing_credits + job + num_dependents + own_telephone + foreign_worker, data = dataset, method = "class", control = rpart.control(cp = 0.01), parms = list(split = "information"), xval = num_folds)
-
-# printing the tree's info
-print(id3_model)
-
-#plotting the tree
- prp (id3_model, uniform = TRUE, main = "Pruned Decision Tree")
-text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
-
-# Making Predictions 
-new_data <- data.frame(dataset)
-
-predictions <- predict(id3_model, newdata = new_data, type = "class")
-
-# Confusion Matrix:
-confusion_matrix <- table(predictions, new_data$class)
-
- print(confusion_matrix)
+ 
+folds <- createFolds(dataset$class, k = num_folds, list = TRUE, returnTrain = FALSE)
+or (fold in seq_along(folds)) {
+ # Extract training and testing sets for the current fold
+ test_indices <- folds[[fold]]
+ train_data <- dataset[-test_indices, ]
+ test_data <- dataset[test_indices, ]
+   
+    # Build the decision tree
+    id3_model <- rpart(class ~ ., data = train_data, method = "class", control = rpart.control(cp = 0.01), parms = list(split = "information"))
+    
+  # Print and plot the decision tree
+ print(id3_model)
+ plot(id3_model, uniform = TRUE, main = paste("Pruned Decision Tree - Fold", fold))
+ text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
+  
+     # Make predictions on the test set
+predictions <- predict(id3_model, newdata = test_data, type = "class")
+    
+     # Print confusion matrix for the current fold
+    confusion_matrix <- table(predictions, test_data$class)
+     print(confusion_matrix)
+ }
 
 ```
 ## 5 folds 
 
-library(rpart)
-
-# Assuming 'dataset' is the data frame
-
-# Define the number of folds
+```{r}
 num_folds <- 5
-
-# Sets up the control parameters for cross-validation
-train_control <- trainControl(method = "cv", number = num_folds)
-
-# Builds an ID3 decision tree 
- id3_model <- rpart(class ~ checking_status + duration + credit_history + purpose + credit_amount + savings_status + employment + installment_commitment + personal_status + other_parties + residence_since + property_magnitude + age + other_payment_plans + housing + existing_credits + job + num_dependents + own_telephone + foreign_worker, data = dataset, method = "class", control = rpart.control(cp = 0.01), parms = list(split = "information"), xval = num_folds)
-
-# printing the tree's info
-print(id3_model)
-
-#plotting the tree
- prp (id3_model, uniform = TRUE, main = "Pruned Decision Tree")
-text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
-
-# Making Predictions 
-new_data <- data.frame(dataset)
-
-predictions <- predict(id3_model, newdata = new_data, type = "class")
-
-# Confusion Matrix:
-confusion_matrix <- table(predictions, new_data$class)
-
- print(confusion_matrix)
+ 
+folds <- createFolds(dataset$class, k = num_folds, list = TRUE, returnTrain = FALSE)
+or (fold in seq_along(folds)) {
+ # Extract training and testing sets for the current fold
+ test_indices <- folds[[fold]]
+ train_data <- dataset[-test_indices, ]
+ test_data <- dataset[test_indices, ]
+   
+    # Build the decision tree
+    id3_model <- rpart(class ~ ., data = train_data, method = "class", control = rpart.control(cp = 0.01), parms = list(split = "information"))
+    
+  # Print and plot the decision tree
+ print(id3_model)
+ plot(id3_model, uniform = TRUE, main = paste("Pruned Decision Tree - Fold", fold))
+ text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
+  
+     # Make predictions on the test set
+predictions <- predict(id3_model, newdata = test_data, type = "class")
+    
+     # Print confusion matrix for the current fold
+    confusion_matrix <- table(predictions, test_data$class)
+     print(confusion_matrix)
+ }
 
 ```
 
 ## 10 folds 
 
-library(rpart)
-
-# Assuming 'dataset' is the data frame
-
-# Define the number of folds
+```{r}
 num_folds <- 10
-
-# Sets up the control parameters for cross-validation
-train_control <- trainControl(method = "cv", number = num_folds)
-
-# Builds an ID3 decision tree 
- id3_model <- rpart(class ~ checking_status + duration + credit_history + purpose + credit_amount + savings_status + employment + installment_commitment + personal_status + other_parties + residence_since + property_magnitude + age + other_payment_plans + housing + existing_credits + job + num_dependents + own_telephone + foreign_worker, data = dataset, method = "class", control = rpart.control(cp = 0.01), parms = list(split = "information"), xval = num_folds)
-
-# printing the tree's info
-print(id3_model)
-
-#plotting the tree
- prp (id3_model, uniform = TRUE, main = "Pruned Decision Tree")
-text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
-
-# Making Predictions 
-new_data <- data.frame(dataset)
-
-predictions <- predict(id3_model, newdata = new_data, type = "class")
-
-# Confusion Matrix:
-confusion_matrix <- table(predictions, new_data$class)
-
- print(confusion_matrix)
-
+ 
+folds <- createFolds(dataset$class, k = num_folds, list = TRUE, returnTrain = FALSE)
+or (fold in seq_along(folds)) {
+ # Extract training and testing sets for the current fold
+ test_indices <- folds[[fold]]
+ train_data <- dataset[-test_indices, ]
+ test_data <- dataset[test_indices, ]
+   
+    # Build the decision tree
+    id3_model <- rpart(class ~ ., data = train_data, method = "class", control = rpart.control(cp = 0.01), parms = list(split = "information"))
+    
+  # Print and plot the decision tree
+ print(id3_model)
+ plot(id3_model, uniform = TRUE, main = paste("Pruned Decision Tree - Fold", fold))
+ text(id3_model, use.n = TRUE, all = TRUE, cex = 0.6)
+  
+     # Make predictions on the test set
+predictions <- predict(id3_model, newdata = test_data, type = "class")
+    
+     # Print confusion matrix for the current fold
+    confusion_matrix <- table(predictions, test_data$class)
+     print(confusion_matrix)
+ }
 ```
 
 
