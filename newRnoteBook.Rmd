@@ -339,13 +339,13 @@ The "housing" attribute represents the housing situation of the applicants. We'v
 "rent" is labeled as 3.
 
 ```{r}
-dataset$foreign_worker <- factor(dataset$foreign_worker, levels = c("yes", "no"), labels = c(0, 1))
+dataset$foreign_worker <- factor(dataset$foreign_worker, levels = c("no", "yes"), labels = c(0, 1))
 ```
 Encoding "foreign_worker"
 The "foreign_worker" attribute represents whether the loan applicant is a foreign worker or not. We've encoded it as follows:
 
-"yes" is labeled as 0.
-"no" is labeled as 1.
+"no" is labeled as 0.
+"yes" is labeled as 1.
 
 ```{r}
 dataset$credit_history = factor(dataset$credit_history,levels = c("no credits/all paid","all paid", "existing paid", "delayed previously", "critical/other existing credit"), labels = c(1, 2, 3, 4, 5))
@@ -425,7 +425,7 @@ We've encoded it as follows :
 "stores insurance" is labeled as 3.
 
 ```{r}
- dataset$job <- factor(dataset$job, levels = c('unemp/unskilled non res u', 'unskilled resident', 'skilled', 'high qualif/self emp/mgmt'), labels = c(1, 2, 3, 4))
+dataset$job <- factor(dataset$job, levels = c('unemp/unskilled non res', 'unskilled resident', 'skilled', 'high qualif/self emp/mgmt'), labels = c(1, 2, 3, 4))
 ```
 Encoding "job"
 The "job" attribute represents the type of job of the loan applicant.
