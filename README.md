@@ -8,4 +8,4 @@ The dataset was sourced from the kaggle website in this URL:
 https://www.kaggle.com/datasets/ppb00x/credit-risk-customers 
 
 Group: 6 
-J
+
