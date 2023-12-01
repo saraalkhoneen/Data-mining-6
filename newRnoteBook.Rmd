@@ -1754,6 +1754,42 @@ print(results)
 | sensitivity | 75.95 | 40.13    | 40.82%     | 76.39 | 38.49    | 39.80      | 74.09 | 17.67    | 42.13      |
 | specificity | 55    | 86.19    | 88.06%     | 47.27 | 85.18    | 87.34      | 50    | 93.95    | 85.90      |
 
+Scenario 10:
+
+Accuracy: 71.72%
+
+Precision: 86.96%
+
+Sensitivity: 75.95%
+
+Specificity: 55.00%
+
+This scenario has the highest accuracy and precision, making it a strong performer in correctly classifying instances, especially positive ones. However, the specificity is comparatively lower.
+
+Scenario 5:
+
+Accuracy: 68.34%
+
+Precision: 79.14%
+
+Sensitivity: 76.39%
+
+Specificity: 47.27%
+
+This scenario has a good balance between precision and sensitivity, but the overall accuracy is slightly lower. The specificity is also relatively low.
+
+Scenario 3:
+
+Accuracy: 70.00%
+
+Precision: 87.88%
+
+Sensitivity: 74.09%
+
+Specificity: 50.00%
+
+This scenario excels in precision and has a moderate accuracy. Sensitivity is also reasonable, but specificity is relatively low.
+
 #Evaluation for clustering:
 
 |     |                                    | K=2 (BEST) | K=3    | K=4    |
