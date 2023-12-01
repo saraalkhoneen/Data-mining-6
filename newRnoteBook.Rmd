@@ -1083,6 +1083,20 @@ False Positive (FP): 31
 False Negative (FN): 63
 This fold shows that the model correctly identified 200 instances of class 1 and 37 instances of class 0. However, it misclassified 31 instances of class 0 as class 1 and 63 instances of class 1 as class 0.
 
+Average Sensitivity: 17.67% :
+The average proportion of true positives among all actual positives. It suggests that the model, on average, correctly identified only 
+17.67% of the actual positive instances.
+
+Average Specificity: 93.95%:
+The average proportion of true negatives among all actual negatives. It indicates that the model, on average, correctly identified 93.95% of the actual negative instances. This is relatively high and suggests good performance in avoiding false alarms for negative instances.
+
+precision= TP/TP+FP 
+Precision= 200/200+31 = 0.8658 
+
+Precision:86.58%:
+The average precision measures the accuracy of positive predictions made by the model. In this case,
+86.58% of the instances predicted as positive by the model were actually positive. This indicates a relatively good level of accuracy in positive predictions.
+
 ```{r}
 plot(tree_model, uniform = TRUE, main = "C4.5 Tree - Fold 3")
 
