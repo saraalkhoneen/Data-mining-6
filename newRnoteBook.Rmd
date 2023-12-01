@@ -1252,35 +1252,61 @@ Sensitivity measures the proportion of actual positive instances correctly ident
 
 ```{r}
 num_folds <- 10
- 
-folds <- createFolds(dataset$class, k = num_folds, list = TRUE, returnTrain = FALSE)
-for (fold in seq_along(folds)) {
- # Extract training and testing sets for the current fold
- test_indices <- folds[[fold]]
- train_data <- dataset[-test_indices, ]
- test_data <- dataset[test_indices, ]
-   
-    # Build the decision tree
-    id3_model <- rpart(class ~ ., data = train_data, method = "class", control = rpart.control(cp = 0.01), parms = list(split = "information"))
-    
- }
 
-  
-     # Make predictions on the test set
-predictions <- predict(id3_model, newdata = test_data, type = "class")
-    
-     # Print confusion matrix for the current fold
-    confusion_matrix <- table(predictions, test_data$class)
-    # Compute accuracy
-accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
-cat(sprintf("Fold: %d, Accuracy: %.2f%%\n", fold, accuracy * 100))
-     print(confusion_matrix)
+folds <- createFolds(dataset$class, k = num_folds, list = TRUE, returnTrain = FALSE)
+
+for (fold in seq_along(folds)) {
+  # Extract training and testing sets for the current fold
+  test_indices <- folds[[fold]]
+  train_data <- dataset[-test_indices, ]
+  test_data <- dataset[test_indices, ]
+
+  # Build the decision tree
+  id3_model <- rpart(class ~ ., data = train_data, method = "class", control = rpart.control(cp = 0.01), parms = list(split = "information"))
+
+  # Make predictions on the test set
+  predictions <- predict(id3_model, newdata = test_data, type = "class")
+
+  # Print confusion matrix for the current fold
+  confusion_matrix <- table(predictions, test_data$class)
+  # Compute accuracy
+  accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
+
+  # Calculate precision, specificity, and sensitivity
+  TP <- confusion_matrix[2, 2]  # True Positives
+  TN <- confusion_matrix[1, 1]  # True Negatives
+  FP <- confusion_matrix[1, 2]  # False Positives
+  FN <- confusion_matrix[2, 1]  # False Negatives
+
+ 
+}
+  cat(sprintf("Fold: %d, Accuracy: %.2f%%\n", fold, accuracy * 100))
+
+ # Precision
+  precision <- TP / (TP + FP)
+  cat(sprintf("Precision: %.2f%%\n", precision * 100))
+
+  # Specificity
+  specificity <- TN / (TN + FP)
+  cat(sprintf("Specificity: %.2f%%\n", specificity * 100))
+
+  # Sensitivity (Recall)
+  sensitivity <- TP / (TP + FN)
+  cat(sprintf("Sensitivity: %.2f%%\n", sensitivity * 100))
+
+  print(confusion_matrix)
 ```
-Fold: 10, Accuracy: 76.53%
-True Positive (TP): 59 - The number of instances correctly predicted as class 1.
-True Negative (TN): 16 - The number of instances correctly predicted as class 0.
-False Positive (FP): 10 - The number of instances incorrectly predicted as class 1.
-False Negative (FN): 13 - The number of instances incorrectly predicted as class 0.
+Fold: 10, Accuracy: 71.72%:
+The overall accuracy of the model is 71.72%. This metric represents the proportion of correctly classified instances out of the total instances.
+Precision: 86.96%
+
+Precision is the proportion of true positive predictions among all positive predictions made by the model. In this case, the precision is 86.96%. This indicates that when the model predicts an instance as positive, it is correct about 86.96% of the time.
+Specificity: 55.00%
+
+Specificity (True Negative Rate) is the proportion of actual negative instances correctly identified by the model. In this case, the specificity is 55.00%, suggesting that the model is performing moderately well in correctly identifying negative instances.
+Sensitivity (Recall): 75.95%
+
+Sensitivity measures the proportion of actual positive instances correctly identified by the model. The sensitivity is 75.95%, indicating that the model is relatively good at correctly identifying positive instances.
 
 ```{r}
 # Print and plot the decision tree
