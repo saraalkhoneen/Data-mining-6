@@ -1,0 +1,449 @@
+---
+title: "clustering"
+output: html_document
+date: "2023-11-13"
+---
+##Clustering
+Clustering involves organizing a set of objects so that those within the same group (cluster) share greater similarity with one another, compared to objects in different groups. This falls under the domain of unsupervised learning, as it lacks class labels. This section focuses on partitioning our dataset through the utilization of the k-means algorithm, exploring three distinct k-means values (2, 3, and 4). Throughout each iteration, we will assess the average silhouette, total within-cluster sum of square, and BCubed (precision and recall).
+
+In terms of packages and methods, the K-means algorithm is employed to form the clusters, while fviz_cluster is utilized for plotting. For evaluation purposes, fviz_nbclust and fviz_silhouette are applied to calculate the silhouette values. Additionally, a custom method has been devised to compute BCubed precision and recall.
+
+
+#Packages
+```{r setup-libraries}
+options(repos = c(CRAN = "https://cran.rstudio.com"))
+
+# Install and load necessary libraries
+install.packages("tidyverse")
+install.packages("cluster")
+install.packages("fastDummies")
+
+library(tidyverse)
+library(cluster)  # For clustering
+library(fastDummies)  # For one-hot encoding
+
+```
+
+```{r}
+# Load the data
+data <- read.csv("credit_customers.csv")
+true_labels <- data$class
+
+# Identify categorical and numerical columns
+categorical_cols <- names(data)[sapply(data, is.character)]
+numerical_data <- data %>% select(-all_of(categorical_cols))
+
+# One-hot encoding
+encoded_data <- data %>% select(all_of(categorical_cols)) %>% 
+  mutate(across(everything(), as.factor)) %>%
+  model.matrix(~. - 1, data = .)
+
+# Combine numerical and encoded data
+data <- as.data.frame(cbind(numerical_data, encoded_data))
+```
+
+
+#Removing the class label(target) before we partition our data
+We have to remove the class label(target) since the clustering is an unsupervised learning.
+```{r}
+
+# Remove the class labels (column names)
+colnames(data) <- NULL
+
+```
+ Principal Component Analysis (PCA)
+```{r}
+# Handle missing values (if any)
+data <- na.omit(data) 
+
+# Z-score Standardization
+data<- as.data.frame(scale(data))
+
+
+ # Perform PCA
+pca_result <- prcomp(data, center = FALSE, scale. = FALSE)  # Data is already standardized
+
+# View summary of PCA results
+print(summary(pca_result))
+
+# Decide how many principal components to keep based on variance explained
+
+cum_var_explained <- cumsum(pca_result$sdev^2 / sum(pca_result$sdev^2))
+num_components <- which(cum_var_explained >= 0.8)[1]
+
+# Select the number of principal components to use
+data_pca <- pca_result$x[, 1:num_components]
+
+loadings <- pca_result$rotation[, 1]
+print(loadings)
+
+data_pca <- pca_result$x[, 1]
+k2_pca <- kmeans(data_pca, centers = 2, nstart = 25)
+
+data_for_plot <- cbind(data_pca, rep(0, length(data_pca)))
+data_pca_df <- as.data.frame(data_pca)
+# Extracting the first three principal components
+data_pca <- pca_result$x[, 1:3]
+
+# Convert the PCA results to a data frame 
+data_pca_df <- as.data.frame(data_pca)
+```
+Findings from PCA Output:
+
+Principal Components:
+
+Dataset has 50 principal components (PC1 to PC50).
+Variance Explained:
+
+PC1 has the highest variability (1.79), followed by PC2, PC3, etc.
+The first 39 components capture about 99.7% of total variance.
+Loadings on PC1:
+
+PC1 is influenced most by V2, V5, V1, and V3.
+Positive/negative signs indicate direction of influence.
+Diminishing Variance:
+
+Standard deviations decrease for later components.
+PC50 has negligible variance (7.96e-16).
+Proportion of Variance:
+
+Proportion of Variance decreases for later components.
+Cumulative Proportion:
+
+Cumulative Proportion reaches 99.87% by PC47.
+Overall Implication:
+Selecting fewer components retains most information while reducing dimensionality.
+
+
+#optimal number
+Elbow Method for determining the optimal number of clusters (K) in a k-means clustering algorithm. The Elbow Method helps identify a suitable value for K by plotting the Total Within Sum of Squares (WSS) against different values of K. 
+```{r}
+#Elbow method
+wss <- numeric(10) 
+
+for (i in 1:10) {
+  set.seed(123) # For reproducibility
+  kmeans_result <- kmeans(data_pca_df, centers = i, nstart = 25)
+  wss[i] <- kmeans_result$tot.withinss
+}
+
+# Creating the Elbow Plot
+k_values <- 1:10 # Adjust the range as needed
+elbow_plot <- data.frame(k_values, wss)
+ggplot(elbow_plot, aes(x = k_values, y = wss)) + 
+  geom_line() + 
+  geom_point() + 
+  theme_minimal() +
+  labs(title = "Elbow Method", x = "Number of Clusters (K)", y = "Total Within Sum of Squares (WSS)")
+optimal_k <- which.min(wss)
+k_values <- c(optimal_k, optimal_k - 1, optimal_k + 1)
+# Print the K values
+cat("Optimal K value is:", optimal_k, "\n")
+cat("K value immediately before the optimal K is:", optimal_k - 1, "\n")
+cat("K value immediately after the optimal K is:", optimal_k + 1, "\n")
+```
+The output of this code will include the Elbow Plot and information about the optimal K value, as well as the K values immediately before and after the optimal K. The user can visually inspect the plot to identify the "elbow" point, which represents the optimal number of clusters for the k-means algorithm based on the WSS criterion
+
+
+#calculate k-mean k=2,3,4 and plot
+```{r}
+# Load necessary library for visualization
+library(factoextra)
+
+# Clustering and plotting for k = 2, 3, and 4 as they were most significant from the elbow plot
+set.seed(123)  # For reproducibility
+
+dist_matrix <- dist(data)
+# Clustering for k = 2
+k2 <- kmeans(data_pca_df, centers = 2, nstart = 25)
+fviz_cluster(k2, data = data_pca_df, geom = "point", 
+             stand = FALSE, ellipse  = TRUE, 
+             main = "Cluster Visualization (k=2)")
+print(paste("Total WSS for k=2:", k2$tot.withinss))
+sil_widths2 <- silhouette(k2$cluster, dist_matrix)
+avg_sil_width2 <- mean(sil_widths2[, "sil_width"])
+print(paste("Average Silhouette Width for k=2:", avg_sil_width2))
+
+# Clustering for k = 3
+k3 <- kmeans(data_pca_df, centers = 3, nstart = 25)
+fviz_cluster(k3, data = data_pca_df, geom = "point", 
+             stand = FALSE, ellipse  = TRUE, 
+             main = "Cluster Visualization (k=3)")
+print(paste("Total WSS for k=3:", k3$tot.withinss))
+sil_widths3 <- silhouette(k3$cluster, dist_matrix)
+avg_sil_width3 <- mean(sil_widths3[, "sil_width"])
+print(paste("Average Silhouette Width for k=3:", avg_sil_width3))
+
+# Clustering for k = 4
+k4 <- kmeans(data_pca_df, centers = 4, nstart = 25)
+fviz_cluster(k4, data = data_pca_df, geom = "point", 
+             stand = FALSE, ellipse  = TRUE, 
+             main = "Cluster Visualization (k=4)")
+print(paste("Total WSS for k=4:", k4$tot.withinss))
+sil_widths4 <- silhouette(k4$cluster, dist_matrix)
+avg_sil_width4 <- mean(sil_widths4[, "sil_width"])
+print(paste("Average Silhouette Width for k=4:", avg_sil_width4))
+
+
+
+```
+
+```{r}
+if (!require(fpc)) {
+  install.packages("fpc")
+}
+
+library(cluster)
+library(fpc)
+
+# Load the data
+data <- read.csv("credit_customers.csv")
+# Specify the numeric and categorical attributes
+numeric_attributes <- c("duration", "credit_amount", "age")
+categorical_attributes <- setdiff(names(data), c("duration", "credit_amount", "age", "class"))
+
+# Extract the relevant columns
+numeric_data <- data[, numeric_attributes]
+categorical_data <- data[, categorical_attributes]
+
+# Check and convert columns in categorical_data to factors if needed
+for (col in names(categorical_data)) {
+  if (!is.factor(categorical_data[[col]]) && !is.numeric(categorical_data[[col]])) {
+    categorical_data[[col]] <- as.factor(categorical_data[[col]])
+  }
+}
+
+# Normalize numeric data 
+normalized_numeric_data <- scale(numeric_data)
+
+# Elbow method for determining the optimal number of clusters (k-means)
+wss <- numeric(length = 10)
+for (k in 1:10) {
+  kmeans_model <- kmeans(normalized_numeric_data, centers = k, nstart = 10)
+  wss[k] <- sum(kmeans_model$withinss)
+}
+
+# Plot the Elbow method graph with adjusted margins
+par(mar = c(5, 4, 4, 2) + 0.1)
+plot(1:10, wss, type = "b", main = "Elbow Method for Optimal k (k-means)",
+     xlab = "Number of Clusters (k)", ylab = "Within-Cluster Sum of Squares (WSS)")
+
+# Choose three different sizes of K based on the Elbow plot
+optimal_k <- which.min(wss)
+k_values <- c(optimal_k, optimal_k - 1, optimal_k + 1)
+
+# Perform k-medoids clustering on categorical data
+dissimilarity_matrix <- daisy(categorical_data, metric = "gower")
+kmedoids_model <- pam(dissimilarity_matrix, k = 3)
+
+# Print the k-medoids clustering results
+cat("\nK-Medoids Clustering Results:\n")
+print(kmedoids_model)
+
+# Evaluate clustering using Silhouette coefficient for k-medoids
+silhouette_kmedoids <- silhouette(kmedoids_model$cluster, dissimilarity_matrix)
+cat("\nSilhouette Coefficient for K-Medoids Clustering:\n")
+print(silhouette_kmedoids)
+
+# Evaluate BCubed precision and recall for k-medoids
+bcubed_kmedoids <- cluster.stats(dissimilarity_matrix, kmedoids_model$cluster)$bcubed
+cat("\nBCubed Precision and Recall for K-Medoids Clustering:\n")
+print(bcubed_kmedoids)
+
+
+```
+
+Bcuped recall and percision
+
+```{r}
+cluster_assignments <- c(k2$cluster)
+ground_truth_labels <- c(true_labels)
+
+data <- data.frame(cluster = cluster_assignments, label = ground_truth_labels)
+
+# Function to calculate BCubed precision and recall
+calculate_bcubed_metrics <- function(data) {
+  n <- nrow(data)
+  precision_sum <- 0
+  recall_sum <- 0
+
+  for (i in 1:n) {
+    cluster <- data$cluster[i]
+    label <- data$label[i]
+    
+# Count the number of items from the same category within the same cluster
+same_category_same_cluster <- sum(data$label[data$cluster == cluster] == label)
+    
+# Count the total number of items in the same cluster
+total_same_cluster <- sum(data$cluster == cluster)
+    
+# Count the total number of items with the same category
+total_same_category <- sum(data$label == label)
+    
+# Calculate precision and recall for the current item and add them to the sums
+precision_sum <- precision_sum + same_category_same_cluster /total_same_cluster
+recall_sum <- recall_sum + same_category_same_cluster / total_same_category
+  }
+
+  # Calculate average precision and recall
+  precision <- precision_sum / n
+  recall <- recall_sum / n
+
+  return(list(precision = precision, recall = recall))
+}
+
+# Calculate BCubed precision and recall
+metrics <- calculate_bcubed_metrics(data)
+
+# Extract precision and recall from the metrics
+precision <- metrics$precision
+recall <- metrics$recall
+
+# Print the results
+cat("BCubed Precision:", precision, "\n")
+cat("BCubed Recall:", recall, "\n")
+
+
+```
+
+```{r}
+cluster_assignments <- c(k3$cluster)
+ground_truth_labels <- c(true_labels)
+
+data <- data.frame(cluster = cluster_assignments, label = ground_truth_labels)
+
+# Function to calculate BCubed precision and recall
+calculate_bcubed_metrics <- function(data) {
+  n <- nrow(data)
+  precision_sum <- 0
+  recall_sum <- 0
+
+  for (i in 1:n) {
+    cluster <- data$cluster[i]
+    label <- data$label[i]
+    
+# Count the number of items from the same category within the same cluster
+same_category_same_cluster <- sum(data$label[data$cluster == cluster] == label)
+    
+# Count the total number of items in the same cluster
+total_same_cluster <- sum(data$cluster == cluster)
+    
+# Count the total number of items with the same category
+total_same_category <- sum(data$label == label)
+    
+# Calculate precision and recall for the current item and add them to the sums
+precision_sum <- precision_sum + same_category_same_cluster /total_same_cluster
+recall_sum <- recall_sum + same_category_same_cluster / total_same_category
+  }
+
+  # Calculate average precision and recall
+  precision <- precision_sum / n
+  recall <- recall_sum / n
+
+  return(list(precision = precision, recall = recall))
+}
+
+# Calculate BCubed precision and recall
+metrics <- calculate_bcubed_metrics(data)
+
+# Extract precision and recall from the metrics
+precision3 <- metrics$precision
+recall3 <- metrics$recall
+
+# Print the results
+cat("BCubed Precision:", precision3, "\n")
+cat("BCubed Recall:", recall3, "\n")
+
+
+```
+
+```{r}
+cluster_assignments <- c(k4$cluster)
+ground_truth_labels <- c(true_labels)
+
+data <- data.frame(cluster = cluster_assignments, label = ground_truth_labels)
+
+# Function to calculate BCubed precision and recall
+calculate_bcubed_metrics <- function(data) {
+  n <- nrow(data)
+  precision_sum <- 0
+  recall_sum <- 0
+
+  for (i in 1:n) {
+    cluster <- data$cluster[i]
+    label <- data$label[i]
+    
+# Count the number of items from the same category within the same cluster
+same_category_same_cluster <- sum(data$label[data$cluster == cluster] == label)
+    
+# Count the total number of items in the same cluster
+total_same_cluster <- sum(data$cluster == cluster)
+    
+# Count the total number of items with the same category
+total_same_category <- sum(data$label == label)
+    
+# Calculate precision and recall for the current item and add them to the sums
+precision_sum <- precision_sum + same_category_same_cluster /total_same_cluster
+recall_sum <- recall_sum + same_category_same_cluster / total_same_category
+  }
+
+  # Calculate average precision and recall
+  precision <- precision_sum / n
+  recall <- recall_sum / n
+
+  return(list(precision = precision, recall = recall))
+}
+
+# Calculate BCubed precision and recall
+metrics <- calculate_bcubed_metrics(data)
+
+# Extract precision and recall from the metrics
+precision4 <- metrics$precision
+recall4 <- metrics$recall
+
+# Print the results
+cat("BCubed Precision:", precision, "\n")
+cat("BCubed Recall:", recall, "\n")
+
+
+results <- data.frame(
+  K = c(2, 3, 4),
+  Average_Silhouette = c(avg_sil_width2, avg_sil_width3, avg_sil_width4),
+  Total_WSS = c(k2$tot.withinss, k3$tot.withinss, k4$tot.withinss),
+  BCubed_Precision = c(precision, precision3, precision4),
+  BCubed_Recall = c(recall,recall3, recall4)
+)
+
+# Print the results table
+print(results)
+```
+
+#Evaluation for clustering:
+
+|     |                                    | K=2 (BEST) | K=3    | K=4    |
+|-----|------------------------------------|------------|--------|--------|
+|     | Average Silhouette width           | 0.0448     | 0.0382 | 0.0264 |
+|     | total within-cluster sum of square | 6122       | 4632   | 3793   |
+|     | BCubed precision                   | 0.583      | 0.640  | 0.626  |
+|     | BCubed recall                      | 0.504      | 0.392  | 0.290  |
+
+For\
+k=2\
+K=2, the Average Silhouette Score is the highest, indicating better-defined clusters. The Total WSS is also high, suggesting less compact clusters. BCubed Precision is moderate, and Recall is the highest among the three, suggesting a better overall cluster purity and completeness.\
+\
+For\
+k=3\
+K=3, the Average Silhouette Score decreases slightly, indicating less clearly defined clusters. The Total WSS is lower, suggesting more compact clusters. BCubed Precision improves, but Recall drops significantly, suggesting an increase in false negatives.\
+\
+For\
+k=4\
+K=4, the Average Silhouette Score is the lowest, indicating the poorest cluster definition. The Total WSS further decreases, again indicating more compact clusters. Both BCubed Precision and Recall are lower than for\
+k=2\
+K=2, indicating lower overall clustering effectiveness.\
+\
+Based on these metrics,\
+k=2\
+K=2 seems to be the best choice as it has the highest Average Silhouette Score, indicating well-defined clusters, and the highest BCubed Recall, suggesting better completeness of clusters with respect to the true classes. While its Total WSS is higher than for\
+k=3\
+K=3 or k=4\
+K=4, this is not necessarily a drawback, as overly compact clusters can indicate overfitting. The trade-off between these metrics depends on the specific needs and context of your clustering application.
