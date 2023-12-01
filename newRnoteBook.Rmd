@@ -1742,6 +1742,18 @@ results <- data.frame(
 print(results)
 ```
 
+##Final phase
+
+##Evaluation for classification
+
+|             |       | 10       |            |       | 5        |            |       | 3        |            |
+|-----------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
+|             | IG    | IG ratio | gini index | IG    | IG ratio | gini index | IG    | IG ratio | gini index |
+| Accuracy    | 71.72 | 68.69    | 73.74%     | 68.34 | 69.35    | 71.36      | 70    | 71.60    | 71.60      |
+| precision   | 86.96 | 56.80    | 59.46%     | 79.14 | 52.27    | 59.04      | 87.88 | 86.58    | 56.95      |
+| sensitivity | 75.95 | 40.13    | 40.82%     | 76.39 | 38.49    | 39.80      | 74.09 | 17.67    | 42.13      |
+| specificity | 55    | 86.19    | 88.06%     | 47.27 | 85.18    | 87.34      | 50    | 93.95    | 85.90      |
+
 #Evaluation for clustering:
 
 |     |                                    | K=2 (BEST) | K=3    | K=4    |
@@ -1753,22 +1765,32 @@ print(results)
 
 For\
 k=2\
-K=2, the Average Silhouette Score is the highest, indicating better-defined clusters. The Total WSS is also high, suggesting less compact clusters. BCubed Precision is moderate, and Recall is the highest among the three, suggesting a better overall cluster purity and completeness.\
+K=2, the Average Silhouette Score is the highest, indicating better-defined clusters.
+The Total WSS is also high, suggesting less compact clusters.
+BCubed Precision is moderate, and Recall is the highest among the three, suggesting a better overall cluster purity and completeness.\
+
 \
 For\
 k=3\
-K=3, the Average Silhouette Score decreases slightly, indicating less clearly defined clusters. The Total WSS is lower, suggesting more compact clusters. BCubed Precision improves, but Recall drops significantly, suggesting an increase in false negatives.\
+K=3, the Average Silhouette Score decreases slightly, indicating less clearly defined clusters.
+The Total WSS is lower, suggesting more compact clusters.
+BCubed Precision improves, but Recall drops significantly, suggesting an increase in false negatives.\
+
 \
 For\
 k=4\
-K=4, the Average Silhouette Score is the lowest, indicating the poorest cluster definition. The Total WSS further decreases, again indicating more compact clusters. Both BCubed Precision and Recall are lower than for\
+K=4, the Average Silhouette Score is the lowest, indicating the poorest cluster definition.
+The Total WSS further decreases, again indicating more compact clusters.
+Both BCubed Precision and Recall are lower than for\
 k=2\
 K=2, indicating lower overall clustering effectiveness.\
+
 \
 Based on these metrics,\
 k=2\
-K=2 seems to be the best choice as it has the highest Average Silhouette Score, indicating well-defined clusters, and the highest BCubed Recall, suggesting better completeness of clusters with respect to the true classes. While its Total WSS is higher than for\
+K=2 seems to be the best choice as it has the highest Average Silhouette Score, indicating well-defined clusters, and the highest BCubed Recall, suggesting better completeness of clusters with respect to the true classes.
+While its Total WSS is higher than for\
 k=3\
 K=3 or k=4\
-K=4, this is not necessarily a drawback, as overly compact clusters can indicate overfitting. The trade-off between these metrics depends on the specific needs and context of your clustering application.
-
+K=4, this is not necessarily a drawback, as overly compact clusters can indicate overfitting.
+The trade-off between these metrics depends on the specific needs and context of your clustering application.
