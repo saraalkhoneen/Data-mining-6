@@ -9,7 +9,16 @@ library(caret)
 ```
 
 ### Project Motivation:
-In this project, our primary goal is to classify customers as either good or bad credit risks. We aim to assist financial institutions in making informed decisions regarding loan approvals based on an analysis of customers' payment behavior and other relevant attributes, such as age, income, loan amount, and employment status. By utilizing this dataset, we will build predictive models to assess customers' creditworthiness and use these models as tools for risk assessment and decision-making.
+
+Credit risk assessment has become an increasingly critical part of the loan application process. As the demand for loan products increases, lenders need to be able to quickly and accurately determine the likelihood of a loan defaulting. In the past, credit risk assessment was a labor-intensive process that required lenders to manually assess each application. This process could be very time-consuming, as lenders had to analyze a variety of data points and review multiple documents. Manual credit risk assessment was also susceptible to human error, which could lead to inaccuracies in the assessment. Traditional methods of assessing credit risk can be inaccurate and may not take into account the full range of factors that can affect a borrower's ability to repay a loan. Moreover, they can be prone to human bias, which can lead to unfair lending practices. In recent years, advances in technology have enabled lenders to use more accurate and efficient methods of assessing credit risk.
+
+### Data Mining Task:
+
+Four methods we will explore are decision trees to classify and K-means, k-medoids and elbow methods to create clusters of the dataset. These methods are more accurate and efficient than traditional methods. They are able to take into account more factors in assessing credit risk, and are less prone to human bias. Additionally, they are able to process large amounts of data quickly, making them ideal for large-scale lending operations. By applying these algorithms to the credit risk dataset, we aim to develop a robust and accurate model. This can help financial institutions make more informed lending decisions.
+
+Our primary goal is to classify customers as either good or bad credit risks. We aim to assist financial institutions in making informed decisions regarding loan approvals based on an analysis of customers' payment behavior and other relevant attributes, such as age, income, loan amount, and employment status. By utilizing this dataset, we will build predictive models to assess customers' creditworthiness and use these models as tools for risk assessment and decision-making.
+
+We also intend to construct clusters for the dataset to understand our dataset better by excluding our class label (the class attribute) then applying the clustring algorithms on the dataset to recognize any patterns or trends between customers which will help to group them into subsets or (clusters) which make it easier to make decisions regarding one group.
 
 ### source
 The dataset was sourced from the kaggle website in this URL:
