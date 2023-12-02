@@ -4,31 +4,15 @@ options(repos = c(CRAN = "https://cloud.r-project.org"))
 
 ### Project Motivation:
 
-Credit risk assessment has become an increasingly critical part of the loan application process. As the demand for loan products increases, 
-lenders need to be able to quickly and accurately determine the likelihood of a loan defaulting. In the past, credit risk assessment was a 
-labor-intensive process that required lenders to manually assess each application. This process could be very time-consuming, as lenders had
-to analyze a variety of data points and review multiple documents. Manual credit risk assessment was also susceptible to human error, which could
-lead to inaccuracies in the assessment. Traditional methods of assessing credit risk can be inaccurate and may not take into account the full range
-of factors that can affect a borrower's ability to repay a loan. Moreover, they can be prone to human bias, which can lead to unfair lending practices.
-In recent years, advances in technology have enabled lenders to use more accurate and efficient methods of assessing credit risk.
+Credit risk assessment has become an increasingly critical part of the loan application process. As the demand for loan products increases, lenders need to be able to quickly and accurately determine the likelihood of a loan defaulting. In the past, credit risk assessment was a labor-intensive process that required lenders to manually assess each application. This process could be very time-consuming, as lenders had to analyze a variety of data points and review multiple documents. Manual credit risk assessment was also susceptible to human error, which could lead to inaccuracies in the assessment. Traditional methods of assessing credit risk can be inaccurate and may not take into account the full range of factors that can affect a borrower's ability to repay a loan. Moreover, they can be prone to human bias, which can lead to unfair lending practices. In recent years, advances in technology have enabled lenders to use more accurate and efficient methods of assessing credit risk.
 
 ### Data Mining Task:
 
-Four methods we will explore are decision trees to classify and K-means, k-medoids and elbow methods to create clusters of the dataset. 
-These methods are more accurate and efficient than traditional methods. They are able to take into account more factors in assessing credit risk, 
-and are less prone to human bias. Additionally, they are able to process large amounts of data quickly, making them ideal for large-scale lending operations. 
-By applying these algorithms to the credit risk dataset, we aim to develop a robust and accurate model. This can help financial institutions make more 
-informed lending decisions.
+Four methods we will explore are decision trees to classify and K-means, k-medoids and elbow methods to create clusters of the dataset. These methods are more accurate and efficient than traditional methods. They are able to take into account more factors in assessing credit risk, and are less prone to human bias. Additionally, they are able to process large amounts of data quickly, making them ideal for large-scale lending operations. By applying these algorithms to the credit risk dataset, we aim to develop a robust and accurate model. This can help financial institutions make more informed lending decisions.
 
-Our primary goal is to classify customers as either good or bad credit risks. We aim to assist financial institutions in making informed decisions regarding
-loan approvals based on an analysis of customers' payment behavior and other relevant attributes, such as age, income, loan amount, and employment status.
-By utilizing this dataset, we will build predictive models to assess customers' creditworthiness and use these models as tools for risk assessment and 
-decision-making.
+Our primary goal is to classify customers as either good or bad credit risks. We aim to assist financial institutions in making informed decisions regarding loan approvals based on an analysis of customers' payment behavior and other relevant attributes, such as age, income, loan amount, and employment status. By utilizing this dataset, we will build predictive models to assess customers' creditworthiness and use these models as tools for risk assessment and decision-making.
 
-We also intend to construct clusters for the dataset to understand our dataset better by excluding our class label (the class attribute) then applying the
-clustring algorithms on the dataset to recognize any patterns or trends between customers which will help to group them into subsets or (clusters) which make
-it easier to make decisions regarding one group.
-
+We also intend to construct clusters for the dataset to understand our dataset better by excluding our class label (the class attribute) then applying the clustring algorithms on the dataset to recognize any patterns or trends between customers which will help to group them into subsets or (clusters) which make it easier to make decisions regarding one group. Four methods we will explore are decision trees to classify and K-means, k-medoids and elbow methods to create clusters of the dataset. These methods are more accurate and efficient than traditional methods. They are able to take into account more factors in assessing credit risk, and are less prone to human bias. Additionally, they are able to process large amounts of data quickly, making them ideal for large-scale lending operations. By applying these algorithms to the credit risk dataset, we aim to develop a robust and accurate model. This can help financial institutions make more informed lending decisions.
 
 ### source
 
@@ -41,7 +25,7 @@ Origonaly our dataset consists of 21 attributes, but we only worked with 21 attr
 ## Attribute description
 
 | Attribute name      | Data type | Description                                                                                                                                                                                                                                                                                   |
-|-------------------|------------------|-----------------------------------|
+|---------|---------|------------------------------------------------------|
 | checking_status     | Nominal   | status of existing checking acount of loan applicant                                                                                                                                                                                                                                          |
 | duration            | Numeric   | duration of loan in months                                                                                                                                                                                                                                                                    |
 | credit_history      | Nominal   | credit history of loan applicant                                                                                                                                                                                                                                                              |
@@ -58,17 +42,11 @@ Origonaly our dataset consists of 21 attributes, but we only worked with 21 attr
 | purpose             | nominal   | This attribute represents the purpose of the credit for which the loan is being taken. It can take one of the following values: 'car (new)', 'car (used)', 'furniture/equipment', 'radio/television', 'domestic appliances', 'repairs', 'education', 'vacation', 'retraining', or ''business. |
 | existing_credits    | nominal   | This attribute represents the number of existing credits the loan applicant has at the time of the loan application.                                                                                                                                                                          |
 | num_dependents      | numeric   | This attribute represents the number of dependents the loan applicant has.                                                                                                                                                                                                                    |
-| job                 | nominal   | This attribute represents the type of job of the loan applicant. It can take one of the                                                                                                                                                                                                       
-                                   following values: 'unemployed/unskilled - non-resident', 'unskilled - resident', 'skilled                                                                                                                                                                                                      
-                                   'employee/official', or 'management/self-employed/highly qualified employee/officer.                                                                                                                                                                                                           |
-| own_telephone       | binary    | This attribute represents whether the loan applicant has their own                                                                                                                                                                                                                            
-                                   'telephone line or not. It can take one of the following values: 'none', or 'yes.                                                                                                                                                                                                              |
-| housing             | nominal   | This attribute represents the housing situation of the loan applicant. It can take                                                                                                                                                                                                            
-                                   'one of the following values: 'rent', 'own', or 'for free.                                                                                                                                                                                                                                     |
-| payment_magnitude   | nominal   | This attribute represents the magnitude of the property owned by                                                                                                                                                                                                                              
-                                   the loan applicant. It can take one of the following values: 'real estate', 'if not A121 : building                                                                                                                                                                                            
-                                   society savings agreement/life insurance', 'if not A121/A122 : car or other, not in attribute 6',                                                                                                                                                                                              
-                                   'or 'unknown / no property.                                                                                                                                                                                                                                                                    |
+| own_telephone       | binary    | This attribute represents whether the loan applicant has their own 'telephone line or not. It can take one of the following values: 'none', or 'yes.                                                                                                                                          |
+| job                 | nominal   | This attribute represents the type of job of the loan applicant.                                                                                                                                                                                                                              |
+| housing             | nominal   | This attribute represents the housing situation of the loan applicant.                                                                                                                                                                                                                        |
+| housing             | nominal   | This attribute represents the housing situation of the loan applicant.                                                                                                                                                                                                                        |
+| payment_magnitude   | nominal   | This attribute represents the magnitude of the property owned by the loan applicant.                                                                                                                                                                                                          |
 
 ## Summary of the dataset
 
@@ -192,20 +170,10 @@ this graphs showed us how different checking status is distributed with our clas
 hist(dataset$age, main = "Histogram of Age", xlab = "Age", ylab = "Frequency", col = "lightblue")
 ```
 
-We ceated a histogram for the "Age" variable to show the age groups for our sample of customers to give a better understanding for our overall variables values and results.\
-most of the custemers age lies between (20 - 50) some custemers being a bit older there is some outliers in the age 70 that we will study in the outliers section.
+We created a histogram for the "Age" variable to show the age groups for our sample of customers to give a better understanding for our overall variables values and results.\
+most of the customers age lies between (20 - 50) some customers being a bit older there is some outliers in the age 70 that we will study in the outliers section.
 
 5-
-
-```{r}
-plot(dataset$credit_amount, dataset$installment_duration,
-     xlab = "Credit Amount", ylab = "duration",
-     main = "Credit Amount and duration")
-```
-
-We created a Scatter plot for the "credit amount" and "duration" attributes to see if there is a correlation between them, from this scatter plot we can say that there is no clear correlation between the duration variable and the credit amount variable
-
-6-
 
 ```{r}
 
@@ -218,7 +186,7 @@ ggplot(dataset, aes(x = checking_status, y = credit_amount)) +
 
 ```
 
-The graph illustrates how the credit amounts are distributed within different categories of checking status. Each violin represents a category of checking status, and its width indicates the density of data points. Also whither there are variations in credit amounts based on checking status which is based on the graph, the checkings status varies in the credit amount.
+The graph illustrates how the credit amounts are distributed within different categories of checking status. Each violin represents a category of checking status, and its width indicates the density of data points. Also whither there are variations in credit amounts based on checking status which is based on the graph, the checking status varies in the credit amount.
 
 ## Outliers
 
@@ -460,6 +428,7 @@ Print the final preprocessed dataset
 
 ```{r}
 print(head(dataset))
+print(dataset)
 
 ```
 
@@ -498,9 +467,7 @@ dataset$credit_amount <- min_max_scaling(dataset$credit_amount)
 
 ```
 
-
 After normalization, the values of these attributes will now fall within the range[0,1], ensuring that they are all on a common scale and ready for further analysis.
-
 
 ## First: chi square
 
@@ -611,6 +578,7 @@ cor_with_class <- sapply(Data[, -ncol(Data)], function(x) cor(x, Data$Class))
 ```{r}
 print(cor_with_class)
 ```
+
 Duration: There is a weak negative correlation (-0.05398498) with the target variable. This suggests that as the duration increases, the likelihood of belonging to class 1 decreases slightly.
 
 Age: There is a weak positive correlation (0.04768862) with the target variable. This suggests that as age increases, the likelihood of belonging to class 1 also increases slightly.
@@ -634,6 +602,7 @@ We wanted to use Cross-validation (try different folds) on our trees to evaluate
 Outstide the loop and after we reached the desired fold we printed, plotted and got the matrix for our trees.
 
 we started by installing the packages we need these packages are important for tasks related to decision tree modeling and data visualization. They provide us tools and functions that make it easier to build, evaluate, and interpret models based on decision trees.
+
 ```{r}
 
 install.packages("rpart.plot")
@@ -707,6 +676,8 @@ Precision (Positive Predictive Value): The average precision is approximately 59
 rpart.plot(tree_model, uniform = TRUE,cex = 0.5, main = "CART Tree - Fold 10")
 ```
 
+For this tree we used Gini Index (CART algorithm) to select the attributes and used 10 folds to make the splits . We noticed that the tree started with the root attribute (checking statues) then started splitting with 1 or 2 attributes at a time for each split. The most important attribute for this tree is the checking statues as it's splits the customers almost in half with the first split with 47% of customers having a good credit risk if their checking statues wasn't 2 or 4 (\<0 or 0\<=x\<200 respectively) leaving only 53% for the second split. We can say that this tree is complex since we have a lot of decision nodes (10+) that lead to have 15 terminal nodes with very small percentage of customers for each node (8 nodes range in 1% - 2%) this could indicate overfitting or imbalance of the data that lead to have such rare patterns / possible outliers, however this does not mean that these patterns aren't important to our analysis since highlighting these patterns can be crucial to our dataset since this nodes represent 15% present of the customers in the dataset.
+
 ## five folds
 
 ```{r}
@@ -759,6 +730,8 @@ fold 5: Accuracy: 71.36%, Gini Index: 0.5844 Average Sensitivity: 39.80% - The a
 ```{r}
 rpart.plot(tree_model, uniform = TRUE,cex = 0.5, main = "CART Tree - Fold 5")
 ```
+
+For this tree we used Gini Index (CART algorithm) to select the attributes and used5 folds to make the splits . We can see that this tree is less complex compared to the 10 folds tree we discussed earlier since it has less decision and terminal nodes, however it is not significant difference between the two (in terms of complexity) since this tree also has a great number of leaves as well. The 'checking statues' attribute is still the root leaf for the tree, splitting our dataset almost in half deciding what class 45% of the customers is from the first split. We can notice that the difference between the trees started to show from the fourth split since the decisions started to be based on different attributes from the previous tree.
 
 ## 3 folds
 
@@ -818,6 +791,10 @@ Average Precision: Precision is the proportion of true positive predictions amon
 ```{r}
 rpart.plot(tree_model, uniform = TRUE,cex = 0.5, main = "CART Tree - Fold 3")
 ```
+
+For this tree we used Gini Index (CART algorithm) to select the attributes and used3 folds to make the splits . We can say that this tree is most complex out of the 3 trees we made so far. The root is still the 'checking status' attribute, it did split the dataset rows almost in half (56% and 44%) but it didn't decided any class for the customers from the first split like the 2 previous trees. Another indication for its complexity is how much decision and terminal nodes this tree has, with more than 20 terminal nodes we know that this tree is highly affected by outliers or rare cases that it has this much of terminal nodes.
+
+The variation in tree complexity across different folds is noteworthy. For instance, observing that in certain folds the tree becomes notably complex, containing a larger number of decision nodes and terminal leaves, while in other folds, it maintains a comparatively simpler structure. This variance in complexity might reflect the diversity or imbalance within the dataset subsets used for training in each fold. We can say that using 5 folds for this algorithm gave the least complex tree which could indicate that the data using that fold was the most balanced out of the three.
 
 ## gain ratio (C4.5 algorithm)
 
@@ -900,6 +877,8 @@ plot(tree_model, uniform = TRUE, cex = 0.7,main = "C4.5 Tree - Fold 10")
 
 ```
 
+For this tree we used Gain ratio (C4.5) to select the attributes and used 10 folds to make the splits . We can see that the 'checking status' is the root node that start the splitting (it also split the data almost in half) deciding the class label for 418 customers from the first split. We are dealing with 10 terminal nodes which means that this tree is less complicated than all the Gini index trees (that does not mean that the results will be better regarding the accuracy and other metrics). We can see the presence of new attributes that was not in the Gini index trees which highlights the difference between Gain Ratio and Gini Index, The Gini index focuses on impurity reduction, favors attributes that most effectively separate classes, while Gain Ratio is biased towards attributes with many values by adjusting the information gain
+
 ## 5 folds
 
 ```{r}
@@ -975,6 +954,8 @@ Average Precision: 52.27%: Precision is the ratio of correctly predicted positiv
 plot(tree_model, uniform = TRUE, main = "C4.5 Tree - Fold 5")
 
 ```
+
+For this tree we used Gain ratio (C4.5) to select the attributes and used 5 folds to make the splits . Right from the start we can see that this tree is more complex that the 10 folds tree for the same algorithm, the root node is still the same but it decided the class for less customers in the first split, there is more decision nodes and the terminal nodes (15+) represent very specific cases of customers which can indicate the possibility of overfitting. Comparing this tree with the 10 fold tree , we can say that there might be a possibility of that the 5 folds doesn't generalize (work on new/unseen data) very well.
 
 ## 3 folds
 
@@ -1052,6 +1033,10 @@ plot(tree_model, uniform = TRUE, main = "C4.5 Tree - Fold 3")
 
 ```
 
+For this tree we used Gain ratio (C4.5) to select the attributes and used 3 folds to make the splits . Out of the 3 trees that used the Gain Ratio algorithm, this one performed the best regarding complexity, with only 4 decision nodes and 6 terminal nodes . A simpler tree often suggests a higher likelihood of generalizing well to new, unseen data. The small number of decision nodes could imply that only this subset of features significantly influences the target variable in this specific fold. It might be interesting to explore which attributes are chosen as decision nodesin this tree.
+
+Since the 3 folds gave the simplest tree, it might be easier for people to use this model because of its ease in interpretably.
+
 ## information gain ID3
 
 ## 3 folds
@@ -1119,6 +1104,10 @@ Sensitivity (Recall): 74.09% Sensitivity measures the proportion of actual posit
 
 ```
 
+For this tree we used Information Gain (ID3 algorithm) to select the attributes and used 3 folds to make the splits .
+
+The tree started with the root attribute (checking statues) indicating that it has the highest information gain out of all our attributes, Visually it is not a very complex tree but it depends on 12 attributes out of the 21 attributes this dataset, more that half of the attributes are considered which might be indicating a bit of complexity that should be in mind when wanting to use this model.
+
 ## 5 folds
 
 ```{r}
@@ -1184,6 +1173,10 @@ Sensitivity measures the proportion of actual positive instances correctly ident
 
 ```
 
+For this tree we used Information Gain (ID3 algorithm) to select the attributes and used 5 folds to make the splits .
+
+The tree started with the root attribute (checking statues) indicating that it has the highest information gain out of all our attributes, We can see this tree has used more attributes to reach the final decision/terminal nodes than the 3 folds one which indicates that it is more complex that the previous one, Which is not necessarily a bad thing but we had to keep that in mind if using this model in the future, since both the 3 and the 5 folds has the same number of splits this information can decided what fold to use.
+
 ## 10 folds
 
 ```{r}
@@ -1248,17 +1241,21 @@ Sensitivity measures the proportion of actual positive instances correctly ident
 
 ```
 
+For this tree we used Information Gain (ID3 algorithm) to select the attributes and used 10 folds to make the splits .
+
+The tree started with the root attribute (checking statues) indicating that it has the highest information gain out of all our attributes, This tree has the same number of splits as the previous two but we used 8 attributes to reach the terminal nodes which is less than the 2nd one and less than the1st so this is something to consider when using this algorithm.
+
+The number of splits was the same for all 3, we think that might be because the variation in the dataset across different folds might not be substantial enough to impact the decision tree's splitting decisions, it also might be because the dataset has dominant attributesthat will remain the same for each fold which will also affect the splitting process.
+
 As mentioned earlier, we constructed 9 different trees using different algorithms and folds and this is what we found:
 
 In terms of algorithms we found that the information gain (ID3) algorithm performed the best compared to the other 2 with accuracy between 76.53% - 71.99% for different folds. We noticed that models were consistent with their accuracy using fold (3) and that's probably because the data in fold 3 was a representative well-balanced sample of the dataset or that the chosen algorithms were well-suited for the characteristics of the data in this fold.
 
 On the other hand, fold 10 gave the highest (with Information Gain) and the lowest (with Ratio Gain) accuracy on the same time, we believe that fold ten data's characteristics was well fitted for the information gain split but it might targeted the sensitivity of the ratio gain tree.
 
-Since more than half of our dataset attributes were of categorial (nominal) type, it was expected for Ratio Gain to perform worse than the others since it does not handle nominal data as effective as them.
-
 if we were looking at it in terms of accuracy we highly recommend using information gain with 10 folds (or any fold) to classifiy this model since it gave the highest accuracy out of the three algorithms.
 
-##Clustering
+## Clustering
 
 Clustering involves organizing a set of objects so that those within the same group (cluster) share greater similarity with one another, compared to objects in different groups. This falls under the domain of unsupervised learning, as it lacks class labels. This section focuses on partitioning our dataset through the utilization of the k-means algorithm, exploring three distinct k-means values (2, 3, and 4). Throughout each iteration, we will assess the average silhouette, total within-cluster sum of square, and BCubed (precision and recall).
 
@@ -1435,6 +1432,24 @@ print(paste("Average Silhouette Width for k=4:", avg_sil_width4))
 
 
 ```
+
+For k=2 :
+
+• Total WSS (Within-Cluster Sum of Squares): 6122.20 • Average Silhouette Width: 0.0448
+
+The Average Silhouette Score is the highest, indicating better-defined clusters. The Total WSS is also high, suggesting less compact clusters. BCubed Precision is moderate, and Recall is the highest among the three, suggesting a better overall cluster purity and completeness. The results for k=2 indicate that the clusters are reasonably well-separated, as reflected by a moderate average silhouette width. The total within-cluster sum of squares suggests substantial variation within the clusters.
+
+For k=3 :
+
+• Total WSS (Within-Cluster Sum of Squares): 4632.49 • Average Silhouette Width: 0.0382
+
+When using k=3, the average silhouette width decreases, indicating less clearly defined clusters. The Total WSS is lower, suggesting more compact clusters. BCubed Precision improves, but Recall drops significantly, suggesting an increase in false negatives.
+
+For k=4 :
+
+• Total WSS (Within-Cluster Sum of Squares): 3792.62 • Average Silhouette Width: 0.0264
+
+With k=4, the Average Silhouette Score is the lowest, indicating the poorest cluster definition. The Total WSS further decreases, again indicating more compact clusters. Both BCubed Precision and Recall are lower than for k=2, indicating lower overall clustering effectiveness.
 
 ```{r}
 if (!require(fpc)) {
@@ -1666,9 +1681,9 @@ results <- data.frame(
 print(results)
 ```
 
-##Final phase
+## Evaluation and Comparison
 
-##Evaluation for classification
+## Evaluation for classification
 
 |             |       | 10       |            |       | 5        |            |       | 3        |            |
 |--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
@@ -1715,12 +1730,12 @@ best among all:
     -   Specificity: 50.00%
 
     -   This scenario excels in precision and has a moderate accuracy. Sensitivity is also reasonable, but specificity is relatively low.
-    
-to decide what is the the best among all we will used the balanced approach (f-1 score) which is the harmonic mean of precision and recall, which means that the F1 score will tell us the model’s balanced ability to both capture positive cases (recall) and be accurate with the cases it does capture (precision).
+
+to decide what is the the best among all we will used the balanced approach (f-1 score) which is the harmonic mean of precision and recall, which means that the F1 score will tell us the model's balanced ability to both capture positive cases (recall) and be accurate with the cases it does capture (precision).
 
 we went with this approach because in credit risk assessment, the consequences of misclassifying instances in either class can be significant. A balanced approach ensures that both positive (good credit) and negative (bad credit) cases receive equal consideration.
 
-F1=2× Precision×Recall/Precision+Recall 
+F1=2× Precision×Recall/Precision+Recall
 
 ```{r}
 # F1 score results
@@ -1739,10 +1754,10 @@ results <- data.frame(
 # Print the results
 print(results)
 ```
-Based on the F1 scores, 10 Folds information gain has the highest F1 score (81.08295), making it the best-performing scenario 
 
+Based on the F1 scores, 10 Folds information gain has the highest F1 score (81.08295), making it the best-performing scenario
 
-#Evaluation for clustering:
+## Evaluation for clustering:
 
 |     |                                    | K=2 (BEST) | K=3    | K=4    |
 |-----|------------------------------------|------------|--------|--------|
@@ -1774,3 +1789,13 @@ K=2 seems to be the best choice as it has the highest Average Silhouette Score, 
 k=3\
 K=3 or k=4\
 K=4, this is not necessarily a drawback, as overly compact clusters can indicate overfitting. The trade-off between these metrics depends on the specific needs and context of your clustering application.
+
+In summary, the results consistently highlight that k=2 is the preferable choice for clustering. It not only demonstrates the highest Average Silhouette Score, indicating well-defined clusters, but also boasts the highest BCubed Recall, suggesting better completeness of clusters concerning the true classes. Although the Total WSS is higher for k=2 compared to k=3 and k=4, this is not necessarily a drawback, as overly compact clusters may indicate overfitting. The trade-off between these metrics depends on the specific needs and context of the clustering application.
+
+## Findings
+
+Based on the nature of our problem, our model needs to come up with one result which is wither the customer we're assisting has good credit or bad credit. We already have a distinct and well defined classes and want to predict it for unseen/new customers. We believe that classification methods are more suited for our dataset. The IG ID3 with 10 folds is what we choose to go with. Another factor is since our class label is known "the class attribute" which is better suited in the classification process, we didn't have to remove it like we did in the clustering process. for that reason we believe that the classification is better for our data set giving us the best results in comparison with clustering.
+
+the best performing clustering.
+
+the best performing classification algorithm.
