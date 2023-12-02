@@ -4,7 +4,13 @@ options(repos = c(CRAN = "https://cloud.r-project.org"))
 
 ### Project Motivation:
 
-Credit risk assessment has become an increasingly critical part of the loan application process. As the demand for loan products increases, lenders need to be able to quickly and accurately determine the likelihood of a loan defaulting. In the past, credit risk assessment was a labor-intensive process that required lenders to manually assess each application. This process could be very time-consuming, as lenders had to analyze a variety of data points and review multiple documents. Manual credit risk assessment was also susceptible to human error, which could lead to inaccuracies in the assessment. Traditional methods of assessing credit risk can be inaccurate and may not take into account the full range of factors that can affect a borrower's ability to repay a loan. Moreover, they can be prone to human bias, which can lead to unfair lending practices. In recent years, advances in technology have enabled lenders to use more accurate and efficient methods of assessing credit risk.
+Credit risk assessment has become an increasingly critical part of the loan application process. As the demand for loan products increases, 
+lenders need to be able to quickly and accurately determine the likelihood of a loan defaulting. In the past, credit risk assessment was a 
+labor-intensive process that required lenders to manually assess each application. This process could be very time-consuming, as lenders had
+to analyze a variety of data points and review multiple documents. Manual credit risk assessment was also susceptible to human error, which could
+lead to inaccuracies in the assessment. Traditional methods of assessing credit risk can be inaccurate and may not take into account the full range
+of factors that can affect a borrower's ability to repay a loan. Moreover, they can be prone to human bias, which can lead to unfair lending practices.
+In recent years, advances in technology have enabled lenders to use more accurate and efficient methods of assessing credit risk.
 
 ### Data Mining Task:
 
