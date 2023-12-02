@@ -14,11 +14,20 @@ In recent years, advances in technology have enabled lenders to use more accurat
 
 ### Data Mining Task:
 
-Four methods we will explore are decision trees to classify and K-means, k-medoids and elbow methods to create clusters of the dataset. These methods are more accurate and efficient than traditional methods. They are able to take into account more factors in assessing credit risk, and are less prone to human bias. Additionally, they are able to process large amounts of data quickly, making them ideal for large-scale lending operations. By applying these algorithms to the credit risk dataset, we aim to develop a robust and accurate model. This can help financial institutions make more informed lending decisions.
+Four methods we will explore are decision trees to classify and K-means, k-medoids and elbow methods to create clusters of the dataset. 
+These methods are more accurate and efficient than traditional methods. They are able to take into account more factors in assessing credit risk, 
+and are less prone to human bias. Additionally, they are able to process large amounts of data quickly, making them ideal for large-scale lending operations. 
+By applying these algorithms to the credit risk dataset, we aim to develop a robust and accurate model. This can help financial institutions make more 
+informed lending decisions.
 
-Our primary goal is to classify customers as either good or bad credit risks. We aim to assist financial institutions in making informed decisions regarding loan approvals based on an analysis of customers' payment behavior and other relevant attributes, such as age, income, loan amount, and employment status. By utilizing this dataset, we will build predictive models to assess customers' creditworthiness and use these models as tools for risk assessment and decision-making.
+Our primary goal is to classify customers as either good or bad credit risks. We aim to assist financial institutions in making informed decisions regarding
+loan approvals based on an analysis of customers' payment behavior and other relevant attributes, such as age, income, loan amount, and employment status.
+By utilizing this dataset, we will build predictive models to assess customers' creditworthiness and use these models as tools for risk assessment and 
+decision-making.
 
-We also intend to construct clusters for the dataset to understand our dataset better by excluding our class label (the class attribute) then applying the clustring algorithms on the dataset to recognize any patterns or trends between customers which will help to group them into subsets or (clusters) which make it easier to make decisions regarding one group.
+We also intend to construct clusters for the dataset to understand our dataset better by excluding our class label (the class attribute) then applying the
+clustring algorithms on the dataset to recognize any patterns or trends between customers which will help to group them into subsets or (clusters) which make
+it easier to make decisions regarding one group.
 
 
 ### source
