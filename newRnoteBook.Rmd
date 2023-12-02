@@ -1779,7 +1779,10 @@ print(results)
 | sensitivity | 75.95 | 40.13    | 40.82%     | 76.39 | 38.49    | 39.80      | 74.09 | 17.67    | 42.13      |
 | specificity | 55    | 86.19    | 88.06%     | 47.27 | 85.18    | 87.34      | 50    | 93.95    | 85.90      |
 
-1.  **Scenario 10:**
+
+best among all:
+
+1.  **Scenario 10 IG:**
 
     -   Accuracy: 71.72%
 
@@ -1789,10 +1792,9 @@ print(results)
 
     -   Specificity: 55.00%
 
-    -   This scenario has the highest accuracy and precision, making it a strong performer in correctly classifying instances, especially positive ones.
-        However, the specificity is comparatively lower.
+    -   This scenario has the highest accuracy and precision, making it a strong performer in correctly classifying instances, especially positive ones. However, the specificity is comparatively lower.
 
-2.  **Scenario 5:**
+2.  **Scenario 5 IG:**
 
     -   Accuracy: 68.34%
 
@@ -1802,10 +1804,9 @@ print(results)
 
     -   Specificity: 47.27%
 
-    -   This scenario has a good balance between precision and sensitivity, but the overall accuracy is slightly lower.
-        The specificity is also relatively low.
+    -   This scenario has a good balance between precision and sensitivity, but the overall accuracy is slightly lower. The specificity is also relatively low.
 
-3.  **Scenario 3:**
+3.  **Scenario 3 IG:**
 
     -   Accuracy: 70.00%
 
@@ -1815,10 +1816,32 @@ print(results)
 
     -   Specificity: 50.00%
 
-    -   This scenario excels in precision and has a moderate accuracy.
-        Sensitivity is also reasonable, but specificity is relatively low.
+    -   This scenario excels in precision and has a moderate accuracy. Sensitivity is also reasonable, but specificity is relatively low.
+    
+to decide what is the the best among all we will used the balanced approach (f-1 score) which is the harmonic mean of precision and recall, which means that the F1 score will tell us the model’s balanced ability to both capture positive cases (recall) and be accurate with the cases it does capture (precision).
 
-**Comparisons:**
+we went with this approach because in credit risk assessment, the consequences of misclassifying instances in either class can be significant. A balanced approach ensures that both positive (good credit) and negative (bad credit) cases receive equal consideration.
+
+F1=2× Precision×Recall/Precision+Recall 
+
+```{r}
+# F1 score results
+precision <- c(86.96, 79.14, 87.88)
+sensitivity <- c(75.95, 76.39, 74.09)
+f1_score <- 2 * (precision * sensitivity) / (precision + sensitivity)
+
+# Create a data frame
+results <- data.frame(
+  Scenario = c("10 folds IG", "5 folds IG", "3 folds IG"),
+  Precision = precision,
+  Sensitivity = sensitivity,
+  F1_Score = f1_score
+)
+
+# Print the results
+print(results)
+```
+Based on the F1 scores, 10 Folds information gain has the highest F1 score (81.08295), making it the best-performing scenario 
 
 #Evaluation for clustering:
 
